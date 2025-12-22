@@ -1,7 +1,9 @@
-
 public abstract class CondimentDecorator extends Beverage {
-    protected Beverage beverage;
-    protected CondimentDecorator(Beverage beverage){
+
+    protected final Beverage beverage;
+
+    protected CondimentDecorator(Beverage beverage) {
+        super(beverage.getDescription());
         this.beverage = beverage;
     }
 
