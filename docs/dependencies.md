@@ -64,6 +64,39 @@
 - 사용 위치: test runtime only
 - 비고: 테스트 실행 시 필요
 
+
+---
+### jjwt-api
+
+- 목적: JWT 생성 및 파싱을 위한 핵심 API 제공
+- 사용 위치: main 코드 전반 (토큰 생성, 검증 로직)
+- 비고: 인터페이스 및 추상 클래스만 포함, 실제 구현은 별도 모듈 필요
+
+---
+### jjwt-impl
+
+- 목적: jjwt-api의 실제 구현체 제공
+- 사용 위치: runtime
+- 비고: 단독 사용 불가, 반드시 jjwt-api와 함께 사용해야 함
+---
+### jjwt-jackson
+
+- 목적: JWT payload의 JSON 직렬화/역직렬화 지원
+- 사용 위치: runtime
+- 비고: Jackson 기반, Spring Boot 환경과 궁합이 좋음
+---
+### spring-boot-starter-security
+
+-목적: 인증(Authentication) 및 인가(Authorization) 기능 제공
+-사용 위치: main 코드 전반 (보안 설정, 필터, 인증 처리)
+-비고: 기본 보안 필터 체인 및 설정 자동 구성 제공
+---
+### spring-security-test
+
+- 목적: Spring Security 환경에서의 테스트 지원
+- 사용 위치: test 패키지
+- 비고: Mock 인증 객체, 보안 컨텍스트 설정 등 테스트 편의 기능 제공
+---
 ## 추가 시 기록 형식
 
 - 의존성 이름:
