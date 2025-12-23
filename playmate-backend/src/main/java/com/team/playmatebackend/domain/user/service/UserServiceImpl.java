@@ -6,6 +6,7 @@ import com.team.playmatebackend.domain.user.repository.UserRepository;
 import com.team.playmatebackend.global.Jwt.JwtProvider;
 import com.team.playmatebackend.domain.user.dto.UserCreateRequest;
 import com.team.playmatebackend.domain.user.entity.User;
+import com.team.playmatebackend.domain.user.entity.enums.UserRoleType;
 import com.team.playmatebackend.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,6 +20,7 @@ public abstract class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final JwtProvider jwtProvider;
 
+
 @Override
 public String login(LoginRequestDto request) {
     User user = userRepository.findByUsername(request.getUsername())
@@ -26,20 +28,12 @@ public String login(LoginRequestDto request) {
 
     if (!passwordEncoder.matches(
             request.getPassword(),
-            user.getPassword())) {
+            user.getUserPassword())) {
         throw new IllegalArgumentException("비밀번호다 틀렸습니다");
     }
 
-    return jwtProvider.createToken(user.getUsername());
+    return jwtProvider.createToken(user.getUserPassword());
 }
-}
-
-
-@Service
-@RequiredArgsConstructor
-public class UserServiceImpl implements UserService {
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
 
 // 회원 존재 여부
     @Transactional(readOnly = true)
@@ -72,6 +66,7 @@ public class UserServiceImpl implements UserService {
                 .gender(userCreateRequest.getGender())
                 .preferCategory(userCreateRequest.getPreferCategory())
                 .age(userCreateRequest.getAge())
+                .roleType(UserRoleType.USER)
                 .build();
 
         return userRepository.save(entity).getId();
