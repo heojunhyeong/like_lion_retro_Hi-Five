@@ -21,25 +21,18 @@ public abstract class UserServiceImpl implements UserService {
 
 @Override
 public String login(LoginRequestDto request) {
-    User user = userRepository.findByUsername(request.getUsername())
+    User user = userRepository.findByUsername(request.getUserID())
             .orElseThrow(() -> new IllegalArgumentException("아이디가 없습니다"));
 
     if (!passwordEncoder.matches(
-            request.getPassword(),
-            user.getPassword())) {
-        throw new IllegalArgumentException("비밀번호다 틀렸습니다");
+            request.getUserPassword(),
+            user.getUserPassword())) {
+        throw new IllegalArgumentException("비밀번호가 틀렸습니다");
     }
 
-    return jwtProvider.createToken(user.getUsername());
-}
+    return jwtProvider.createToken(user.getUserId());
 }
 
-
-@Service
-@RequiredArgsConstructor
-public class UserServiceImpl implements UserService {
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
 
 // 회원 존재 여부
     @Transactional(readOnly = true)

@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class LoginRequestDto {
 
-    private String username; // 클라이언트에서 보낸 아이디
-    private String password; // 클라이언트에서 보낸 비밀번호
+    private String userID; // 클라이언트에서 보낸 아이디
+    private String userPassword; // 클라이언트에서 보낸 비밀번호
 }
