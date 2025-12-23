@@ -77,5 +77,22 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(entity).getId();
     }
 
+    /**
+     *
+     * 사용자 로그아웃 로직 구현
+     * userId 기반 사용자 조회
+     * 로그아웃 시 refresh token 제거 처리
+     *
+     * @author 김지번
+     * @DateOfCreated 2025-12-23
+     * @DateOfEdit 2025-12-23
+     */
+    @Override
+    @Transactional
+    public void logout(String userId) {
+        User user = userRepository.findByUserId(userId)
+                .orElseThrow(() -> new IllegalArgumentException("유저를 찾을 수 없습니다."));
 
+        user.logout(); // refreshToken = null
+    }
 }

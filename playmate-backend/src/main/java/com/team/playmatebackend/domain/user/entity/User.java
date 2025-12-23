@@ -1,3 +1,14 @@
+/**
+ *
+ * JWT 로그아웃을 위한 refreshToken 필드 및 무효화 로직 추가
+ * User 엔티티에 refreshToken 컬럼 추가
+ * logout() 메서드로 refreshToken 제거하여 로그인 상태 해제
+ *
+ * @author 김지번
+ * @DateOfCreated 2025-12-23
+ * @DateOfEdit 2025-12-23
+ */
+
 package com.team.playmatebackend.domain.user.entity;
 
 import com.team.playmatebackend.domain.user.entity.enums.AgeGroup;
@@ -55,5 +66,12 @@ public class User {
 
     @LastModifiedDate
     private LocalDateTime updatedDate;
-}
 
+    @Column(length = 500)
+    private String refreshToken;
+
+    public void logout() {
+        this.refreshToken = null;
+    }
+
+}
