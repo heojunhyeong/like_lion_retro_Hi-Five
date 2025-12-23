@@ -87,9 +87,9 @@
 ---
 ### spring-boot-starter-security
 
--목적: 인증(Authentication) 및 인가(Authorization) 기능 제공
--사용 위치: main 코드 전반 (보안 설정, 필터, 인증 처리)
--비고: 기본 보안 필터 체인 및 설정 자동 구성 제공
+- 목적: 인증(Authentication) 및 인가(Authorization) 기능 제공
+- 사용 위치: main 코드 전반 (보안 설정, 필터, 인증 처리)
+- 비고: 기본 보안 필터 체인 및 설정 자동 구성 제공
 ---
 ### spring-security-test
 
