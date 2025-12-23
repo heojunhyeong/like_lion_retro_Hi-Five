@@ -2,7 +2,7 @@ package com.team.playmatebackend.domain.user.controller;
 
 import com.team.playmatebackend.domain.user.dto.LoginRequestDto;
 import com.team.playmatebackend.domain.user.service.UserService;
-import com.team.playmatebackend.global.common.ApiResponse;
+import com.team.playmatebackend.global.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor // 생성자 자동 생성
 @RequestMapping("/api/users") // 기본 URL
 public class UserController {
-
     private final UserService userService;
 
     /**
@@ -28,19 +27,5 @@ public class UserController {
     ) {
         String token = userService.login(request); // 로그인 + JWT 발급
         return ResponseEntity.ok(token);
-    }
-
-    /**
-     * 로그아웃 API
-     *
-     * @author 김지번
-     * @DateOfCreated 2025-12-23
-     * @DateOfEdit 2025-12-23
-     */
-    @PostMapping("/logout")
-    public ApiResponse<Void> logout(Authentication authentication) {
-        String userId = authentication.getName(); // SecurityContext에서 userId 추출
-        userService.logout(userId);
-        return ApiResponse.success();
     }
 }
