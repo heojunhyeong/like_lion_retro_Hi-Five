@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: playmate-backend
+
+#output.ansi.enabled ???? ???? ???? ??
+  output:
+    ansi:
+      enabled: always
