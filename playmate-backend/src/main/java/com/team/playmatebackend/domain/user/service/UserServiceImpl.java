@@ -19,19 +19,20 @@ public abstract class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final JwtProvider jwtProvider;
 
-@Override
-public String login(LoginRequestDto request) {
-    User user = userRepository.findByUsername(request.getUserID())
-            .orElseThrow(() -> new IllegalArgumentException("아이디가 없습니다"));
 
-    if (!passwordEncoder.matches(
-            request.getUserPassword(),
-            user.getUserPassword())) {
-        throw new IllegalArgumentException("비밀번호가 틀렸습니다");
+    @Override
+    public String login(LoginRequestDto request) {
+        User user = userRepository.findByUsername(request.getUserID())
+                .orElseThrow(() -> new IllegalArgumentException("아이디가 없습니다"));
+
+        if (!passwordEncoder.matches(
+                request.getUserPassword(),
+                user.getUserPassword())) {
+            throw new IllegalArgumentException("비밀번호다 틀렸습니다");
+        }
+
+        return jwtProvider.createToken(user.getUserPassword());
     }
-
-    return jwtProvider.createToken(user.getUserId());
-}
 
 
     // 회원 존재 여부
