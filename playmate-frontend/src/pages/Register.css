@@ -1,0 +1,27 @@
+div {
+    margin-bottom: 12px;
+}
+
+label {
+    font-weight: bold;
+}
+
+input, select, button {
+    padding: 6px 8px;
+    font-size: 14px;
+    width: 200px;
+    box-sizing: border-box;
+}
+
+button {
+    width: 100%;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 3px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
