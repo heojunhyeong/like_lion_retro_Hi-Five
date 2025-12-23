@@ -3,6 +3,7 @@ package com.team.playmatebackend.domain.user.dto;
 import com.team.playmatebackend.domain.user.entity.enums.AgeGroup;
 import com.team.playmatebackend.domain.user.entity.enums.Gender;
 import com.team.playmatebackend.domain.user.entity.enums.PreferCategory;
+import com.team.playmatebackend.domain.user.entity.enums.UserRoleType;
 import lombok.Getter;
 
 @Getter
@@ -15,4 +16,6 @@ public class UserCreateRequest {
     private Gender gender;
     private PreferCategory preferCategory;
     private AgeGroup age;
+
+    private UserRoleType roleType;
 }
