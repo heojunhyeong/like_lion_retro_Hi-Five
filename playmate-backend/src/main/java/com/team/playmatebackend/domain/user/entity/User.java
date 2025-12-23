@@ -61,13 +61,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserRoleType roleType;
 
-<<<<<<< HEAD
-    @Column(length = 100)
-    private String introduction;
-
-=======
     @CreatedDate
->>>>>>> develop
     private LocalDateTime createdDate;
 
     @LastModifiedDate
