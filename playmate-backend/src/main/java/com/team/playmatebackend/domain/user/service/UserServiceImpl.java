@@ -22,7 +22,14 @@ public class UserServiceImpl implements UserService {
     }
 
 
-// 회원 가입
+    /**
+     * 회원가입 메서드
+     * gender, preferCategory, age는 미선택시 Other을 반환하는 것이 아닌 Null 처리
+     *
+     * @author 허준형
+     * @DateOfCreated 2025-12-23
+     * @DateOfEdit 2025-12-23
+     */
     @Transactional
     public Long signUp(UserCreateRequest userCreateRequest) {
 
@@ -35,6 +42,9 @@ public class UserServiceImpl implements UserService {
                 .userPassword(passwordEncoder.encode(userCreateRequest.getPassword()))
                 .nickName(userCreateRequest.getNickname())
                 .userEmail(userCreateRequest.getEmail())
+                .gender(userCreateRequest.getGender())
+                .preferCategory(userCreateRequest.getPreferCategory())
+                .age(userCreateRequest.getAge())
                 .build();
 
         return userRepository.save(entity).getId();
