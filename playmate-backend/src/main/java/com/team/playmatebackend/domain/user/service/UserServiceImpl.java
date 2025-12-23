@@ -31,7 +31,7 @@ public abstract class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("비밀번호다 틀렸습니다");
         }
 
-        return jwtProvider.createToken(user.getUserPassword());
+        return jwtProvider.createToken(user.getUserId());
     }
 
 
