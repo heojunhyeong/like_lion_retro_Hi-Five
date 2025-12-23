@@ -5,8 +5,7 @@ import com.team.playmatebackend.domain.user.entity.User;
 import com.team.playmatebackend.domain.user.repository.UserRepository;
 import com.team.playmatebackend.global.Jwt.JwtProvider;
 import com.team.playmatebackend.domain.user.dto.UserCreateRequest;
-import com.team.playmatebackend.domain.user.entity.User;
-import com.team.playmatebackend.domain.user.repository.UserRepository;
+import com.team.playmatebackend.domain.user.entity.enums.UserRoleType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service //스프링이 빈으로 등록
 @RequiredArgsConstructor
 public abstract class UserServiceImpl implements UserService {
+
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtProvider jwtProvider;
@@ -34,13 +34,12 @@ public String login(LoginRequestDto request) {
 }
 
 
-// 회원 존재 여부
+    // 회원 존재 여부
     @Transactional(readOnly = true)
     public boolean existUser(UserCreateRequest userCreateRequest) {
         return ((userRepository.existsByUserId(userCreateRequest.getUserId())) ||
                 userRepository.existByEmail(userCreateRequest.getEmail()));
     }
-
 
     /**
      * 회원가입 메서드
@@ -65,10 +64,28 @@ public String login(LoginRequestDto request) {
                 .gender(userCreateRequest.getGender())
                 .preferCategory(userCreateRequest.getPreferCategory())
                 .age(userCreateRequest.getAge())
+                .roleType(UserRoleType.USER)
                 .build();
 
         return userRepository.save(entity).getId();
     }
 
+    /**
+     *
+     * 사용자 로그아웃 로직 구현
+     * userId 기반 사용자 조회
+     * 로그아웃 시 refresh token 제거 처리
+     *
+     * @author 김지번
+     * @DateOfCreated 2025-12-23
+     * @DateOfEdit 2025-12-23
+     */
+    @Override
+    @Transactional
+    public void logout(String userId) {
+        User user = userRepository.findByUserId(userId)
+                .orElseThrow(() -> new IllegalArgumentException("유저를 찾을 수 없습니다."));
 
+        user.logout(); // refreshToken = null
+    }
 }
