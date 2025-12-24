@@ -1,6 +1,20 @@
 spring:
   application:
     name: playmate-backend
+    
+
+# spring-boot-stater-mail을 위한 설정
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: @gmail
+    password: 앱비밀번호
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 
 #output.ansi.enabled ???? ???? ???? ??
   output:
