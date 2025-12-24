@@ -13,8 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service //스프링이 빈으로 등록
 @RequiredArgsConstructor
-public abstract class UserServiceImpl implements UserService {
-
+//public abstract class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtProvider jwtProvider;
@@ -22,7 +22,7 @@ public abstract class UserServiceImpl implements UserService {
 
     @Override
     public String login(LoginRequestDto request) {
-        User user = userRepository.findByUsername(request.getUserID())
+        User user = userRepository.findByUserId(request.getUserID())
                 .orElseThrow(() -> new IllegalArgumentException("아이디가 없습니다"));
 
         if (!passwordEncoder.matches(
@@ -34,12 +34,11 @@ public abstract class UserServiceImpl implements UserService {
         return jwtProvider.createToken(user.getUserId());
     }
 
-
     // 회원 존재 여부
     @Transactional(readOnly = true)
     public boolean existUser(UserCreateRequest userCreateRequest) {
         return ((userRepository.existsByUserId(userCreateRequest.getUserId())) ||
-                userRepository.existByEmail(userCreateRequest.getEmail()));
+                userRepository.existsByUserEmail(userCreateRequest.getEmail()));
     }
 
     /**

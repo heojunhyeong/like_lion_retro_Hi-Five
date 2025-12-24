@@ -1,6 +1,7 @@
 package com.team.playmatebackend.domain.user.controller;
 
 import com.team.playmatebackend.domain.user.dto.LoginRequestDto;
+import com.team.playmatebackend.domain.user.dto.UserCreateRequest;  //
 import com.team.playmatebackend.domain.user.service.UserService;
 import com.team.playmatebackend.global.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
@@ -24,5 +25,13 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody LoginRequestDto request) {
         String token = userService.login(request); // 로그인 + JWT 발급
-        return ResponseEntity.ok(token);}
+        return ResponseEntity.ok(token);    //tokean -> token
+    }
+
+    // UserController.java에 추가할 코드
+    @PostMapping("/register")
+    public ResponseEntity<ApiResponse<Long>> register(@RequestBody UserCreateRequest request) {
+        Long userId = userService.signUp(request);
+        return ResponseEntity.ok(ApiResponse.success(userId));
+    }
 }
