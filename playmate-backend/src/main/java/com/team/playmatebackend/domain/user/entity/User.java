@@ -43,6 +43,11 @@ public class User {
     @Column(nullable = false, length = 20)
     private String userPassword;
 
+    @Column(unique = true)
+    private String passwordResetToken;
+
+    private LocalDateTime passwordResetExpiredAt;
+
     @Column(nullable = false, unique = true, length = 30)
     private String userEmail;
 
@@ -74,4 +79,17 @@ public class User {
         this.refreshToken = null;
     }
 
+    public void issuePasswordResetToken(String token, LocalDateTime expiredAt) {
+        this.passwordResetToken = token;
+        this.passwordResetExpiredAt = expiredAt;
+    }
+
+    public void clearPasswordResetToken() {
+        this.passwordResetToken = null;
+        this.passwordResetExpiredAt = null;
+    }
+
+    public void changePassword(String encodedPassword) {
+        this.userPassword = encodedPassword;
+    }
 }

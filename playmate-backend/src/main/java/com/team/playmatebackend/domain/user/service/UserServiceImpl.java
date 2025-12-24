@@ -11,6 +11,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.util.UUID;
+
 @Service //스프링이 빈으로 등록
 @RequiredArgsConstructor
 public abstract class UserServiceImpl implements UserService {
@@ -18,6 +21,8 @@ public abstract class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtProvider jwtProvider;
+    private final MailService mailService;
+
 
 
 
@@ -72,6 +77,55 @@ public abstract class UserServiceImpl implements UserService {
 
         return userRepository.save(entity).getId();
     }
+
+    /**
+     * 작성중
+     *
+     * @author 허준형
+     * @DateOfCreated 2025-12-24
+     * @DateOfEdit 2025-12-24
+     */
+
+    @Transactional
+    public void requestPasswordReset(String email) {
+
+        // 사용자 조회
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("해당 이메일의 유저가 없습니다."));
+
+        // 토큰 생성
+        String token = UUID.randomUUID().toString();
+
+        // 만료 시간 설정
+        LocalDateTime expiredAt = LocalDateTime.now().plusMinutes(30);
+
+        // 유저 엔티티에 저장
+        user.issuePasswordResetToken(token, expiredAt);
+
+        // 재설정 링크 생성
+        String resetLink =
+                "http://localhost:3000/password/reset?token=" + token;
+
+        // 메일 전송
+        mailService.sendPasswordResetMail(user.getUserEmail(), resetLink);
+    }
+
+
+    @Transactional
+    public void resetPassword(String token, String newPassword) {
+
+        User user = userRepository.findByPasswordResetToken(token)
+                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 토큰"));
+
+        if (user.getPasswordResetExpiredAt().isBefore(LocalDateTime.now())) {
+            throw new IllegalArgumentException("토큰 만료");
+        }
+
+        user.changePassword(passwordEncoder.encode(newPassword));
+
+        user.clearPasswordResetToken(); // 재사용 방지를 위한 토큰 제거
+    }
+
 
     /**
      *
