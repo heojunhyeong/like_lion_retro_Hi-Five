@@ -7,26 +7,14 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: @gmail
-    password: 앱비밀번호
+    username: gjwnsgud38@gmail.com
+    password: kaym gcej wlie buzp
     properties:
       mail:
         smtp:
           auth: true
           starttls:
             enable: true
-
-  #DB 등록 (test용)
-  datasource:
-    url: jdbc:mysql://localhost:3306/lion_hi5
-    username: lion_hi5_user
-    password: hi5
-    driver-class-name: com.mysql.cj.jdbc.Driver
-
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
 
 #output.ansi.enabled ???? ???? ???? ??
   output:
