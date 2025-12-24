@@ -19,7 +19,6 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final JwtProvider jwtProvider;
 
-
     @Override
     public String login(LoginRequestDto request) {
         User user = userRepository.findByUserId(request.getUserID())
