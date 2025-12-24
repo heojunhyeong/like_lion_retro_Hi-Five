@@ -16,6 +16,18 @@ spring:
           starttls:
             enable: true
 
+  #DB 등록 (test용)
+  datasource:
+    url: jdbc:mysql://localhost:3306/lion_hi5
+    username: lion_hi5_user
+    password: hi5
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
 #output.ansi.enabled ???? ???? ???? ??
   output:
     ansi:

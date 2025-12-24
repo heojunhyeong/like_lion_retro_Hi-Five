@@ -6,6 +6,7 @@ import com.team.playmatebackend.global.security.JwtFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -13,6 +14,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebSecurity
@@ -47,6 +50,7 @@ public class SecurityConfig {
         // CSRF 공격은 세션 기반에서 이루어짐
         // JWT는 토큰 기반이라 의미가 크지 않아 Disable
         http
+                .cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable);
 
         // 기존 Form 로그인 Disable, 로그인 필터 직접 구현해야함
@@ -61,7 +65,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         // "/login", "/", "/signup" 요청은 모두에게 허용
-                        .requestMatchers("/login", "/", "/signup").permitAll()
+                        .requestMatchers("/login", "/", "/signup", "api/users/register").permitAll()
                         // admin으로 시작하는 모든 요청은 Admin 역할을 가진 사용자만 접근 가능
                         .requestMatchers("/admin/**").hasRole(UserRoleType.ADMIN.name())
                         // 나머지 모든 요청은 로그인 필수
@@ -76,11 +80,30 @@ public class SecurityConfig {
         // 요청 -> JwtFilter (토큰 확인) -> 이미 인증됨이면 통과 -> 이후 필터 느낌
         http
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-
-
-
-
-
+        
         return http.build();
+    }
+
+    /**
+    * React 백엔드 통신
+    * 서로 다른 서버에서 실행중이라면 필요
+     *
+    * @author 정찬혁
+    * @DateOfCreated 2025-12-23
+    * @DateOfEdit 2025-12-23
+    * */
+    //React와 백엔드 통신
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/api/**")
+                        .allowedOrigins("http://localhost:5173")  // React 주소
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                        .allowedHeaders("*")
+                        .allowCredentials(true);
+            }
+        };
     }
 }

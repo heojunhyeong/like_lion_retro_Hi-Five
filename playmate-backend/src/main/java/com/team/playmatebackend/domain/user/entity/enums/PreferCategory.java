@@ -5,5 +5,9 @@ public enum PreferCategory {
     MUSIC,
     TRAVEL,
     ART,
-    TECHNOLOGY
+    TECHNOLOGY,
+    League_Of_Legends,
+    피파온라인4,
+    오버워치,
+    메이플스토리,
 }

@@ -15,14 +15,15 @@ function UserForm() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        //React에서 백엔드로 보내는 JSON 요청 형태 backend Dto UserCreateRequest 와 동일해야함
         const userData = {
-            userId,
-            userPassword,
-            userEmail,
-            nickName,
-            preferCategory,
-            gender,
-            age,
+            userId: userId,
+            password: userPassword,
+            email: userEmail,
+            nickname: nickName,
+            preferCategory: preferCategory,
+            gender: gender,
+            age: age,
             //roleType,
         };
 
@@ -89,7 +90,7 @@ function UserForm() {
                         required
                     >
                         <option value="">Select</option>
-                        <option value="league of legends">league of legends</option>
+                        <option value="League_Of_Legends">league of legends</option>
                         <option value="피파온라인4">피파온라인4</option>
                         <option value="오버워치">오버워치</option>
                         <option value="메이플스토리">메이플스토리</option>
@@ -110,13 +111,18 @@ function UserForm() {
                 </div>
 
                 <div>
-                    <label>나이:</label><br />
-                    <input
-                        type="text"
+                    <select
                         value={age}
                         onChange={(e) => setAge(e.target.value)}
                         required
-                    />
+                    >
+                        <option value="">선택하세요</option>
+                        <option value="TEENS">10대</option>
+                        <option value="TWENTIES">20대</option>
+                        <option value="THIRTIES">30대</option>
+                        <option value="FORTIES">40대</option>
+                        <option value="FIFTIES_PLUS">50대 이상</option>
+                    </select>
                 </div>
 
                 {/*<div>*/}

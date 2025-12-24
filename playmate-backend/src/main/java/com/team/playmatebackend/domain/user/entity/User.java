@@ -40,7 +40,7 @@ public class User {
     @Column(nullable = false, unique = true)
     private String userId;
 
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false, length = 250)
     private String userPassword;
 
     @Column(unique = true)
@@ -55,6 +55,7 @@ public class User {
     private String nickName;
 
     @Enumerated(EnumType.STRING)
+    @Column(length = 30)
     private PreferCategory preferCategory;
 
     @Enumerated(EnumType.STRING)
