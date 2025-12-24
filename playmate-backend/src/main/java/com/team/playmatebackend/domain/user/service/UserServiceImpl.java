@@ -20,8 +20,10 @@ public abstract class UserServiceImpl implements UserService {
     private final JwtProvider jwtProvider;
 
 
+
     @Override
     public String login(LoginRequestDto request) {
+
         User user = userRepository.findByUsername(request.getUserID())
                 .orElseThrow(() -> new IllegalArgumentException("아이디가 없습니다"));
 
