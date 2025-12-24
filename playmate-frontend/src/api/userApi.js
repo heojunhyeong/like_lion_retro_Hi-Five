@@ -1,5 +1,5 @@
 // API 기본 URL 설정 (백엔드 서버 주소)
-const API_BASE_URL = "http://localhost:8080/api/users";
+const API_BASE_URL = "http://localhost:8080";
 
 /**
  * 회원가입 API 호출 (필요시 사용)
@@ -8,7 +8,7 @@ const API_BASE_URL = "http://localhost:8080/api/users";
  */
 export const register = async (userData) => {
     try {
-        const response = await fetch(`${API_BASE_URL}/register`, {
+        const response = await fetch(`${API_BASE_URL}/api/users/register`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
