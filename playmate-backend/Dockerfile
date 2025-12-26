@@ -1,5 +1,5 @@
 # .jar 파일 생성
-FROM eclipse-temurin:21-jdk AS builder
+FROM eclipse-temurin:21-jdk
 WORKDIR /app
 
 COPY gradlew .
