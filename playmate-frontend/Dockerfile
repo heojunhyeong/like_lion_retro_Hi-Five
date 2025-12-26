@@ -6,10 +6,10 @@ RUN npm install
 
 COPY . .
 EXPOSE 3000
-RUN npm run build #실제 배포할 때 사용
+RUN npm run build
 
 #Nginx
-FROM nginx:alpine
+FROM nginx:1.28.1-alpine
 COPY --from=builder /app/build /usr/share/nginx/html/
 
 EXPOSE 80
