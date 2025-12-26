@@ -86,7 +86,7 @@ public class UserServiceImpl implements UserService {
     public void requestPasswordReset(String email) {
 
         // 사용자 조회
-        User user = userRepository.findByEmail(email)
+        User user = userRepository.findByUserEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("해당 이메일의 유저가 없습니다."));
 
         // 토큰 생성
