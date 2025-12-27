@@ -6,6 +6,8 @@ import com.team.playmatebackend.domain.user.repository.UserRepository;
 import com.team.playmatebackend.global.Jwt.JwtProvider;
 import com.team.playmatebackend.domain.user.dto.UserCreateRequest;
 import com.team.playmatebackend.domain.user.entity.enums.UserRoleType;
+import com.team.playmatebackend.global.exception.CustomException;
+import com.team.playmatebackend.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -75,19 +77,23 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * 작성중
+     * 패스워드 재설정 메일을 보내는 메서드
+     * 재설정 링크에 필요한 토큰, 토큰의 만료시간, 메일 발송을 담당
+     *
      *
      * @author 허준형
      * @DateOfCreated 2025-12-24
-     * @DateOfEdit 2025-12-24
+     * @DateOfEdit 2025-12-26
      */
 
     @Transactional
+    @Override
     public void requestPasswordReset(String email) {
 
         // 사용자 조회
         User user = userRepository.findByUserEmail(email)
-                .orElseThrow(() -> new IllegalArgumentException("해당 이메일의 유저가 없습니다."));
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+//                .orElseThrow(() -> new IllegalArgumentException("해당 이메일의 유저가 없습니다."));
 
         // 토큰 생성
         String token = UUID.randomUUID().toString();
@@ -106,8 +112,15 @@ public class UserServiceImpl implements UserService {
         mailService.sendPasswordResetMail(user.getUserEmail(), resetLink);
     }
 
-
+    /**
+     * 위의 메서드로 만들어진 링크를 타고 들어가면 작동하는 패스워드 재설정 메서드
+     * 재설정에 성공하면 재사용에 사용된 토큰을 Null처리
+     * @author 허준형
+     * @DateOfCreated 2025-12-26
+     * @DateOfEdit 2025-12-26
+     */
     @Transactional
+    @Override
     public void resetPassword(String token, String newPassword) {
 
         User user = userRepository.findByPasswordResetToken(token)
@@ -119,7 +132,8 @@ public class UserServiceImpl implements UserService {
 
         user.changePassword(passwordEncoder.encode(newPassword));
 
-        user.clearPasswordResetToken(); // 재사용 방지를 위한 토큰 제거
+        // 재사용 방지를 위한 토큰 제거
+        user.clearPasswordResetToken();
     }
 
 
