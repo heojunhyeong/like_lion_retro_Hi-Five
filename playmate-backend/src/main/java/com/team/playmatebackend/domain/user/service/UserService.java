@@ -17,4 +17,8 @@ public interface UserService {
 
     String login(LoginRequestDto request); // 로그인 기능 선언
     Long signUp(UserCreateRequest request);
+
+    void requestPasswordReset(String email);
+
+    void resetPassword(String token, String newPassword);
 }

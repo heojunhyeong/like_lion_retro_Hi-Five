@@ -65,9 +65,13 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         // "/login", "/", "/signup" 요청은 모두에게 허용
-                        .requestMatchers("/login", "/", "/signup", "api/users/register").permitAll()
+                        .requestMatchers("/login", "/", "/signup", "api/users/register",
+                                "/password/", "/password/reset-request", "/password/reset")
+                        .permitAll()
+
                         // admin으로 시작하는 모든 요청은 Admin 역할을 가진 사용자만 접근 가능
                         .requestMatchers("/admin/**").hasRole(UserRoleType.ADMIN.name())
+
                         // 나머지 모든 요청은 로그인 필수
                         .anyRequest().authenticated()
                 );
