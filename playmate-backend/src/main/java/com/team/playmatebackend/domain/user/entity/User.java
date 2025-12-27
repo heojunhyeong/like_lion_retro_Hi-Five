@@ -80,11 +80,12 @@ public class User {
         this.refreshToken = null;
     }
 
+    // 패스워드 찾기시 재설정 링크에 필요한 토큰
     public void issuePasswordResetToken(String token, LocalDateTime expiredAt) {
         this.passwordResetToken = token;
         this.passwordResetExpiredAt = expiredAt;
     }
-
+    // 패스워드 변경 성공시 토큰 삭제(재사용 방지)
     public void clearPasswordResetToken() {
         this.passwordResetToken = null;
         this.passwordResetExpiredAt = null;

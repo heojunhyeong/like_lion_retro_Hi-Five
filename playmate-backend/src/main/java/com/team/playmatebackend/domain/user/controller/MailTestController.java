@@ -6,6 +6,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * 테스트용 컨트롤러
+ * @author 허준형
+ * @DateOfCreated 2025-12-26
+ * @DateOfEdit 2025-12-26
+ */
 @RestController
 @RequiredArgsConstructor
 public class MailTestController {
