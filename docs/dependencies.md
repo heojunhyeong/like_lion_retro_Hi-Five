@@ -97,6 +97,12 @@
 - 사용 위치: test 패키지
 - 비고: Mock 인증 객체, 보안 컨텍스트 설정 등 테스트 편의 기능 제공
 ---
+### spring-boot-starter-mail
+
+- 목적 : Java 애플리케이션에서 이메일을 쉽게 보낼 수 있도록 지원하는 모듈
+- 사용 위치 : MailService, MailServiceImpl
+- 비고 : 추가시 JavaMailSender 빈을 자동으로 설정
+---
 ## 추가 시 기록 형식
 
 - 의존성 이름:

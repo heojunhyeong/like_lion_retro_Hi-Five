@@ -1,8 +1,8 @@
-//package com.team.playmatebackend.domain.user.dto;
-//
-//import lombok.Getter;
-//
-//@Getter
-//public class PasswordVerifyRequestDto {
-//    private String password;
-//}
+package com.team.playmatebackend.domain.user.dto;
+
+import lombok.Getter;
+
+@Getter
+public class PasswordVerifyRequestDto {
+    private String password;
+}

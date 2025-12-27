@@ -1,7 +1,9 @@
 package com.team.playmatebackend.domain.user.service;
 
 import com.team.playmatebackend.domain.user.dto.LoginRequestDto;
+import com.team.playmatebackend.domain.user.dto.PasswordResetToken;
 import com.team.playmatebackend.domain.user.entity.User;
+import com.team.playmatebackend.domain.user.repository.PasswordResetTokenRepository;
 import com.team.playmatebackend.domain.user.repository.UserRepository;
 import com.team.playmatebackend.global.Jwt.JwtProvider;
 import com.team.playmatebackend.domain.user.dto.UserCreateRequest;
@@ -24,6 +26,7 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final JwtProvider jwtProvider;
     private final MailService mailService;
+    private final PasswordResetTokenRepository passwordResetTokenRepository;
 
 
     @Override
@@ -77,6 +80,7 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
+     * @TODO 주석 재작성 필요
      * 패스워드 재설정 메일을 보내는 메서드
      * 재설정 링크에 필요한 토큰, 토큰의 만료시간, 메일 발송을 담당
      *
@@ -93,28 +97,29 @@ public class UserServiceImpl implements UserService {
         // 사용자 조회
         User user = userRepository.findByUserEmail(email)
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
-//                .orElseThrow(() -> new IllegalArgumentException("해당 이메일의 유저가 없습니다."));
 
         // 토큰 생성
         String token = UUID.randomUUID().toString();
 
-        // 만료 시간 설정
-        LocalDateTime expiredAt = LocalDateTime.now().plusMinutes(30);
+        PasswordResetToken resetToken = PasswordResetToken.builder()
+                .token(token)
+                .user(user)
+                .expiredAt(LocalDateTime.now().plusMinutes(30))
+                .used(false)
+                .build();
 
-        // 유저 엔티티에 저장
-        user.issuePasswordResetToken(token, expiredAt);
+        passwordResetTokenRepository.save(resetToken);
 
-        // 재설정 링크 생성
         String resetLink =
                 "http://localhost:3000/password/reset?token=" + token;
 
-        // 메일 전송
         mailService.sendPasswordResetMail(user.getUserEmail(), resetLink);
+
     }
 
     /**
-     * 위의 메서드로 만들어진 링크를 타고 들어가면 작동하는 패스워드 재설정 메서드
-     * 재설정에 성공하면 재사용에 사용된 토큰을 Null처리
+     * 유저가 새로운 비밀번호를 입력 후 제출할 때 사용되는 메서드
+     *
      * @author 허준형
      * @DateOfCreated 2025-12-26
      * @DateOfEdit 2025-12-26
@@ -123,17 +128,29 @@ public class UserServiceImpl implements UserService {
     @Override
     public void resetPassword(String token, String newPassword) {
 
-        User user = userRepository.findByPasswordResetToken(token)
-                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 토큰"));
+        // DB에 있는지 체크
+        PasswordResetToken resetToken =
+                passwordResetTokenRepository.findByToken(token)
+                        .orElseThrow(() -> new CustomException(ErrorCode.RESET_TOKEN_NOT_FOUND));
 
-        if (user.getPasswordResetExpiredAt().isBefore(LocalDateTime.now())) {
-            throw new IllegalArgumentException("토큰 만료");
+        // 이미 사용된 토큰인지 검증
+        if (resetToken.isUsed()) {
+            throw new CustomException(ErrorCode.RESET_TOKEN_ALREADY_USED);
         }
 
+        // 토큰이만료됐는지 체크
+        if (resetToken.getExpiredAt().isBefore(LocalDateTime.now())) {
+            throw new CustomException(ErrorCode.RESET_TOKEN_EXPIRED);
+        }
+
+        // 유저를 가져온 뒤
+        User user = resetToken.getUser();
+
+        // 비밀번호 변경
         user.changePassword(passwordEncoder.encode(newPassword));
 
-        // 재사용 방지를 위한 토큰 제거
-        user.clearPasswordResetToken();
+        // used가 true로 바뀌며 해당 토큰은 재사용 불가 처리
+        resetToken.use();
     }
 
 
