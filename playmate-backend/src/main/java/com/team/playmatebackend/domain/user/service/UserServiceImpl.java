@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
         if (!passwordEncoder.matches(
                 request.getUserPassword(),
                 user.getUserPassword())) {
-            throw new IllegalArgumentException("비밀번호다 틀렸습니다");
+            throw new IllegalArgumentException("비밀번호가 틀렸습니다");
         }
 
         return jwtProvider.createToken(user.getUserId());

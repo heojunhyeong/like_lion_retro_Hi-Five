@@ -76,6 +76,9 @@ public class User {
     @Column(length = 500)
     private String refreshToken;
 
+    @Column(length = 100)
+    private String introduction;
+
     public void logout() {
         this.refreshToken = null;
     }
@@ -94,4 +97,11 @@ public class User {
     public void changePassword(String encodedPassword) {
         this.userPassword = encodedPassword;
     }
+
+    public void updateProfile(String nickName, PreferCategory preferCategory, String introduction) {
+        this.nickName = nickName;
+        this.preferCategory = preferCategory;
+        this.introduction = introduction;
+    }
+
 }

@@ -33,5 +33,6 @@ public class UserController {
     public ResponseEntity<ApiResponse<Long>> register(@RequestBody UserCreateRequest request) {
         Long userId = userService.signUp(request);
         return ResponseEntity.ok(ApiResponse.success(userId));
+
     }
 }
