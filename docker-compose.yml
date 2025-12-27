@@ -1,0 +1,54 @@
+services:
+  mysql:
+    image: mysql:8.0
+    expose:
+      - 3306
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - db-net
+
+  playmate-backend:
+    build: ./playmate-backend
+    image: playmate-backend-server:v1
+    expose:
+      - 8080
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/${MYSQL_DATABASE}
+    networks:
+      - backend-net
+      - db-net
+
+  playmate-frontend:
+    build: ./playmate-frontend
+    image: playmate-frontend-server:v1
+    depends_on:
+      - playmate-backend
+    networks:
+      - frontend-net
+
+  nginx:
+    build: ./nginx
+    image: playmate-nginx:v1
+    ports:
+      - 80:80
+    depends_on:
+      - playmate-backend
+      - playmate-frontend
+    networks:
+      - backend-net
+      - frontend-net
+
+networks:
+  backend-net:
+  frontend-net:
+  db-net:

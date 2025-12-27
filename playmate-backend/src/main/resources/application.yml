@@ -3,6 +3,19 @@ spring:
     name: playmate-backend
     
 
+  #DB 등록 (test용)
+  datasource:
+    url: jdbc:mysql://mysql:3306/Playmate_MySQL
+    username: root
+    password: root1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+
 # spring-boot-stater-mail을 위한 설정
   mail:
     host: smtp.gmail.com

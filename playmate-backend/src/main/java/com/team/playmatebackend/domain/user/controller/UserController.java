@@ -28,7 +28,7 @@ public class UserController {
         return ResponseEntity.ok(token);    //tokean -> token
     }
 
-    // UserController.java에 추가할 코드
+    // 회원가입 api
     @PostMapping("/register")
     public ResponseEntity<ApiResponse<Long>> register(@RequestBody UserCreateRequest request) {
         Long userId = userService.signUp(request);

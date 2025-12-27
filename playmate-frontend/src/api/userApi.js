@@ -1,6 +1,6 @@
 // API 기본 URL 설정 (백엔드 서버 주소)
+//const API_BASE_URL = "http://localhost:8080";
 const API_BASE_URL = "http://localhost:8080";
-
 /**
  * 회원가입 API 호출 (필요시 사용)
  * @param {Object} userData - 회원가입 데이터
