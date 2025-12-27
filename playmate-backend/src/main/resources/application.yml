@@ -1,7 +1,9 @@
 spring:
   application:
     name: playmate-backend
-    
+
+  profiles:
+    active: docker
 
   #DB 등록 (test용)
   datasource:
@@ -15,8 +17,7 @@ spring:
       ddl-auto: update
     show-sql: true
 
-
-# spring-boot-stater-mail을 위한 설정
+  # spring-boot-stater-mail을 위한 설정
   mail:
     host: smtp.gmail.com
     port: 587
@@ -29,7 +30,7 @@ spring:
           starttls:
             enable: true
 
-#output.ansi.enabled ???? ???? ???? ??
+  #output.ansi.enabled ???? ???? ???? ??
   output:
     ansi:
       enabled: always
