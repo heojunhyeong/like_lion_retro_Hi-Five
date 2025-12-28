@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Lion-Hi-Five1.iml" filepath="$PROJECT_DIR$/.idea/Lion-Hi-Five1.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/playmate-backend.main.iml" filepath="$PROJECT_DIR$/.idea/modules/playmate-backend.main.iml" />
     </modules>
   </component>
 </project>
