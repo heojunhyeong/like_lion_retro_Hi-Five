@@ -1,6 +1,6 @@
 package com.team.playmatebackend.global.security;
 
-import com.team.playmatebackend.global.Jwt.JwtProvider;
+import com.team.playmatebackend.global.jwt.JwtProvider;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

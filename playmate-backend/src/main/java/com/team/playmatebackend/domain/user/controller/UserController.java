@@ -53,4 +53,11 @@ public class UserController {
         return ResponseEntity.ok(ApiResponse.success(userId));
 
     }
+
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout(Authentication authentication) {
+        String userId = authentication.getName(); // JWT subject
+        userService.logout(userId);
+        return ResponseEntity.ok().build();
+    }
 }
