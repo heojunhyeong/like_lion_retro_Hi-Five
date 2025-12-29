@@ -31,6 +31,15 @@ public class MatchServiceImpl implements MatchService {
     private final UserRepository userRepository;
     private final MatchParticipantRepository matchParticipantRepository;
 
+
+    /**
+     * 매칭방 생성 메서드
+     * 성별, 나이, 실력 등의 조건은 필수가 아닌 선택 옵션
+     *
+     * @author 허준형
+     * @DateOfCreated 2025-12-29
+     * @DateOfEdit 2025-12-29
+     */
     @Override
     @Transactional
     public Long createMatch(String userId, MatchCreateDto dto) {
@@ -56,6 +65,16 @@ public class MatchServiceImpl implements MatchService {
         return matchRepository.save(match).getId();
     }
 
+    /**
+     * 매칭방 입장 메서드
+     * 방장이 매칭방을 생성할 때 위에 명시한 3가지 조건 중 하나라도 명시했다면
+     * validateparticipantConditions에서 참가자의 조건과 명시한 조건이 맞는지 검증
+     * 방장이 즉시 입장이 아닌 수락 대기 상태로 방을 만들었다면 대기
+     *
+     * @author 허준형
+     * @DateOfCreated 2025-12-29
+     * @DateOfEdit 2025-12-29
+     */
     @Transactional
     @Override
     public void applyToMatch(String userId, Long matchId) {
@@ -87,6 +106,14 @@ public class MatchServiceImpl implements MatchService {
         matchParticipantRepository.save(participant);
     }
 
+
+    /**
+     * 방장의 승인 메서드
+     *
+     * @author 허준형
+     * @DateOfCreated 2025-12-29
+     * @DateOfEdit 2025-12-29
+     */
     @Transactional
     @Override
     public void approveParticipant(String hostId, Long participantId) {
@@ -101,6 +128,38 @@ public class MatchServiceImpl implements MatchService {
         // 인원 추가 및 상태 변경
         participant.getMatch().addParticipant();
         participant.approve();
+    }
+
+
+    /**
+     * 방 나가기 및 자동 삭제 메서드
+     * 일반 참여자가 나갈 때는 인원수만 줄어들고, 마지막 인원이었다면 방을 삭제함
+     * 방장이 나갈때는 바로 방을 삭제함
+     * @author 허준형
+     * @DateOfCreated 2025-12-29
+     * @DateOfEdit 2025-12-29
+     */
+    @Transactional
+    @Override
+    public void leaveMatch(String userId, Long matchId) {
+
+        // 해당 유저가 실제로 매칭방에 참여중인지 검증
+        MatchParticipant participant = matchParticipantRepository.findByMatchIdAndUserUserId(matchId, userId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 매칭에 참여하고 있지 않습니다"));
+
+        Match match = participant.getMatch();
+
+        // 참여 내역 삭제
+        matchParticipantRepository.delete(participant);
+
+        // 인원 수 감소
+        match.removeParticipant();
+
+        // 방이 비었거나, 나가는 사람이 방장인 경우 방을 삭제
+        if (match.getCurrentParticipants() <= 0 || match.getHost().getUserId().equals(userId)) {
+            // 방 삭제
+            matchRepository.delete(match);
+        }
     }
 
     // 매칭방과 유저의 조건이 맞는지 검증하는 메서드

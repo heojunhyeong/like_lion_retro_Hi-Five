@@ -11,5 +11,6 @@ public interface MatchService {
     Long createMatch(String userId, MatchCreateDto dto);
     void applyToMatch(String userId, Long matchId);
     void approveParticipant(String hostId, Long participantId);
+    void leaveMatch(String userId, Long matchId);
     List<MatchResponseDto> searchMatches(MatchSearchRequestDto searchRequest);
 }

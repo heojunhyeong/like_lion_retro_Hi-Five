@@ -29,7 +29,7 @@ public class MatchController {
     private final MatchService matchService;
 
     /**
-     * 매칭방 생성 메서드
+     * 매칭방 생성
      * Authentication 객체를 받아서 처리
      *
      * @author 허준형
@@ -45,6 +45,22 @@ public class MatchController {
         Long matchId = matchService.createMatch(userId, dto);
         return ResponseEntity.ok(ApiResponse.success(matchId));
 
+    }
+
+    /**
+     * 매칭방 퇴장
+     *
+     * @author 허준형
+     * @DateOfCreated 2025-12-29
+     * @DateOfEdit 2025-12-29
+     */
+    @PostMapping("/{matchId}/leave")
+    public ResponseEntity<ApiResponse<Void>> leaveMatch(
+            Authentication authentication,
+            @PathVariable Long matchId
+    ) {
+        matchService.leaveMatch(authentication.getName(), matchId);
+        return ResponseEntity.ok(ApiResponse.success(null));
     }
 
     //매칭방 검색

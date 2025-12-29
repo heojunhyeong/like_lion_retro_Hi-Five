@@ -6,6 +6,7 @@ import com.team.playmatebackend.global.security.JwtFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -65,9 +66,11 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         // "/login", "/", "/signup" 요청은 모두에게 허용
-                        .requestMatchers("/api/users/login", "/", "/signup", "/api/users/register",
+                        .requestMatchers("/api/users/login", "/signup", "/api/users/register",
                                 "/password/", "/password/reset/request", "/password/reset")
                         .permitAll()
+
+                        .requestMatchers(HttpMethod.GET, "/api/matches/**").permitAll()
 
                         // admin으로 시작하는 모든 요청은 Admin 역할을 가진 사용자만 접근 가능
                         .requestMatchers("/admin/**").hasRole(UserRoleType.ADMIN.name())

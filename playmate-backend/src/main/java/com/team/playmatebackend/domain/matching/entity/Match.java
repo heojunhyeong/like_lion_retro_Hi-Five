@@ -92,4 +92,17 @@ public class Match {
         }
         this.currentParticipants++;
     }
+
+    /**
+     * 참여자가 나갈 때 인원이 감소하는 메서드
+     * FIXME: 인원 증가 메서드와 똑같이 동시성 이슈가 발생할 수 있음
+     * @author 허준형
+     * @DateOfCreated 2025-12-28
+     * @DateOfEdit 2025-12-28
+     */
+    public void removeParticipant() {
+        if (this.currentParticipants > 0) {
+            this.currentParticipants--;
+        }
+    }
 }
