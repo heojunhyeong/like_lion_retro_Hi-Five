@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Register.css";
 import { register } from "../api/userApi";
 
-function UserForm() {
+function Register() {
+    const navigate = useNavigate();
     const [userId, setUserId] = useState("");
     const [userPassword, setUserPassword] = useState("");
     const [userEmail, setUserEmail] = useState("");
@@ -15,7 +17,7 @@ function UserForm() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        //React에서 백엔드로 보내는 JSON 요청 형태 backend Dto UserCreateRequest 와 동일해야함
+        //React에서 백엔드로 보내는 JSON 요청 형태 Dto UserCreateRequest 와 동일해야함
         const userData = {
             userId: userId,
             password: userPassword,
@@ -24,14 +26,14 @@ function UserForm() {
             preferCategory: preferCategory,
             gender: gender,
             age: age,
-            //roleType,
         };
 
         try {
             const createdUserId = await register(userData);
             console.log("회원가입 성공! 사용자 ID:", createdUserId);
-            alert("회원가입이 완료되었습니다!");
-            // 회원가입 성공 후 폼 초기화 또는 페이지 이동
+            alert("회원가입이 성공했습니다!");
+            // 알림 확인 버튼 클릭 후 로그인 페이지로 이동
+            navigate("/login");
         } catch (error) {
             console.error("회원가입 실패:", error);
             alert(error.message || "회원가입에 실패했습니다.");
@@ -39,7 +41,7 @@ function UserForm() {
     };
 
     return (
-        <div>
+        <div className="register-container">
             <h2>회원가입</h2>
             <form onSubmit={handleSubmit}>
                 <div>
@@ -111,6 +113,7 @@ function UserForm() {
                 </div>
 
                 <div>
+                    <label>나이</label><br />
                     <select
                         value={age}
                         onChange={(e) => setAge(e.target.value)}
@@ -145,4 +148,4 @@ function UserForm() {
     );
 }
 
-export default UserForm;
+export default Register;
