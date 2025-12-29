@@ -1,6 +1,6 @@
-package com.team.playmatebackend.domain.user.repository;
+package com.team.playmatebackend.domain.matching.repository;
 
-import com.team.playmatebackend.domain.user.entity.Match;
+import com.team.playmatebackend.domain.matching.entity.Match;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 

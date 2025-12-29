@@ -1,4 +1,4 @@
-package com.team.playmatebackend.domain.user.entity.enums;
+package com.team.playmatebackend.domain.matching.entity.enums;
 
 public enum MatchSortType {
     LATEST, // 최신순

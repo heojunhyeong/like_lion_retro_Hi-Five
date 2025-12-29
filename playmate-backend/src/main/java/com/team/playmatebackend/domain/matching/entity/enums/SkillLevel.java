@@ -1,4 +1,4 @@
-package com.team.playmatebackend.domain.user.entity.enums;
+package com.team.playmatebackend.domain.matching.entity.enums;
 
 /**
  * 매칭방 생성 조건 중 방장의 게임 실력에 대한 열거형 클래스

@@ -1,4 +1,4 @@
-package com.team.playmatebackend.domain.user.dto;
+package com.team.playmatebackend.domain.matching.dto;
 
 import com.team.playmatebackend.domain.user.entity.enums.PreferCategory;
 import lombok.Builder;
