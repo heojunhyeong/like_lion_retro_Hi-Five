@@ -1,7 +1,7 @@
 package com.team.playmatebackend.global.config;
 
 import com.team.playmatebackend.domain.user.entity.enums.UserRoleType;
-import com.team.playmatebackend.global.Jwt.JwtProvider;
+import com.team.playmatebackend.global.jwt.JwtProvider;
 import com.team.playmatebackend.global.security.JwtFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -65,7 +65,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         // "/login", "/", "/signup" 요청은 모두에게 허용
-                        .requestMatchers("/login", "/", "/signup", "api/users/register",
+                        .requestMatchers("/login", "/", "/signup", "/api/users/register",
                                 "/password/", "/password/reset/request", "/password/reset")
                         .permitAll()
 

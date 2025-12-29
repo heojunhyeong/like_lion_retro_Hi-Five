@@ -1,4 +1,4 @@
-package com.team.playmatebackend.global.Jwt;
+package com.team.playmatebackend.global.jwt;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;

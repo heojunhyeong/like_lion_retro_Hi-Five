@@ -6,7 +6,7 @@ import com.team.playmatebackend.domain.user.dto.PasswordResetToken;
 import com.team.playmatebackend.domain.user.entity.User;
 import com.team.playmatebackend.domain.user.repository.PasswordResetTokenRepository;
 import com.team.playmatebackend.domain.user.repository.UserRepository;
-import com.team.playmatebackend.global.Jwt.JwtProvider;
+import com.team.playmatebackend.global.jwt.JwtProvider;
 import com.team.playmatebackend.domain.user.dto.UserCreateRequest;
 import com.team.playmatebackend.domain.user.entity.enums.UserRoleType;
 import com.team.playmatebackend.global.exception.CustomException;
@@ -44,14 +44,14 @@ public class UserServiceImpl implements UserService {
 
         // Access Token 생성
         String accessToken = jwtProvider.createAccessToken(user.getUserId());
-        
+
         // Refresh Token 생성
         String refreshToken = jwtProvider.createRefreshToken(user.getUserId());
-        
+
         // Refresh Token을 DB에 저장
         user.updateRefreshToken(refreshToken);
         userRepository.save(user);
-        
+
         // 두 토큰을 함께 반환
         return LoginResponseDto.builder()
                 .accessToken(accessToken)
@@ -66,14 +66,14 @@ public class UserServiceImpl implements UserService {
         if (!jwtProvider.validateToken(refreshToken)) {
             throw new IllegalArgumentException("유효하지 않은 Refresh Token입니다");
         }
-        
+
         // DB에서 해당 Refresh Token을 가진 사용자 조회
         User user = userRepository.findByRefreshToken(refreshToken)
                 .orElseThrow(() -> new IllegalArgumentException("Refresh Token을 찾을 수 없습니다"));
-        
+
         // 새로운 Access Token 발급
         String newAccessToken = jwtProvider.createAccessToken(user.getUserId());
-        
+
         return newAccessToken;
     }
 
@@ -117,8 +117,6 @@ public class UserServiceImpl implements UserService {
      * @TODO 주석 재작성 필요
      * 패스워드 재설정 메일을 보내는 메서드
      * 재설정 링크에 필요한 토큰, 토큰의 만료시간, 메일 발송을 담당
-     *
-     *
      * @author 허준형
      * @DateOfCreated 2025-12-24
      * @DateOfEdit 2025-12-26
@@ -189,21 +187,22 @@ public class UserServiceImpl implements UserService {
 
 
     /**
-     *
      * 사용자 로그아웃 로직 구현
-     * userId 기반 사용자 조회
      * 로그아웃 시 refresh token 제거 처리
      *
      * @author 김지번
-     * @DateOfCreated 2025-12-23
-     * @DateOfEdit 2025-12-23
+     * @DateOfCreated 2025-12-29
+     * @DateOfEdit 2025-12-29
      */
     @Override
     @Transactional
     public void logout(String userId) {
-        User user = userRepository.findByUserId(userId)
-                .orElseThrow(() -> new IllegalArgumentException("유저를 찾을 수 없습니다."));
 
-        user.logout(); // refreshToken = null
+        User user = userRepository.findByUserId(userId)
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+
+        // Refresh Token 제거
+        user.logout();
     }
+
 }

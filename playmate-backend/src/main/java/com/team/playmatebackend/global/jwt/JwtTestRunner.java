@@ -1,4 +1,4 @@
-package com.team.playmatebackend.global.Jwt;
+package com.team.playmatebackend.global.jwt;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
