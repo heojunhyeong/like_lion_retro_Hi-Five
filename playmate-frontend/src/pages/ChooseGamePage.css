@@ -1,4 +1,4 @@
-.main-page {
+.choose-game-page {
     width: 100%;
     min-height: 100vh;
     background: #e5e7eb;
@@ -21,7 +21,6 @@
 
 .header-content {
     width: 100%;
-    max-width: 1200px;
     margin: 0 auto;
     padding: 0 40px;
     display: flex;
@@ -114,82 +113,81 @@
 
 /* 메인 컨텐츠 */
 .main-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    max-width: 1400px;
+    width: 100%;
+    margin: 0 auto;
     padding: 60px 40px;
-    gap: 120px;
     box-sizing: border-box;
+    flex: 1;
 }
 
-/* 사이트 소개 섹션 */
-.intro-section {
+.games-section {
     width: 100%;
-    max-width: 1200px;
-    display: flex;
-    justify-content: center;
 }
 
-.intro-box {
-    width: 100%;
-    max-width: 930px;
-    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-    border-radius: 20px;
-    padding: 80px 60px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-    text-align: center;
-}
-
-.intro-title {
+.section-title {
     font-size: 32px;
     font-weight: 700;
     color: #2c3e50;
-    margin: 0;
+    margin-bottom: 32px;
+    text-align: center;
     letter-spacing: -0.5px;
 }
 
-/* 방 생성/참여 섹션 */
-.room-section {
-    width: 100%;
-    max-width: 930px;
-    display: flex;
-    justify-content: center;
-    gap: 40px;
+.games-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 24px;
+    margin-top: 32px;
 }
 
-.room-button {
-    flex: 1;
-    max-width: 400px;
-    padding: 50px 40px;
-    font-size: 24px;
-    font-weight: 600;
-    color: #2c3e50;
+.game-card {
     background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-    border: 2px solid #e1e8ed;
     border-radius: 20px;
-    cursor: pointer;
-    transition: all 0.3s ease;
+    overflow: hidden;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 2px solid transparent;
 }
 
-.room-button:hover {
+.game-card:hover {
     transform: translateY(-4px);
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
     border-color: #4a90e2;
-    background: linear-gradient(135deg, #f9fafb 0%, #ffffff 100%);
 }
 
-.room-button:active {
-    transform: translateY(-2px);
+.game-card-content {
+    padding: 0;
+    text-align: center;
+    min-height: 280px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
 }
 
-.create-room-button {
-    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+.game-image-container {
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
 }
 
-.join-room-button {
+.game-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.game-name {
+    font-size: 20px;
+    font-weight: 600;
+    color: #2c3e50;
+    margin: 0;
+    padding: 20px 24px;
     background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
 }
 
@@ -211,25 +209,16 @@
 
     .main-content {
         padding: 40px 20px;
-        gap: 80px;
     }
 
-    .intro-box {
-        padding: 60px 40px;
+    .games-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 16px;
     }
 
-    .intro-title {
+    .section-title {
         font-size: 24px;
-    }
-
-    .room-section {
-        flex-direction: column;
-        gap: 24px;
-    }
-
-    .room-button {
-        max-width: 100%;
-        padding: 40px 30px;
-        font-size: 20px;
+        margin-bottom: 24px;
     }
 }
+

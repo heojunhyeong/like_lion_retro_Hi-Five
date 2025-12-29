@@ -19,12 +19,12 @@ public class MatchDetailResponseDto {
     private Long id;
     private String title;
 
-    // 1. 방장의 정보 (공개)
+    // 1. 방장의 정보 (DB에서 가져옴)
     private String hostNickname;
     private Gender hostGender;
     private AgeGroup hostAge;
 
-    // 2. 방장이 설정한 참가 조건 (공개)
+    // 2. 방장이 설정한 참가 조건 (이 방에 들어올 수 있는 사람의 조건)
     private Gender genderRestriction;
     private AgeGroup ageRestriction;
     private SkillLevel skillRestriction;
@@ -42,7 +42,7 @@ public class MatchDetailResponseDto {
         this.hostGender = match.getHost().getGender();
         this.hostAge = match.getHost().getAge();
 
-        // 설정된 조건을 가져옴
+        // 방장이 설정한 참가 조건
         this.genderRestriction = match.getGenderRestriction();
         this.ageRestriction = match.getAgeRestriction();
         this.skillRestriction = match.getSkillRestriction();

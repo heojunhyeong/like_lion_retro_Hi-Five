@@ -41,7 +41,8 @@ function Register() {
     };
 
     return (
-        <div className="register-container">
+        <div className="register-page-wrapper">
+            <div className="register-container">
             <h2>회원가입</h2>
             <form onSubmit={handleSubmit}>
                 <div>
@@ -144,6 +145,7 @@ function Register() {
 
                 <button type="submit">회원가입</button>
             </form>
+            </div>
         </div>
     );
 }

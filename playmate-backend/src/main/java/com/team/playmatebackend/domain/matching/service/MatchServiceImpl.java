@@ -34,11 +34,11 @@ public class MatchServiceImpl implements MatchService {
                 .currentParticipants(1)
                 .entryMethod(dto.getEntryMethod())
 
-
-                // 방장이 조건을 설정하면 Match 엔티티에 저장된다
+                // 방장이 설정한 참가 조건 (이 방에 들어올 수 있는 사람의 조건)
                 .genderRestriction(dto.getGenderRestriction())
                 .ageRestriction(dto.getAgeRestriction())
                 .skillRestriction(dto.getSkillRestriction())
+                .hashTag(dto.getHashTag())
                 .build();
 
         return matchRepository.save(match).getId();

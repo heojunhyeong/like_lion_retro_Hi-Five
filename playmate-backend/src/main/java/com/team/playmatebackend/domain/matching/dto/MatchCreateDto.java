@@ -25,5 +25,6 @@ public class MatchCreateDto {
     private Gender genderRestriction;
     private AgeGroup ageRestriction;
     private SkillLevel skillRestriction;
+    private String hashTag;
 
 }

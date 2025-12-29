@@ -1,7 +1,14 @@
+.login-page-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 40px 20px;
+}
+
 .login-container {
     max-width: 800px;
     width: 90%;
-    margin: 0 auto;
     padding: 60px 50px;
     background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
     border-radius: 20px;
@@ -65,28 +72,29 @@
     font-size: 17px;
     font-weight: 600;
     cursor: pointer;
-    background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
-    color: white;
-    border: none;
+    background: #ffffff;
+    color: #4a90e2;
+    border: 2px solid #e1e8ed;
     border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
     transition: all 0.3s ease;
 }
 
 .login-container button.register-button {
-    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
-    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+    background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+    color: #ffffff;
+    border: none;
+    box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
 }
 
 .login-container button:not(.register-button):hover {
-    background: linear-gradient(135deg, #357abd 0%, #2a5f8f 100%);
-    box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
+    background: #f9fafb;
+    border-color: #4a90e2;
     transform: translateY(-2px);
 }
 
 .login-container button.register-button:hover {
-    background: linear-gradient(135deg, #20c997 0%, #1ea080 100%);
-    box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+    background: linear-gradient(135deg, #357abd 0%, #2a5f8f 100%);
+    box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
     transform: translateY(-2px);
 }
 

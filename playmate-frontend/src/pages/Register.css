@@ -1,7 +1,14 @@
+.register-page-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 40px 20px;
+}
+
 .register-container {
     max-width: 800px;
     width: 90%;
-    margin: 0 auto;
     padding: 60px 50px;
     background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
     border-radius: 20px;
