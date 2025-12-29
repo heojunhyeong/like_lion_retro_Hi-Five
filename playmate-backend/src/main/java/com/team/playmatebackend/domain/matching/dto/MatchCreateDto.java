@@ -27,4 +27,7 @@ public class MatchCreateDto {
     private SkillLevel skillRestriction;
     private String hashTag;
 
+    private String contactInfo;
+
+
 }
