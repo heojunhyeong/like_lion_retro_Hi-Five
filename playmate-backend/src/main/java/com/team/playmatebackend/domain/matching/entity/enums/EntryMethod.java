@@ -1,4 +1,4 @@
-package com.team.playmatebackend.domain.user.entity.enums;
+package com.team.playmatebackend.domain.matching.entity.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

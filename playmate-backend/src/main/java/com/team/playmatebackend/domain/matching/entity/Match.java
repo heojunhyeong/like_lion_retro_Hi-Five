@@ -1,5 +1,8 @@
-package com.team.playmatebackend.domain.user.entity;
+package com.team.playmatebackend.domain.matching.entity;
 
+import com.team.playmatebackend.domain.matching.entity.enums.EntryMethod;
+import com.team.playmatebackend.domain.matching.entity.enums.SkillLevel;
+import com.team.playmatebackend.domain.user.entity.User;
 import com.team.playmatebackend.domain.user.entity.enums.*;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -68,6 +71,9 @@ public class Match {
 
     @CreatedDate
     private LocalDateTime createdDate;
+
+    // 매칭방 태그
+    private String hashTag;
 
     /**
      * 인원이 추가될 때 현재 인원수를 1 증가시키는 비즈니스 로직
