@@ -72,6 +72,9 @@ public class Match {
     @CreatedDate
     private LocalDateTime createdDate;
 
+    // 매칭방 생성 시 디스코드 혹은 연락할 수 있는 곳을 적어두는 용도
+    private String contactInfo;
+
     // 매칭방 태그
     private String hashTag;
 

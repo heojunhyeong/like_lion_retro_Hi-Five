@@ -26,4 +26,7 @@ public class MatchCreateDto {
     private AgeGroup ageRestriction;
     private SkillLevel skillRestriction;
 
+    private String contactInfo;
+
+
 }

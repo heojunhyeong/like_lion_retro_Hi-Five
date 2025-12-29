@@ -1,5 +1,6 @@
 package com.team.playmatebackend.domain.user.entity;
 
+import com.team.playmatebackend.domain.matching.entity.enums.SkillLevel;
 import com.team.playmatebackend.domain.user.entity.enums.AgeGroup;
 import com.team.playmatebackend.domain.user.entity.enums.Gender;
 import com.team.playmatebackend.domain.user.entity.enums.PreferCategory;
@@ -34,6 +35,8 @@ public class User {
 
     @Column(unique = true)
     private String passwordResetToken;
+
+    private SkillLevel skillRestriction;
 
     private LocalDateTime passwordResetExpiredAt;
 
