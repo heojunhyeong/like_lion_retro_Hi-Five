@@ -7,7 +7,6 @@ public enum PreferCategory {
     ART,
     TECHNOLOGY,
     League_Of_Legends,
-    피파온라인4,
-    오버워치,
-    메이플스토리,
+    TFT,
+    OVER_WATCH,
 }
