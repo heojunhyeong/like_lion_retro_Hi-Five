@@ -1,6 +1,10 @@
 // API 기본 URL 설정 (백엔드 서버 주소)
-//const API_BASE_URL = "http://localhost:8080";
-const API_BASE_URL = "http://localhost:8080";
+// 환경 변수 VITE_API_URL이 설정되어 있으면 사용, 없으면 기본값 사용
+// 도커 환경: 빈 문자열("") 또는 환경 변수로 설정 → nginx 프록시 사용 (/api)
+// 로컬 개발: http://localhost:8080 사용
+const API_BASE_URL = import.meta.env.VITE_API_URL !== undefined 
+    ? import.meta.env.VITE_API_URL 
+    : "http://localhost:8080";
 /**
  * 회원가입 API 호출 (필요시 사용)
  * @param {Object} userData - 회원가입 데이터

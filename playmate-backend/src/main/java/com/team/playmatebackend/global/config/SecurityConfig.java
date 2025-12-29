@@ -65,7 +65,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         // "/login", "/", "/signup" 요청은 모두에게 허용
-                        .requestMatchers("/login", "/", "/signup", "/api/users/register",
+                        .requestMatchers("/api/users/login", "/", "/signup", "/api/users/register",
                                 "/password/", "/password/reset/request", "/password/reset")
                         .permitAll()
 
