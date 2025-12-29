@@ -20,7 +20,6 @@ public class ApiResponse<T> {
         return new ApiResponse<>(true, data, null);
     }
 
-    // getter, setter 생략 가능하면 lombok @Getter @Setter 사용 가능
     public boolean isSuccess() { return success; }
     public void setSuccess(boolean success) { this.success = success; }
     public T getData() { return data; }
