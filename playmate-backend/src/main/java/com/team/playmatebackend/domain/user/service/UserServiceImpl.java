@@ -1,6 +1,7 @@
 package com.team.playmatebackend.domain.user.service;
 
 import com.team.playmatebackend.domain.user.dto.LoginRequestDto;
+import com.team.playmatebackend.domain.user.dto.LoginResponseDto;
 import com.team.playmatebackend.domain.user.dto.PasswordResetToken;
 import com.team.playmatebackend.domain.user.entity.User;
 import com.team.playmatebackend.domain.user.repository.PasswordResetTokenRepository;
@@ -30,7 +31,8 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public String login(LoginRequestDto request) {
+    @Transactional
+    public LoginResponseDto login(LoginRequestDto request) {
         User user = userRepository.findByUserId(request.getUserID())
                 .orElseThrow(() -> new IllegalArgumentException("아이디가 없습니다"));
 
@@ -40,7 +42,39 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("비밀번호가 틀렸습니다");
         }
 
-        return jwtProvider.createToken(user.getUserId());
+        // Access Token 생성
+        String accessToken = jwtProvider.createAccessToken(user.getUserId());
+        
+        // Refresh Token 생성
+        String refreshToken = jwtProvider.createRefreshToken(user.getUserId());
+        
+        // Refresh Token을 DB에 저장
+        user.updateRefreshToken(refreshToken);
+        userRepository.save(user);
+        
+        // 두 토큰을 함께 반환
+        return LoginResponseDto.builder()
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .build();
+    }
+
+    @Override
+    @Transactional
+    public String refreshAccessToken(String refreshToken) {
+        // Refresh Token 검증
+        if (!jwtProvider.validateToken(refreshToken)) {
+            throw new IllegalArgumentException("유효하지 않은 Refresh Token입니다");
+        }
+        
+        // DB에서 해당 Refresh Token을 가진 사용자 조회
+        User user = userRepository.findByRefreshToken(refreshToken)
+                .orElseThrow(() -> new IllegalArgumentException("Refresh Token을 찾을 수 없습니다"));
+        
+        // 새로운 Access Token 발급
+        String newAccessToken = jwtProvider.createAccessToken(user.getUserId());
+        
+        return newAccessToken;
     }
 
     // 회원 존재 여부

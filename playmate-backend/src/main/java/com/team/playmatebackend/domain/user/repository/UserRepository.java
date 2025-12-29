@@ -27,6 +27,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByUserEmail(String email);
 
+    Optional<User> findByRefreshToken(String refreshToken);
+
 // 로그인시 userId만 사용해서 로그인 하는 것이 아닌 userEmail로도 로그인 가능하게 만드는 쿼리
 // Optional<User> findByUserIdOrUserEmail(String userId, String userEmail);
 // User user = userRepository

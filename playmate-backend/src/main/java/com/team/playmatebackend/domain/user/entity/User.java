@@ -104,4 +104,8 @@ public class User {
         this.introduction = introduction;
     }
 
+    public void updateRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+    }
+
 }
