@@ -1,7 +1,7 @@
 package com.team.playmatebackend.global.config;
 
 import com.team.playmatebackend.domain.user.entity.enums.UserRoleType;
-import com.team.playmatebackend.global.Jwt.JwtProvider;
+import com.team.playmatebackend.global.jwt.JwtProvider;
 import com.team.playmatebackend.global.security.JwtFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

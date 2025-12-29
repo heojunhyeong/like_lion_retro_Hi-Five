@@ -29,35 +29,67 @@ export const register = async (userData) => {
 };
 
 
-//
-// /**
-//  * 로그인 API 호출
-//  * @param {string} username - 사용자 아이디
-//  * @param {string} password - 사용자 비밀번호
-//  * @returns {Promise<string>} JWT 토큰
-//  */
-// export const login = async (username, password) => {
-//     try {
-//         const response = await fetch(`${API_BASE_URL}/login`, {
-//             method: "POST",
-//             headers: {
-//                 "Content-Type": "application/json",
-//             },
-//             body: JSON.stringify({
-//                 username: username,
-//                 password: password,
-//             }),
-//         });
-//
-//         if (!response.ok) {
-//             const errorData = await response.text();
-//             throw new Error(errorData || "로그인에 실패했습니다.");
-//         }
-//
-//         const token = await response.text(); // 백엔드에서 String으로 반환하므로 text() 사용
-//         return token;
-//     } catch (error) {
-//         console.error("Login error:", error);
-//         throw error;
-//     }
-// };
+/**
+ * 로그인 API 호출
+ * @param {string} userID - 사용자 아이디
+ * @param {string} userPassword - 사용자 비밀번호
+ * @returns {Promise<Object>} { accessToken, refreshToken }
+ */
+export const login = async (userID, userPassword) => {
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/users/login`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                userID: userID,
+                userPassword: userPassword,
+            }),
+        });
+
+        if (!response.ok) {
+            const errorData = await response.text();
+            throw new Error(errorData || "로그인에 실패했습니다.");
+        }
+
+        const data = await response.json();
+        
+        // Access Token과 Refresh Token 저장
+        localStorage.setItem("accessToken", data.accessToken);
+        localStorage.setItem("refreshToken", data.refreshToken);
+        
+        return data;
+    } catch (error) {
+        console.error("Login error:", error);
+        throw error;
+    }
+};
+
+/**
+ * JWT 토큰을 가져오는 헬퍼 함수
+ * @returns {string|null} localStorage에 저장된 Access Token
+ */
+export const getToken = () => {
+    return localStorage.getItem("accessToken");
+};
+
+/**
+ * JWT 토큰을 제거하는 헬퍼 함수 (로그아웃 시 사용)
+ */
+export const removeToken = () => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+};
+
+/**
+ * 인증이 필요한 API 요청을 위한 헤더 생성
+ * @returns {Object} Authorization 헤더가 포함된 headers 객체
+ */
+export const getAuthHeaders = () => {
+    const token = getToken();
+    return {
+        "Content-Type": "application/json",
+        ...(token && { Authorization: `Bearer ${token}` }),
+    };
+};

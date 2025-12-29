@@ -6,7 +6,7 @@ import com.team.playmatebackend.domain.user.dto.PasswordResetToken;
 import com.team.playmatebackend.domain.user.entity.User;
 import com.team.playmatebackend.domain.user.repository.PasswordResetTokenRepository;
 import com.team.playmatebackend.domain.user.repository.UserRepository;
-import com.team.playmatebackend.global.Jwt.JwtProvider;
+import com.team.playmatebackend.global.jwt.JwtProvider;
 import com.team.playmatebackend.domain.user.dto.UserCreateRequest;
 import com.team.playmatebackend.domain.user.entity.enums.UserRoleType;
 import com.team.playmatebackend.global.exception.CustomException;

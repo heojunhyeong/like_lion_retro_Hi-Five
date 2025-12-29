@@ -1,27 +1,92 @@
-div {
-    margin-bottom: 12px;
+.register-container {
+    max-width: 800px;
+    width: 90%;
+    margin: 0 auto;
+    padding: 60px 50px;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
 }
 
-label {
-    font-weight: bold;
+.register-container h2 {
+    text-align: center;
+    margin-bottom: 32px;
+    font-size: 32px;
+    font-weight: 700;
+    color: #000000;
+    letter-spacing: -0.5px;
 }
 
-input, select, button {
-    padding: 6px 8px;
-    font-size: 14px;
-    width: 200px;
-    box-sizing: border-box;
+.register-container form > div {
+    margin-bottom: 20px;
 }
 
-button {
+.register-container label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 10px;
+    color: #000000;
+    font-size: 16px;
+}
+
+.register-container input,
+.register-container select {
+    padding: 14px 16px;
+    font-size: 16px;
     width: 100%;
+    box-sizing: border-box;
+    border: 2px solid #e1e8ed;
+    border-radius: 12px;
+    background-color: #ffffff;
+    color: #000000;
+    transition: all 0.3s ease;
+}
+
+.register-container input:focus,
+.register-container select:focus {
+    outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 4px rgba(74, 144, 226, 0.1);
+    background-color: #ffffff;
+}
+
+.register-container input::placeholder {
+    color: #95a5a6;
+    font-weight: 400;
+}
+
+.register-container select {
     cursor: pointer;
-    background-color: #007bff;
+}
+
+.register-container select option {
+    color: #000000;
+    background-color: #ffffff;
+    padding: 10px;
+}
+
+.register-container button {
+    width: 100%;
+    padding: 14px;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
     color: white;
     border: none;
-    border-radius: 3px;
+    border-radius: 12px;
+    margin-top: 8px;
+    box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+    transition: all 0.3s ease;
 }
 
-button:hover {
-    background-color: #0056b3;
+.register-container button:hover {
+    background: linear-gradient(135deg, #357abd 0%, #2a5f8f 100%);
+    box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
+    transform: translateY(-2px);
+}
+
+.register-container button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 10px rgba(74, 144, 226, 0.3);
 }
