@@ -1,10 +1,6 @@
 // API 기본 URL 설정 (백엔드 서버 주소)
-// 환경 변수 VITE_API_URL이 설정되어 있으면 사용, 없으면 기본값 사용
-// 도커 환경: 빈 문자열("") 또는 환경 변수로 설정 → nginx 프록시 사용 (/api)
-// 로컬 개발: http://localhost:8080 사용
-const API_BASE_URL = import.meta.env.VITE_API_URL !== undefined 
-    ? import.meta.env.VITE_API_URL 
-    : "http://localhost:8080";
+// 도커 환경에서는 nginx를 통해 /api/로 프록시되므로 빈 문자열 사용
+const API_BASE_URL = "";
 /**
  * 회원가입 API 호출 (필요시 사용)
  * @param {Object} userData - 회원가입 데이터
@@ -96,4 +92,27 @@ export const getAuthHeaders = () => {
         "Content-Type": "application/json",
         ...(token && { Authorization: `Bearer ${token}` }),
     };
+};
+
+/**
+ * 현재 로그인한 사용자의 프로필 정보 조회
+ * @returns {Promise<Object>} 사용자 프로필 정보
+ */
+export const getMyProfile = async () => {
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/users/me`, {
+            method: "GET",
+            headers: getAuthHeaders(),
+        });
+
+        if (!response.ok) {
+            const errorData = await response.text();
+            throw new Error(errorData || "프로필 조회에 실패했습니다.");
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error("Get profile error:", error);
+        throw error;
+    }
 };

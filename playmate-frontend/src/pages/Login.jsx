@@ -29,7 +29,8 @@ function Login() {
     };
 
     return (
-        <div className="login-container">
+        <div className="login-page-wrapper">
+            <div className="login-container">
             <h2>로그인</h2>
             <form onSubmit={handleSubmit}>
                 <div>
@@ -67,6 +68,7 @@ function Login() {
                     </button>
                 </div>
             </form>
+            </div>
         </div>
     );
 }

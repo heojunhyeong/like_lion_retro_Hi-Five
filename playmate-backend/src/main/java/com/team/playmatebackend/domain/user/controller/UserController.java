@@ -21,6 +21,12 @@ import java.util.Map;
 public class UserController {
     private final UserService userService;
 
+
+    /**
+     * @author 최윤혁
+     * @DateOfCreated 2025-12-26
+     * @DateOfEdit 2025-12-29
+     */
     /**
      * 로그인 API
      * 로그인 성공 시 Access Token과 Refresh Token 반환
