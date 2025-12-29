@@ -47,9 +47,14 @@ public class MatchController {
 
     }
 
+    //매칭방 검색
     @GetMapping
     public ResponseEntity<List<MatchResponseDto>> getMatches(@ModelAttribute MatchSearchRequestDto searchRequest) { //카테고리, 키워드, 인원
         List<MatchResponseDto> matches = matchService.searchMatches(searchRequest);
         return ResponseEntity.ok(matches);
     }
+
+    //매칭방 상세 조회
+    //@GetMapping("/{id}")
+
 }

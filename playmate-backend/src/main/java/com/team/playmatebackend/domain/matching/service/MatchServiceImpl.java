@@ -61,45 +61,58 @@ public class MatchServiceImpl implements MatchService {
     public void approveParticipant(String hostId, Long participantId) {
 
     }
-    @Override
-    public List<MatchResponseDto> searchMatches(MatchSearchRequestDto searchRequest) {
-        Specification<Match> spec = (root, query, cb) -> cb.conjunction();
 
-        if (searchRequest.getPreferCategory() != null) {
+    /// ///////
+    //Specification<엔티티> 문법 - 검색 대상 엔티티,
+    private Specification<Match> buildSearchSpec(MatchSearchRequestDto request) {
+        Specification<Match> spec = (root, query, cb) -> cb.conjunction(); //항상 참, 조건이 없는 상태
+
+        //카테고리 필터
+        if (request.getPreferCategory() != null) {
             spec = spec.and((root, query, cb) ->
-                    cb.equal(root.get("category"), searchRequest.getPreferCategory())
+                    cb.equal(root.get("category"), request.getPreferCategory())
             );
         }
 
-        if (searchRequest.getKeyword() != null && !searchRequest.getKeyword().trim().isEmpty()) {
-            String keyword = "%" + searchRequest.getKeyword().trim() + "%";
+        //방제목 키워드 검색
+        if (request.getKeyword() != null && !request.getKeyword().trim().isEmpty()) {
+            String keyword = "%" + request.getKeyword().trim() + "%";
             spec = spec.and((root, query, cb) ->
                     cb.like(root.get("title"), keyword)
             );
         }
+        return spec;
+    }
 
-        MatchSortType sortType = searchRequest.getSortType() != null
-                ? searchRequest.getSortType()
-                : MatchSortType.LATEST;
-
-        Sort sort;
-        switch (sortType) {
-            case PARTICIPANTS:
-                sort = Sort.by(Sort.Direction.DESC, "currentParticipants");
-                break;
-            case LATEST:
-            default:
-                sort = Sort.by(Sort.Direction.DESC, "createdDate");
-                break;
+    // 정렬 필터 (참여자 수 순, 최신순)
+    private Sort buildSort(MatchSortType sortType) {
+        //기본으로 최신순으로 정렬
+        if (sortType == null) {
+            return Sort.by(Sort.Direction.DESC, "createdDate");
         }
 
-        List<Match> matches = matchRepository.findAll(spec, sort);
+        switch (sortType) {
+            case PARTICIPANTS:
+                return Sort.by(Sort.Direction.DESC, "currentParticipants"); // 인원순
+            case LATEST:
+            default:
+                return Sort.by(Sort.Direction.DESC, "createdDate"); //최신순
+        }
+    }
 
-        return matches.stream()
+    //검색조건 + 정렬 조합 후 DB에 조회 및 DTO 반환
+    @Override
+    public List<MatchResponseDto> searchMatches(MatchSearchRequestDto request) {
+
+        Specification<Match> spec = buildSearchSpec(request);   // 검색 조건
+        Sort sort = buildSort(request.getSortType());   // 정렬
+
+        return matchRepository.findAll(spec, sort).stream()
                 .map(this::toResponseDto)
                 .collect(Collectors.toList());
     }
 
+    // Match 엔티티 -> MatchResponseDto 변환 메서드
     private MatchResponseDto toResponseDto(Match match) {
         return MatchResponseDto.builder()
                 .id(match.getId())
@@ -111,5 +124,4 @@ public class MatchServiceImpl implements MatchService {
                 .createdDate(match.getCreatedDate())
                 .build();
     }
-
 }
