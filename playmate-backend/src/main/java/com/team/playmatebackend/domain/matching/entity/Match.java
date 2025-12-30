@@ -23,6 +23,7 @@ import java.time.LocalDateTime;
  * @DateOfEdit 2025-12-28
  */
 @Entity
+@Table(name = "matches")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor

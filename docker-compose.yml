@@ -41,7 +41,7 @@ services:
     build: ./nginx
     image: playmate-nginx:v1
     ports:
-      - 80:80
+      - 70:80
     depends_on:
       - playmate-backend
       - playmate-frontend
