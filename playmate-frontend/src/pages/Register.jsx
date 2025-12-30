@@ -7,6 +7,7 @@ function Register() {
     const navigate = useNavigate();
     const [userId, setUserId] = useState("");
     const [userPassword, setUserPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
     const [userEmail, setUserEmail] = useState("");
     const [nickName, setNickName] = useState("");
     const [preferCategory, setPreferCategory] = useState("");
@@ -17,10 +18,16 @@ function Register() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        if (userPassword !== confirmPassword) {
+            alert("비밀번호가 일치하지 않습니다.");
+            return;
+        }
+
         //React에서 백엔드로 보내는 JSON 요청 형태 Dto UserCreateRequest 와 동일해야함
         const userData = {
             userId: userId,
             password: userPassword,
+            confirmPassword: confirmPassword,
             email: userEmail,
             nickname: nickName,
             preferCategory: preferCategory,
@@ -61,6 +68,16 @@ function Register() {
                         type="password"
                         value={userPassword}
                         onChange={(e) => setUserPassword(e.target.value)}
+                        required
+                    />
+                </div>
+
+                <div>
+                    <label>Password 확인:</label><br />
+                    <input
+                        type="password"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
                         required
                     />
                 </div>
