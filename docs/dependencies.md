@@ -103,6 +103,13 @@
 - 사용 위치 : MailService, MailServiceImpl
 - 비고 : 추가시 JavaMailSender 빈을 자동으로 설정
 ---
+### spring-boot-starter-websocket
+
+- 목적 : 
+- 사용 위치 : 
+- 비고 : 
+
+---
 ## 추가 시 기록 형식
 
 - 의존성 이름:

@@ -24,6 +24,7 @@ services:
         condition: service_healthy
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/${MYSQL_DATABASE}
+
     networks:
       - backend-net
       - db-net

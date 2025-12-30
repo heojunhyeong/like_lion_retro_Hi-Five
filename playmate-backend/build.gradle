@@ -51,8 +51,11 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     testImplementation 'org.springframework.security:spring-security-test'
 
-    // starter-mail
+    // mail
     implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+    // websocket
+    implementation 'org.springframework.boot:spring-boot-starter-websocket:4.0.1'
 
 }
 
