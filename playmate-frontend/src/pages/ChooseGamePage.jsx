@@ -47,6 +47,11 @@ function ChooseGamePage() {
             name: '메이플스토리', 
             id: 'maple_story',
             image: '/images/Maple.jpg'
+        },
+        { 
+            name: '기타/취미', 
+            id: 'hobby',
+            image: '/images/hobby.jpg'
         }
     ];
 
@@ -80,7 +85,6 @@ function ChooseGamePage() {
             {/* 메인 컨텐츠 */}
             <main className="main-content">
                 <div className="games-section">
-                    <h2 className="section-title">게임</h2>
                     <div className="games-grid">
                         {games.map((game) => (
                             <div key={game.id} className="game-card">
