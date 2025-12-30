@@ -100,7 +100,7 @@ public class UserServiceImpl implements UserService {
         }
 
         if (!userCreateRequest.getPassword().equals(userCreateRequest.getConfirmPassword())) {
-            throw new IllegalArgumentException("비밀번호와 비밀번화 확인이 일치하지 않습니다");
+            throw new IllegalArgumentException("비밀번호와 비밀번호 확인이 일치하지 않습니다");
         }
 
         User entity = User.builder()
