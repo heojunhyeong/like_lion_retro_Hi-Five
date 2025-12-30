@@ -58,8 +58,6 @@ export const login = async (userID, userPassword) => {
         // Access Token과 Refresh Token 저장
         localStorage.setItem("accessToken", data.accessToken);
         localStorage.setItem("refreshToken", data.refreshToken);
-        // 사용자 ID 저장 (매칭방 알림 기능을 위해 추가 - 로그인에 사용한 userID)
-        localStorage.setItem("userId", userID);
         
         return data;
     } catch (error) {
@@ -82,35 +80,6 @@ export const getToken = () => {
 export const removeToken = () => {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
-    localStorage.removeItem("userId");
-};
-
-/**
- * 사용자 ID를 저장하는 함수
- * 
- * 작업내용: 매칭방 알림 기능을 위해 사용자 ID 저장 기능 추가
- * @author 김지번
- * @DateOfCreated 2025-12-29
- * @DateOfEdit 2025-12-29
- * 
- * @param {string} userId - 사용자 ID
- */
-export const setUserId = (userId) => {
-    localStorage.setItem("userId", userId);
-};
-
-/**
- * 저장된 사용자 ID를 가져오는 함수
- * 
- * 작업내용: 매칭방 알림 기능을 위해 사용자 ID 조회 기능 추가
- * @author 김지번
- * @DateOfCreated 2025-12-29
- * @DateOfEdit 2025-12-29
- * 
- * @returns {string|null} localStorage에 저장된 사용자 ID
- */
-export const getUserId = () => {
-    return localStorage.getItem("userId");
 };
 
 /**
