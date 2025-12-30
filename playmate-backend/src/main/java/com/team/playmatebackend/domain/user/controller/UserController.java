@@ -5,6 +5,7 @@ import com.team.playmatebackend.domain.user.dto.LoginResponseDto;
 import com.team.playmatebackend.domain.user.dto.UserCreateRequest;  //
 import com.team.playmatebackend.domain.user.service.UserService;
 import com.team.playmatebackend.global.response.ApiResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -54,7 +55,7 @@ public class UserController {
 
     // 회원가입 api
     @PostMapping("/register")
-    public ResponseEntity<ApiResponse<Long>> register(@RequestBody UserCreateRequest request) {
+    public ResponseEntity<ApiResponse<Long>> register(@Valid @RequestBody UserCreateRequest request) {
         Long userId = userService.signUp(request);
         return ResponseEntity.ok(ApiResponse.success(userId));
 

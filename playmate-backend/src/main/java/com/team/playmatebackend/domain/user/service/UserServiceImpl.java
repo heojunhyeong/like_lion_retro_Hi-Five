@@ -99,6 +99,10 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("이미 존재하는 회원입니다");
         }
 
+        if (!userCreateRequest.getPassword().equals(userCreateRequest.getConfirmPassword())) {
+            throw new IllegalArgumentException("비밀번호와 비밀번화 확인이 일치하지 않습니다");
+        }
+
         User entity = User.builder()
                 .userId(userCreateRequest.getUserId())
                 .userPassword(passwordEncoder.encode(userCreateRequest.getPassword()))
