@@ -105,10 +105,15 @@
 ---
 ### spring-boot-starter-websocket
 
-- 목적 : 
-- 사용 위치 : 
-- 비고 : 
+- 목적 : 서버와 클라이언트 간 실시간 양방향 통신을 위해 사용
+- 사용 위치 : WebSocket 설정 클래스와 @MessageMapping 컨트롤러
+- 비고 : STOMP 기반 pub/sub 구조로 채팅·알림 같은 실시간 기능 구현
+---
+### spring-boot-starter-validation
 
+- 목적 : 요청으로 들어오는 데이터의 유효성 검증 자동 처리
+- 사용 위치 : @RequestBody / @ModelAttribute DTO와 컨트롤러
+- 비고 : @NotNull, @NotBlank 등 어노테이션으로 검증 실패를 사전에 차단
 ---
 ## 추가 시 기록 형식
 
