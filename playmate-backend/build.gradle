@@ -55,7 +55,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-mail'
 
     // websocket
-    implementation 'org.springframework.boot:spring-boot-starter-websocket:4.0.1'
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
 
 }
 
