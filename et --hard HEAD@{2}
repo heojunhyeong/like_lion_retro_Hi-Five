@@ -1,0 +1,96 @@
+[33m073db62[m[33m ([m[1;36mHEAD[m[33m, [m[1;31morigin/develop[m[33m, [m[1;32mdevelop[m[33m)[m HEAD@{0}: rebase (start): checkout develop
+[33mab15507[m[33m ([m[1;31morigin/feature/push-notification-kimjibun[m[33m, [m[1;32mfeature/push-notification-kimjibun[m[33m)[m HEAD@{1}: checkout: moving from develop to feature/push-notification-kimjibun
+[33m073db62[m[33m ([m[1;36mHEAD[m[33m, [m[1;31morigin/develop[m[33m, [m[1;32mdevelop[m[33m)[m HEAD@{2}: checkout: moving from feature/push-notification-kimjibun to develop
+[33mab15507[m[33m ([m[1;31morigin/feature/push-notification-kimjibun[m[33m, [m[1;32mfeature/push-notification-kimjibun[m[33m)[m HEAD@{3}: commit: feat: 매칭방 입장 및 승인 실시간 알림 기능 구현 (SSE)
+[33m79b5ea5[m HEAD@{4}: checkout: moving from develop to feature/push-notification-kimjibun
+[33m073db62[m[33m ([m[1;36mHEAD[m[33m, [m[1;31morigin/develop[m[33m, [m[1;32mdevelop[m[33m)[m HEAD@{5}: checkout: moving from feature/push-notification-kimjibun to develop
+[33m79b5ea5[m HEAD@{6}: checkout: moving from develop to feature/push-notification-kimjibun
+[33m073db62[m[33m ([m[1;36mHEAD[m[33m, [m[1;31morigin/develop[m[33m, [m[1;32mdevelop[m[33m)[m HEAD@{7}: pull origin develop: Fast-forward
+[33m6f0cce4[m HEAD@{8}: checkout: moving from feature/push-notification-kimjibun to develop
+[33m79b5ea5[m HEAD@{9}: reset: moving to HEAD
+[33m79b5ea5[m HEAD@{10}: checkout: moving from develop to feature/push-notification-kimjibun
+[33m6f0cce4[m HEAD@{11}: checkout: moving from feature/push-notification-kimjibun to develop
+[33m79b5ea5[m HEAD@{12}: reset: moving to HEAD
+[33m79b5ea5[m HEAD@{13}: checkout: moving from develop to feature/push-notification-kimjibun
+[33m6f0cce4[m HEAD@{14}: pull origin develop: Fast-forward
+[33m0f4ae74[m HEAD@{15}: checkout: moving from feature/push-notification-kimjibun to develop
+[33m79b5ea5[m HEAD@{16}: reset: moving to HEAD
+[33m79b5ea5[m HEAD@{17}: checkout: moving from develop to feature/push-notification-kimjibun
+[33m0f4ae74[m HEAD@{18}: checkout: moving from feature/push-notification-kimjibun to develop
+[33m79b5ea5[m HEAD@{19}: rebase (finish): returning to refs/heads/feature/push-notification-kimjibun
+[33m79b5ea5[m HEAD@{20}: rebase (pick): feat(notification): 알림 전송용 DTO 추가, SSE 이벤트 구조 정의
+[33m0f4ae74[m HEAD@{21}: rebase (start): checkout develop
+[33m5784cf0[m HEAD@{22}: checkout: moving from develop to feature/push-notification-kimjibun
+[33m0f4ae74[m HEAD@{23}: pull origin develop: Fast-forward
+[33m0c8ab70[m HEAD@{24}: checkout: moving from feature/push-notification-kimjibun to develop
+[33m5784cf0[m HEAD@{25}: checkout: moving from develop to feature/push-notification-kimjibun
+[33m0c8ab70[m HEAD@{26}: checkout: moving from feature/push-notification-kimjibun to develop
+[33m5784cf0[m HEAD@{27}: commit: feat(notification): 알림 전송용 DTO 추가, SSE 이벤트 구조 정의
+[33m0c8ab70[m HEAD@{28}: pull origin develop: Fast-forward
+[33m5ad9ddb[m HEAD@{29}: checkout: moving from develop to feature/push-notification-kimjibun
+[33m0c8ab70[m HEAD@{30}: pull origin develop: Fast-forward
+[33m87483cd[m HEAD@{31}: checkout: moving from feature/push-notification-kimjibun to develop
+[33m5ad9ddb[m HEAD@{32}: checkout: moving from develop to feature/push-notification-kimjibun
+[33m87483cd[m HEAD@{33}: pull origin develop: Fast-forward
+[33m5ad9ddb[m HEAD@{34}: checkout: moving from feature/push-notification-kimjibun to develop
+[33m5ad9ddb[m HEAD@{35}: checkout: moving from develop to feature/push-notification-kimjibun
+[33m5ad9ddb[m HEAD@{36}: checkout: moving from feature/push-notification-kimjibun to develop
+[33m5ad9ddb[m HEAD@{37}: pull origin develop: Fast-forward
+[33m80e6fb6[m HEAD@{38}: checkout: moving from develop to feature/push-notification-kimjibun
+[33m5ad9ddb[m HEAD@{39}: pull origin develop: Fast-forward
+[33m08e8908[m HEAD@{40}: checkout: moving from feature/push-notification-kimjibun to develop
+[33m80e6fb6[m HEAD@{41}: checkout: moving from develop to feature/push-notification-kimjibun
+[33m08e8908[m HEAD@{42}: pull origin develop: Fast-forward
+[33m80e6fb6[m HEAD@{43}: checkout: moving from feature/push-notification-kimjibun to develop
+[33m80e6fb6[m HEAD@{44}: checkout: moving from develop to feature/push-notification-kimjibun
+[33m80e6fb6[m HEAD@{45}: checkout: moving from feature/push-notification-kimjibun to develop
+[33m80e6fb6[m HEAD@{46}: pull origin develop: Fast-forward
+[33ma1876e2[m HEAD@{47}: checkout: moving from develop to feature/push-notification-kimjibun
+[33m80e6fb6[m HEAD@{48}: pull origin develop: Fast-forward
+[33ma1876e2[m HEAD@{49}: checkout: moving from develop to develop
+[33ma1876e2[m HEAD@{50}: pull origin develop: Fast-forward
+[33m400f6ef[m HEAD@{51}: checkout: moving from feature/push-notification-kimjibun to develop
+[33ma1876e2[m HEAD@{52}: pull origin develop: Fast-forward
+[33m400f6ef[m HEAD@{53}: checkout: moving from develop to feature/push-notification-kimjibun
+[33m400f6ef[m HEAD@{54}: checkout: moving from feature/add-logout-kimjibun to develop
+[33m4ebd97f[m[33m ([m[1;31morigin/feature/add-logout-kimjibun[m[33m)[m HEAD@{55}: commit: feat: UserContorller logout 메서드 추가
+[33m400f6ef[m HEAD@{56}: pull origin develop: Fast-forward
+[33m2dfb62b[m HEAD@{57}: checkout: moving from develop to feature/add-logout-kimjibun
+[33m400f6ef[m HEAD@{58}: pull origin develop: Fast-forward
+[33m2dfb62b[m HEAD@{59}: checkout: moving from feature/add-logout-kimjibun to develop
+[33m2dfb62b[m HEAD@{60}: checkout: moving from develop to feature/add-logout-kimjibun
+[33m2dfb62b[m HEAD@{61}: checkout: moving from feature/add-logout-kimjibun to develop
+[33m2dfb62b[m HEAD@{62}: pull origin develop: Fast-forward
+[33m16a47df[m HEAD@{63}: checkout: moving from develop to feature/add-logout-kimjibun
+[33m2dfb62b[m HEAD@{64}: pull origin develop: Fast-forward
+[33m16a47df[m HEAD@{65}: checkout: moving from feature/add-logout-kimjibun to develop
+[33m16a47df[m HEAD@{66}: reset: moving to HEAD
+[33m16a47df[m HEAD@{67}: pull origin develop: Fast-forward
+[33m5447e4c[m HEAD@{68}: checkout: moving from develop to feature/add-logout-kimjibun
+[33m16a47df[m HEAD@{69}: pull origin develop: Fast-forward
+[33mf3849f3[m HEAD@{70}: checkout: moving from feature/add-logout-kimjibun to develop
+[33m5447e4c[m HEAD@{71}: checkout: moving from develop to feature/add-logout-kimjibun
+[33mf3849f3[m HEAD@{72}: pull origin develop: Fast-forward
+[33m5447e4c[m HEAD@{73}: reset: moving to HEAD
+[33m5447e4c[m HEAD@{74}: checkout: moving from feature/add-logout-kimjibun to develop
+[33m5447e4c[m HEAD@{75}: checkout: moving from develop to feature/add-logout-kimjibun
+[33m5447e4c[m HEAD@{76}: pull origin develop: Fast-forward
+[33m0a33728[m HEAD@{77}: pull origin develop: Fast-forward
+[33mf668136[m HEAD@{78}: pull origin develop: Fast-forward
+[33mad197e7[m HEAD@{79}: reset: moving to HEAD
+[33mad197e7[m HEAD@{80}: pull origin develop: Fast-forward
+[33m46a6df7[m HEAD@{81}: pull origin develop: Fast-forward
+[33mc601b09[m HEAD@{82}: pull origin develop: Fast-forward
+[33mdad83c4[m HEAD@{83}: pull origin develop: Fast-forward
+[33m7da36af[m HEAD@{84}: reset: moving to HEAD~1
+[33mdad83c4[m HEAD@{85}: pull origin develop: Fast-forward
+[33m32f6060[m HEAD@{86}: reset: moving to HEAD
+[33m32f6060[m HEAD@{87}: checkout: moving from develop to develop
+[33m32f6060[m HEAD@{88}: pull origin develop: Fast-forward
+[33m13b3e8e[m HEAD@{89}: checkout: moving from feature/user-logout-kimjibun to develop
+[33ma2c1181[m[33m ([m[1;31morigin/feature/user-logout-kimjibun[m[33m)[m HEAD@{90}: commit: feat: UserController에 로그인/로그아웃 API 통합
+[33m13b3e8e[m HEAD@{91}: pull origin develop: Fast-forward
+[33m8a3f500[m HEAD@{92}: checkout: moving from develop to feature/user-logout-kimjibun
+[33m13b3e8e[m HEAD@{93}: pull origin develop: Fast-forward
+[33mda5808f[m HEAD@{94}: pull origin develop: Fast-forward
+[33mabe366a[m HEAD@{95}: checkout: moving from develop 
