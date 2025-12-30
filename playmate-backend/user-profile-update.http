@@ -1,11 +1,11 @@
 ### 사용자 프로필 조회 (로그인 상태)
 GET http://localhost:8080/api/users/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaW4iLCJpYXQiOjE3NjY5NzIyMzUsImV4cCI6MTc2Njk3NTgzNX0.LfIbuYS6AqqI9cfjmUvVeklRDdFqVMZAM_fECIb4ZQk
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaW4iLCJpYXQiOjE3NjcwNjk0MjgsImV4cCI6MTc2NzA3MzAyOH0.u4sZq6aOCqcoBGPL80EESujvvvigdMbHwe5IBRPvYRo
 
 
 ### 프로필 수정
 PUT http://localhost:8080/api/users/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaW4iLCJpYXQiOjE3NjY5NzIyMzUsImV4cCI6MTc2Njk3NTgzNX0.LfIbuYS6AqqI9cfjmUvVeklRDdFqVMZAM_fECIb4ZQk
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaW4iLCJpYXQiOjE3NjcwNjk0MjgsImV4cCI6MTc2NzA3MzAyOH0.u4sZq6aOCqcoBGPL80EESujvvvigdMbHwe5IBRPvYRo
 Content-Type: application/json
 
 {
@@ -16,4 +16,4 @@ Content-Type: application/json
 
 ### 프로필 조회
 GET http://localhost:8080/api/users/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaW4iLCJpYXQiOjE3NjY5NzIyMzUsImV4cCI6MTc2Njk3NTgzNX0.LfIbuYS6AqqI9cfjmUvVeklRDdFqVMZAM_fECIb4ZQk
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaW4iLCJpYXQiOjE3NjcwNjk0MjgsImV4cCI6MTc2NzA3MzAyOH0.u4sZq6aOCqcoBGPL80EESujvvvigdMbHwe5IBRPvYRo

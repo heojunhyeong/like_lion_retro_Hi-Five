@@ -4,6 +4,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
+
 /**
  * 로컬 환경에서 JWT 테스트 토큰 생성을 위한 실행 클래스
  *
@@ -15,10 +17,9 @@ import org.springframework.stereotype.Component;
  *
  * local 프로파일에서만 동작하며,
  * 운영 환경에서는 실행되지 않는다.
- *
  * @author 전진
  * @DateOfCreated 2025-12-27
- * @DateOfEdit 2025-12-27
+ * @DateOfEdit 2025-12-30
  */
 @Component
 @Profile("local")
@@ -26,20 +27,9 @@ public class JwtTestRunner implements CommandLineRunner {
 
     private final JwtProvider jwtProvider;
 
-    /**
-     * JwtProvider를 주입받는 생성자
-     *
-     * JWT 토큰 생성 로직을 담당하는 컴포넌트를 주입받는다.
-     *
-     * @author 전진
-     * @DateOfCreated 2025-12-27
-     * @DateOfEdit 2025-12-27
-     * @param jwtProvider JWT 생성 기능을 제공하는 클래스
-     */
     public JwtTestRunner(JwtProvider jwtProvider) {
         this.jwtProvider = jwtProvider;
     }
-
     /**
      * 애플리케이션 기동 완료 후 자동으로 실행되는 메서드
      *
@@ -50,16 +40,23 @@ public class JwtTestRunner implements CommandLineRunner {
      *
      * @author 전진
      * @DateOfCreated 2025-12-27
-     * @DateOfEdit 2025-12-27
+     * @DateOfEdit 2025-12-30
      * @param args 애플리케이션 실행 시 전달되는 인자
      */
     @Override
     public void run(String... args) {
-        String token = jwtProvider.createToken("jin");
+        String token = jwtProvider.createAccessToken("jin");
+
+        Date now = new Date();
+        Date exp = jwtProvider.getExpiration(token);
 
         System.out.println("=================================");
         System.out.println("테스트용 JWT 토큰:");
         System.out.println(token);
+        System.out.println();
+        System.out.println("현재 서버 시간(now): " + now);
+        System.out.println("토큰 만료 시간(exp): " + exp);
+        System.out.println("남은 시간(ms): " + (exp.getTime() - now.getTime()));
         System.out.println("=================================");
     }
 }
