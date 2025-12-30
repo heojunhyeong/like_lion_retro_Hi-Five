@@ -70,6 +70,25 @@ public class JwtProvider {
         return createAccessToken(username);
     }
 
+    /**
+     * JWT 토큰의 만료 시간을 반환한다.
+     *
+     * 테스트 및 디버깅 용도로 사용되며,
+     * 토큰 내부 exp 클레임을 Date 형태로 반환한다.
+     *
+     * @param token JWT 문자열
+     * @return 토큰 만료 시간
+     */
+    public Date getExpiration(String token) {
+        return Jwts.parser()
+                .verifyWith(Keys.hmacShaKeyFor(SECRET_KEY.getBytes()))
+                .build()
+                .parseSignedClaims(token)
+                .getPayload()
+                .getExpiration();
+    }
+
+
 }
 
 

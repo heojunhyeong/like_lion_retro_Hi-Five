@@ -7,6 +7,7 @@ import com.team.playmatebackend.domain.user.entity.User;
 import com.team.playmatebackend.domain.user.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 /**
  * 사용자 프로필 관련 비즈니스 로직을 처리하는 서비스 클래스
@@ -24,6 +25,7 @@ import org.springframework.stereotype.Service;
 public class UserProfileService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
     /**
      * 로그인한 사용자의 프로필 정보를 조회한다.
      *
@@ -74,6 +76,63 @@ public class UserProfileService {
                 dto.getPreferCategory(),
                 dto.getIntroduction()
         );
+    }
+    /**
+     * 로그인한 사용자의 비밀번호를 변경한다.
+     *
+     * Authentication 객체에서 사용자 식별 정보를 추출한 뒤,
+     * 기존 비밀번호가 일치하는지 검증하고
+     * 새 비밀번호를 암호화하여 사용자 엔티티에 반영한다.
+     *
+     * 해당 메서드는 비밀번호 초기화 로직과 분리되어 있으며,
+     * 사용자가 기존 비밀번호를 알고 있는 상태에서만 호출된다.
+     *
+     * 트랜잭션 범위 내에서 변경 감지를 통해 DB에 반영된다.
+     *
+     * @param authentication 현재 로그인한 사용자 인증 정보
+     * @param dto 비밀번호 변경 요청 DTO
+     * @author 전진
+     * @DateOfCreated 2025-12-29
+     * @DateOfEdit 2025-12-29
+     */
+
+    @Transactional
+    public void changePassword(
+            String userId,
+            String currentPassword,
+            String newPassword
+    ) {
+        // 1. 현재 비밀번호 검증 (중복 제거)
+        verifyPassword(userId, currentPassword);
+
+        // 2. 새 비밀번호 암호화 후 저장
+        User user = userRepository.findByUserId(userId)
+                .orElseThrow(() -> new IllegalArgumentException("유저 없음"));
+
+        user.changePassword(passwordEncoder.encode(newPassword));
+    }
+
+    /**
+     * 로그인한 사용자의 현재 비밀번호를 검증한다.
+     *
+     * 전달받은 평문 비밀번호와
+     * DB에 저장된 암호화된 비밀번호를 비교한다.
+     *
+     * 비밀번호가 일치하지 않을 경우 예외를 발생시킨다.
+     *
+     * @param userId 로그인한 사용자 아이디
+     * @param password 사용자가 입력한 현재 비밀번호(평문)
+     * @author 전진
+     * @DateOfCreated 2025-12-30
+     * @DateOfEdit 2025-12-30
+     */
+    public void verifyPassword(String userId, String password) {
+        User user = userRepository.findByUserId(userId)
+                .orElseThrow(() -> new IllegalArgumentException("유저 없음"));
+
+        if (!passwordEncoder.matches(password, user.getUserPassword())) {
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        }
     }
 
 

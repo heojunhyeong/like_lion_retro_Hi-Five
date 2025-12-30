@@ -2,8 +2,6 @@ spring:
   application:
     name: playmate-backend
 
-  profiles:
-    active: docker
 
   #DB 등록 (test용)
   datasource:
