@@ -7,6 +7,8 @@ import com.team.playmatebackend.domain.matching.entity.Match;
 import com.team.playmatebackend.domain.matching.entity.MatchParticipant;
 import com.team.playmatebackend.domain.matching.entity.enums.EntryMethod;
 import com.team.playmatebackend.domain.matching.entity.enums.ParticipantStatus;
+import com.team.playmatebackend.domain.notification.entity.NotificationType;
+import com.team.playmatebackend.domain.notification.service.NotificationService;
 import com.team.playmatebackend.domain.user.entity.User;
 import com.team.playmatebackend.domain.matching.repository.MatchParticipantRepository;
 import com.team.playmatebackend.domain.matching.repository.MatchRepository;
@@ -30,7 +32,7 @@ public class MatchServiceImpl implements MatchService {
     private final MatchRepository matchRepository;
     private final UserRepository userRepository;
     private final MatchParticipantRepository matchParticipantRepository;
-
+    private final NotificationService notificationService;
 
     /**
      * 매칭방 생성 메서드
@@ -104,6 +106,47 @@ public class MatchServiceImpl implements MatchService {
 
 
         matchParticipantRepository.save(participant);
+
+        /**
+         * 알림 전송 로직을 별도 메서드로 분리하여 호출
+         *
+         * @author 김지번
+         * @DateOfCreated 2025-12-30
+         * @DateOfEdit 2025-12-30
+         */
+
+        sendApplyNotification(match, user, status);
+    }
+
+    /**
+     * 입장 상태(즉시 입장/대기)에 따라 적절한 알림을 전송하는 헬퍼 메서드
+     *
+     * @author 김지번
+     * @DateOfCreated 2025-12-30
+     * @DateOfEdit 2025-12-30
+     */
+    private void sendApplyNotification(Match match, User user, ParticipantStatus status) {
+        String hostId = match.getHost().getUserId();
+        String matchTitle = match.getTitle();
+        String userNickname = user.getNickName();
+
+        if (status == ParticipantStatus.ACCEPTED) {
+            // 1. 즉시 입장 -> "입장 알림"
+            notificationService.send(
+                    hostId,
+                    NotificationType.MATCH_ENTER,
+                    userNickname + "님이 " + matchTitle + " 방에 입장했습니다.",
+                    "/matches/" + match.getId()
+            );
+        } else if (status == ParticipantStatus.WAITING) {
+            // 2. 승인 대기 -> "요청 알림"
+            notificationService.send(
+                    hostId,
+                    NotificationType.MATCH_REQUEST,
+                    userNickname + "님이 " + matchTitle + " 방 입장을 요청했습니다.",
+                    "/matches/" + match.getId() + "/manage"
+            );
+        }
     }
 
 
@@ -128,6 +171,25 @@ public class MatchServiceImpl implements MatchService {
         // 인원 추가 및 상태 변경
         participant.getMatch().addParticipant();
         participant.approve();
+
+        /**
+         * 승인 완료 -> 신청자에게 "승인되었다"고 알림
+         * 받는 사람: 신청자 (participant.getUser().getUserId())
+         *
+         * @author 김지번
+         * @DateOfCreated 2025-12-30
+         * @DateOfEdit 2025-12-30
+         */
+
+        User targetUser = participant.getUser();
+
+        notificationService.send(
+                targetUser.getUserId(),
+                NotificationType.MATCH_APPROVED,
+                participant.getMatch().getTitle() + " 방 입장이 승인되었습니다.",
+                "/matches/" + participant.getMatch().getId() // 해당 매칭방으로 이동
+        );
+
     }
 
 
