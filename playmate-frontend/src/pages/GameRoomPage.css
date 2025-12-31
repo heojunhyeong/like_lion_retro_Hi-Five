@@ -1,117 +1,186 @@
-.game-room-page .create-room-button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
+.game-room-page .game-room-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  margin-bottom: 20px;
 }
 
 .game-room-page .game-room-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    background-color: white;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  margin-bottom: 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.game-room-page .game-room-header .game-title {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
+  margin: 0;
+}
+
+.game-room-page .header-left {
+  display: flex;
+  justify-content: flex-start; /* 왼쪽 정렬 */
+}
+
+.game-room-page .header-right {
+  display: flex;
+  justify-content: flex-end; /* 오른쪽 정렬 */
 }
 
 .game-room-page .game-title {
-    font-size: 24px;
-    font-weight: bold;
-    margin: 0;
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+  text-align: center;
 }
 
-.game-room-page .back-button {
-    padding: 10px 20px;
-    background-color: #6c757d;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
+.game-room-page button.back-button {
+  padding: 10px 20px !important;
+  background-color: #6c757d !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 5px !important;
+  cursor: pointer;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  white-space: nowrap;
+  min-width: 120px;
+  text-align: center;
 }
 
-.game-room-page .back-button:hover {
-    background-color: #5a6268;
+.game-room-page button.back-button:hover {
+  background-color: #5a6268 !important;
+  color: #ffffff !important;
 }
 
-.game-room-page .create-room-button:hover {
-    background-color: #0056b3;
+.game-room-page button.create-room-button {
+  padding: 10px 20px !important;
+  background-color: #007bff !important;
+  background: #007bff !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 5px !important;
+  cursor: pointer;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  white-space: nowrap;
+  min-width: 120px;
+  text-align: center;
+}
+
+.game-room-page button.create-room-button:hover {
+  background-color: #0056b3 !important;
+  background: #0056b3 !important;
+  color: #ffffff !important;
+}
+
+.game-room-page button.create-room-button * {
+  color: #ffffff !important;
 }
 
 .game-room-page .loading {
-    text-align: center;
-    padding: 40px;
-    font-size: 18px;
-    color: #666;
+  text-align: center;
+  padding: 40px;
+  font-size: 18px;
+  color: #666;
 }
 
 .game-room-page .no-rooms {
-    text-align: center;
-    padding: 60px 20px;
-    background-color: white;
-    border-radius: 8px;
-    margin: 20px;
+  text-align: center;
+  padding: 60px 20px;
+  background-color: white;
+  border-radius: 8px;
+  margin: 20px;
 }
 
 .game-room-page .no-rooms p {
-    font-size: 18px;
-    color: #666;
-    margin-bottom: 20px;
+  font-size: 18px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.game-room-page .no-rooms button.create-room-button {
+  padding: 10px 20px !important;
+  background-color: #007bff !important;
+  background: #007bff !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 5px !important;
+  cursor: pointer;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  white-space: nowrap;
+  min-width: 120px;
+  text-align: center;
+}
+
+.game-room-page .no-rooms button.create-room-button:hover {
+  background-color: #0056b3 !important;
+  background: #0056b3 !important;
+  color: #ffffff !important;
+}
+
+.game-room-page .no-rooms button.create-room-button * {
+  color: #ffffff !important;
 }
 
 .game-room-page .rooms-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
-    padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px;
 }
 
 .game-room-page .room-card {
-    background-color: white;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
+  background-color: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .game-room-page .room-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 .game-room-page .room-title {
-    font-size: 20px;
-    font-weight: bold;
-    margin: 0 0 15px 0;
-    color: #333;
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0 0 15px 0;
+  color: #333;
 }
 
 .game-room-page .room-info {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
 }
 
 .game-room-page .room-host {
-    color: #666;
-    font-size: 14px;
-    margin: 0;
+  color: #666;
+  font-size: 14px;
+  margin: 0;
 }
 
 .game-room-page .room-participants {
-    color: #007bff;
-    font-size: 14px;
-    font-weight: bold;
-    margin: 0;
+  color: #007bff;
+  font-size: 14px;
+  font-weight: bold;
+  margin: 0;
 }
 
 .game-room-page .room-date {
-    color: #999;
-    font-size: 12px;
-    margin: 10px 0 0 0;
+  color: #999;
+  font-size: 12px;
+  margin: 10px 0 0 0;
 }

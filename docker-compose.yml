@@ -11,6 +11,8 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    volumes:
+      - mysql-data:/var/lib/mysql
     networks:
       - db-net
 
@@ -55,3 +57,6 @@ networks:
   backend-net:
   frontend-net:
   db-net:
+
+volumes:
+  mysql-data:
