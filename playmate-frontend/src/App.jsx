@@ -9,6 +9,9 @@ import Register from "./pages/Register.jsx";
 import PasswordReset from "./pages/PasswordReset.jsx";
 import ChatRoom from "./pages/ChatRoom.jsx";
 import NotificationListener from "./components/NotificationListener.jsx";
+import ProfilePage from "./pages/ProfilePage.jsx";
+import ProfileEditPage from "./pages/ProfileEditPage.jsx";
+import ProfilePasswordPage from "./pages/ProfilePasswordPage.jsx";
 
 function App() {
   return (
@@ -16,7 +19,6 @@ function App() {
       <div className="app-container">
         {/* 로그인 상태일 때만 동작하도록 내부에서 처리됨 */}
         <NotificationListener />
-
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/choosegame" element={<ChooseGamePage />} />
@@ -26,6 +28,9 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/password-reset" element={<PasswordReset />} />
           <Route path="/chat/:matchId" element={<ChatRoom />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/profile/edit" element={<ProfileEditPage />} />
+          <Route path="/profile/password" element={<ProfilePasswordPage />} />
         </Routes>
       </div>
     </Router>
