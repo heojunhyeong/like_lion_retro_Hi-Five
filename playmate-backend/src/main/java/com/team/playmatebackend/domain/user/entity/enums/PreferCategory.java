@@ -6,7 +6,7 @@ public enum PreferCategory {
     TRAVEL,
     ART,
     TECHNOLOGY,
-    League_Of_Legends,
+    LEAGUE_OF_LEGENDS,
     TFT,
     OVER_WATCH,
 }
