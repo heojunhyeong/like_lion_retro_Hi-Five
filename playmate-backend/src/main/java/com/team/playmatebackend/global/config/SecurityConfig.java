@@ -107,8 +107,13 @@ public class SecurityConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
+<<<<<<< Updated upstream
                 registry.addMapping("/api/*")
                         .allowedOrigins("http://localhost:5173/", "http://localhost:70")  // React 주소
+=======
+                registry.addMapping("/api/**")
+                        .allowedOrigins("http://localhost:5173","http://localhost:70")  // React 주소
+>>>>>>> Stashed changes
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("")
                         .allowCredentials(true);

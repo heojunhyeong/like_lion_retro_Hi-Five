@@ -1,122 +1,117 @@
-.game-room-page {
-  min-height: 100vh;
-  background-color: #f5f5f5;
+.game-room-page .create-room-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
 }
 
-.game-room-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
-  background-color: white;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.game-room-page .game-room-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: white;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.game-title {
-  font-size: 24px;
-  font-weight: bold;
-  margin: 0;
+.game-room-page .game-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
 }
 
-.back-button {
-  padding: 10px 20px;
-  background-color: #6c757d;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 14px;
+.game-room-page .back-button {
+    padding: 10px 20px;
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
 }
 
-.back-button:hover {
-  background-color: #5a6268;
+.game-room-page .back-button:hover {
+    background-color: #5a6268;
 }
 
-.create-room-button {
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 14px;
+.game-room-page .create-room-button:hover {
+    background-color: #0056b3;
 }
 
-.create-room-button:hover {
-  background-color: #0056b3;
+.game-room-page .loading {
+    text-align: center;
+    padding: 40px;
+    font-size: 18px;
+    color: #666;
 }
 
-.loading {
-  text-align: center;
-  padding: 40px;
-  font-size: 18px;
-  color: #666;
+.game-room-page .no-rooms {
+    text-align: center;
+    padding: 60px 20px;
+    background-color: white;
+    border-radius: 8px;
+    margin: 20px;
 }
 
-.no-rooms {
-  text-align: center;
-  padding: 60px 20px;
-  background-color: white;
-  border-radius: 8px;
-  margin: 20px;
+.game-room-page .no-rooms p {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 20px;
 }
 
-.no-rooms p {
-  font-size: 18px;
-  color: #666;
-  margin-bottom: 20px;
+.game-room-page .rooms-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
 }
 
-.rooms-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
-  padding: 20px;
+.game-room-page .room-card {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.room-card {
-  background-color: white;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
+.game-room-page .room-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-.room-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+.game-room-page .room-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0 0 15px 0;
+    color: #333;
 }
 
-.room-title {
-  font-size: 20px;
-  font-weight: bold;
-  margin: 0 0 15px 0;
-  color: #333;
+.game-room-page .room-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
 }
 
-.room-info {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
+.game-room-page .room-host {
+    color: #666;
+    font-size: 14px;
+    margin: 0;
 }
 
-.room-host {
-  color: #666;
-  font-size: 14px;
-  margin: 0;
+.game-room-page .room-participants {
+    color: #007bff;
+    font-size: 14px;
+    font-weight: bold;
+    margin: 0;
 }
 
-.room-participants {
-  color: #007bff;
-  font-size: 14px;
-  font-weight: bold;
-  margin: 0;
-}
-
-.room-date {
-  color: #999;
-  font-size: 12px;
-  margin: 10px 0 0 0;
+.game-room-page .room-date {
+    color: #999;
+    font-size: 12px;
+    margin: 10px 0 0 0;
 }
