@@ -7,9 +7,10 @@ import "./CreateRoomPage.css";
 // 게임 ID와 카테고리 매핑 (GameRoomPage와 동일하게)
 const GAME_CATEGORY_MAP = {
   fc_online: "FC_ONLINE",
-  league_of_legends: "League_Of_Legends",
+  league_of_legends: "LEAGUE_OF_LEGENDS",
   overwatch: "OVER_WATCH",
   maple_story: "MAPLE_STORY",
+  hobby: "OTHER", // 추가
 };
 
 function CreateRoomPage() {
@@ -101,10 +102,10 @@ function CreateRoomPage() {
             >
               <option value="">선택 안함</option>
               <option value="FC_ONLINE">FC온라인</option>
-              <option value="League_Of_Legends">리그 오브 레전드</option>
+              <option value="LEAGUE_OF_LEGENDS">리그 오브 레전드</option>
               <option value="OVER_WATCH">오버워치</option>
               <option value="MAPLE_STORY">메이플스토리</option>
-              <option value="기타/취미">기타/취미</option>
+              <option value="OTHER">기타</option>
             </select>
           </div>
 

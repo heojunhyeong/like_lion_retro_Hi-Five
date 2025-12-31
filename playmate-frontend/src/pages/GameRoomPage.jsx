@@ -6,10 +6,11 @@ import "./GameRoomPage.css";
 
 // 게임 ID와 카테고리 매핑
 const GAME_CATEGORY_MAP = {
-  fc_online: "FC_ONLINE", // PreferCategory에 맞게 조정 필요
-  league_of_legends: "League_Of_Legends",
+  fc_online: "FC_ONLINE",
+  league_of_legends: "LEAGUE_OF_LEGENDS",
   overwatch: "OVER_WATCH",
-  maple_story: "MAPLE_STORY", // PreferCategory에 맞게 조정 필요
+  maple_story: "MAPLE_STORY",
+  hobby: "OTHER",
 };
 
 const GAME_NAME_MAP = {
@@ -17,6 +18,7 @@ const GAME_NAME_MAP = {
   league_of_legends: "리그오브레전드",
   overwatch: "오버워치",
   maple_story: "메이플스토리",
+  hobby: "기타",
 };
 
 function GameRoomPage() {

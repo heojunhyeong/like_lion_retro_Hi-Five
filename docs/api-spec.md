@@ -21,7 +21,7 @@
   "nickname" : "Playmate",
   "email" : "playmate@example.com",
   "gender" : "MALE",
-  "preferCategory" : "League_Of_Legends",
+  "preferCategory" : "LEAGUE_OF_LEGENDS",
   "age" : "TWENTIES"
 }
 ```
@@ -321,7 +321,7 @@
     "id": 10,
     "title": "롤 실버 이상 구함",
     "content": "매너 게임 하실 분만 오세요.",
-    "category": "League_Of_Legends",
+    "category": "LEAGUE_OF_LEGENDS",
     "hostNickname": "최고수",
     "maxParticipants": 5,
     "currentParticipants": 2,

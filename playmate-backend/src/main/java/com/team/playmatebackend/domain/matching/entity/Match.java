@@ -46,6 +46,7 @@ public class Match {
 
     // 원하는 컨텐츠
     @Enumerated(EnumType.STRING)
+    @Column(length = 30)
     private PreferCategory category;
 
     // 최대 인원 수
