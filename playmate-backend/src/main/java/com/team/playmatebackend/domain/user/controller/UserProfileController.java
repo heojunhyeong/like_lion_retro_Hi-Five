@@ -50,10 +50,10 @@ public class UserProfileController {
      * @param request 사용자 프로필 수정 요청 DTO
      * @author 전진
      * @DateOfCreated 2025-12-29
-     * @DateOfEdit 2025-12-29
+     * @DateOfEdit 2025-12-31
      */
-    @PutMapping("/me")
-    public void updateProfile(
+    @PutMapping("/me/profile")
+    public void updateMyProfile(
             Authentication authentication,
             @RequestBody UserProfileUpdateRequestDto request
     ) {

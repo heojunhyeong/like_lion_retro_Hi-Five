@@ -62,6 +62,10 @@ public class UserPasswordController {
     ) {
         String userId = authentication.getName();
 
+        if (!request.getNewPassword().equals(request.getNewPasswordConfirm())) {
+            throw new IllegalArgumentException("새 비밀번호가 일치하지 않습니다.");
+        }
+
         userProfileService.changePassword(
                 userId,
                 request.getCurrentPassword(),

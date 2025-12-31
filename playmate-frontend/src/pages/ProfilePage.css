@@ -1,0 +1,105 @@
+.profile-page {
+  min-height: calc(100vh - 70px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-card {
+  width: 420px;
+  padding: 32px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.profile-title {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.profile-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  font-size: 15px;
+}
+
+.profile-intro {
+  margin-top: 16px;
+}
+
+.profile-intro span {
+  font-weight: 600;
+}
+
+.profile-intro p {
+  margin-top: 6px;
+  font-size: 14px;
+  color: #555;
+}
+
+/* 🔽 버튼 영역 */
+.profile-button-group {
+  display: flex;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.profile-back-button,
+.profile-edit-button {
+  flex: 1;
+  padding: 12px 0;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  border: none;
+}
+
+/* 돌아가기 */
+.profile-back-button {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+.profile-back-button:hover {
+  background: #d1d5db;
+}
+
+/* 수정하기 */
+.profile-edit-button {
+  background: linear-gradient(135deg, #7cfc00, #32cd32);
+  color: #ffffff;
+  box-shadow: 0 6px 15px rgba(50, 205, 50, 0.35);
+}
+
+.profile-edit-button:hover {
+  transform: translateY(-2px);
+}
+
+.profile-row {
+  display: flex;
+  align-items: center;
+}
+
+.profile-label {
+  width: 100px;
+  font-weight: 600;
+}
+
+.profile-value {
+  flex: 1;
+  color: #555;
+}
+
+/* 비밀번호 수정 버튼 */
+.edit-btn {
+  background-color: #4f46e5;
+  color: white;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
