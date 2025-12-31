@@ -11,7 +11,8 @@ package com.team.playmatebackend.domain.notification.entity;
 public enum NotificationType {
     MATCH_ENTER("매칭방 입장"),
     MATCH_REQUEST("입장 요청"),
-    MATCH_APPROVED("요청 승인");
+    MATCH_APPROVED("요청 승인"),
+    MATCH_REJECTED("요청 거부");
 
     private final String description;
 

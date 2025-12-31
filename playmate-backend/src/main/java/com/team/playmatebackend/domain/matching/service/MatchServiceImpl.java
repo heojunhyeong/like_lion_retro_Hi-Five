@@ -223,9 +223,31 @@ public class MatchServiceImpl implements MatchService {
             throw new IllegalArgumentException("방장만 거절할 수 있습니다.");
         }
 
+        /**
+         * 234~236, 242~249행 추가
+         * 거절 알림 전송 파트 추가
+         *
+         * @author 김지번
+         * @DateOfCreated 2025-12-31
+         * @DateOfEdit 2025-12-31
+         */
+
+        // 알림 전송을 위해 필요한 정보 미리 저장 (삭제 전)
+        User targetUser = participant.getUser();
+        String matchTitle = participant.getMatch().getTitle();
+
         // 상태를 거절로 변경 및 참여 내역 삭제
         participant.reject();
         matchParticipantRepository.delete(participant);
+
+        // 거절 알림 전송 (추가된 부분)
+        notificationService.send(
+                targetUser.getUserId(),
+                NotificationType.MATCH_REJECTED,
+                matchTitle + " 방 입장이 거절되었습니다.",
+                ""
+        );
+
     }
 
     /**
