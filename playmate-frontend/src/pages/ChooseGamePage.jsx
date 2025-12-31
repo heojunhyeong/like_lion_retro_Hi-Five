@@ -41,7 +41,7 @@ function ChooseGamePage() {
     {
       name: "리그오브레전드",
       id: "league_of_legends",
-      category: "League_Of_Legends",
+      category: "LEAGUE_OF_LEGENDS",
       image: "/images/Lol.jpg",
     },
     {
@@ -57,8 +57,9 @@ function ChooseGamePage() {
       image: "/images/Maple.jpg",
     },
     {
-      name: "기타/취미",
+      name: "기타",
       id: "hobby",
+      category: "OTHER",
       image: "/images/hobby.jpg",
     },
   ];

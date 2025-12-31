@@ -89,7 +89,7 @@ public class SecurityConfig {
         // 요청 -> JwtFilter (토큰 확인) -> 이미 인증됨이면 통과 -> 이후 필터 느낌
         http
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-        
+
         return http.build();
     }
 
