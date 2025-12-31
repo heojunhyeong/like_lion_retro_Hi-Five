@@ -67,7 +67,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // "/login", "/", "/signup" 요청은 모두에게 허용
                         .requestMatchers("/api/users/login", "/signup", "/api/users/register",
-                                "/api/password/reset/request", "/api/password/reset")
+                                "/password/", "/password/reset/request", "/password/reset")
                         .permitAll()
 
                         .requestMatchers(HttpMethod.GET, "/api/matches/**").permitAll()
@@ -110,7 +110,7 @@ public class SecurityConfig {
                 registry.addMapping("/api/*")
                         .allowedOrigins("http://localhost:5173/", "http://localhost:70")  // React 주소
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                        .allowedHeaders("*")
+                        .allowedHeaders("")
                         .allowCredentials(true);
             }
         };
