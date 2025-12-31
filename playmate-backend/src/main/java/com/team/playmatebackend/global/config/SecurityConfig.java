@@ -89,7 +89,7 @@ public class SecurityConfig {
         // 요청 -> JwtFilter (토큰 확인) -> 이미 인증됨이면 통과 -> 이후 필터 느낌
         http
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-        
+
         return http.build();
     }
 
@@ -107,14 +107,8 @@ public class SecurityConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-<<<<<<< Updated upstream
                 registry.addMapping("/api/*")
                         .allowedOrigins("http://localhost:5173/", "http://localhost:70")  // React 주소
-
-=======
-                registry.addMapping("/api/**")
-                        .allowedOrigins("http://localhost:5173", "http://localhost:70")  // React 주소
->>>>>>> Stashed changes
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true);

@@ -85,7 +85,8 @@ function GameRoomPage() {
       navigate("/login");
       return;
     }
-    navigate("/createroom");
+    // gameId를 쿼리 파라미터로 전달
+    navigate(`/createroom?gameId=${gameId}`);
   };
 
   return (
