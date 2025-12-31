@@ -1,29 +1,31 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import './App.css'
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import "./App.css";
 import MainPage from "./pages/MainPage.jsx";
 import ChooseGamePage from "./pages/ChooseGamePage.jsx";
+import GameRoomPage from "./pages/GameRoomPage.jsx";
 import CreateRoomPage from "./pages/CreateRoomPage.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 import NotificationListener from "./components/NotificationListener.jsx";
 
 function App() {
-    return (
-        <Router>
-            <div className="app-container">
-                {/* 로그인 상태일 때만 동작하도록 내부에서 처리됨 */}
-                <NotificationListener />
+  return (
+    <Router>
+      <div className="app-container">
+        {/* 로그인 상태일 때만 동작하도록 내부에서 처리됨 */}
+        <NotificationListener />
 
-                <Routes>
-                    <Route path="/" element={<MainPage />} />
-                    <Route path="/choosegame" element={<ChooseGamePage />} />
-                    <Route path="/createroom" element={<CreateRoomPage />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/register" element={<Register />} />
-                </Routes>
-            </div>
-        </Router>
-    );
+        <Routes>
+          <Route path="/" element={<MainPage />} />
+          <Route path="/choosegame" element={<ChooseGamePage />} />
+          <Route path="/game/:gameId" element={<GameRoomPage />} />
+          <Route path="/createroom" element={<CreateRoomPage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Routes>
+      </div>
+    </Router>
+  );
 }
 
 export default App;
