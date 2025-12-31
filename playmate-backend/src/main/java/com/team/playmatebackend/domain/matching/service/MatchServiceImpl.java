@@ -1,8 +1,10 @@
 package com.team.playmatebackend.domain.matching.service;
 
 import com.team.playmatebackend.domain.matching.dto.MatchCreateDto;
+import com.team.playmatebackend.domain.matching.dto.MatchDetailResponseDto;
 import com.team.playmatebackend.domain.matching.dto.MatchResponseDto;
 import com.team.playmatebackend.domain.matching.dto.MatchSearchRequestDto;
+import com.team.playmatebackend.domain.matching.dto.ParticipantResponseDto;
 import com.team.playmatebackend.domain.matching.entity.Match;
 import com.team.playmatebackend.domain.matching.entity.MatchParticipant;
 import com.team.playmatebackend.domain.matching.entity.enums.EntryMethod;
@@ -62,9 +64,21 @@ public class MatchServiceImpl implements MatchService {
                 .genderRestriction(dto.getGenderRestriction())
                 .ageRestriction(dto.getAgeRestriction())
                 .skillRestriction(dto.getSkillRestriction())
+                .hashTag(dto.getHashTag())
                 .build();
 
-        return matchRepository.save(match).getId();
+        Match savedMatch = matchRepository.save(match);
+
+        // 방장을 참가자로 추가
+        MatchParticipant hostParticipant = MatchParticipant.builder()
+                .match(savedMatch)
+                .user(host)
+                .status(ParticipantStatus.ACCEPTED)
+                .build();
+
+        matchParticipantRepository.save(hostParticipant);
+
+        return savedMatch.getId();
     }
 
     /**
@@ -192,6 +206,62 @@ public class MatchServiceImpl implements MatchService {
 
     }
 
+    /**
+     * 참가자 거절 메서드
+     *
+     * @author 최윤혁
+     * @DateOfCreated 2025-12-30
+     */
+    @Transactional
+    @Override
+    public void rejectParticipant(String hostId, Long participantId) {
+        MatchParticipant participant = matchParticipantRepository.findById(participantId)
+                .orElseThrow(() -> new IllegalArgumentException("참가 신청 내역이 없습니다."));
+
+        // 방장 권한 확인
+        if (!participant.getMatch().getHost().getUserId().equals(hostId)) {
+            throw new IllegalArgumentException("방장만 거절할 수 있습니다.");
+        }
+
+        // 상태를 거절로 변경 및 참여 내역 삭제
+        participant.reject();
+        matchParticipantRepository.delete(participant);
+    }
+
+    /**
+     * 매칭방 참가자 목록 조회
+     *
+     * @author 최윤혁
+     * @DateOfCreated 2025-12-30
+     */
+    @Override
+    public List<ParticipantResponseDto> getParticipants(Long matchId) {
+        List<MatchParticipant> participants = matchParticipantRepository.findByMatchId(matchId);
+        return participants.stream()
+                .map(participant -> ParticipantResponseDto.builder()
+                        .participantId(participant.getId())
+                        .userId(participant.getUser().getUserId())
+                        .nickName(participant.getUser().getNickName())
+                        .gender(participant.getUser().getGender())
+                        .age(participant.getUser().getAge())
+                        .status(participant.getStatus())
+                        .build())
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * 매칭방 상세 정보 조회
+     *
+     * @author 최윤혁
+     * @DateOfCreated 2025-12-30
+     */
+    @Override
+    public MatchDetailResponseDto getMatchDetail(Long matchId) {
+        Match match = matchRepository.findById(matchId)
+                .orElseThrow(() -> new CustomException(ErrorCode.ROOM_NOT_FOUND));
+        return new MatchDetailResponseDto(match);
+    }
+
 
     /**
      * 방 나가기 및 자동 삭제 메서드
@@ -225,6 +295,7 @@ public class MatchServiceImpl implements MatchService {
     }
 
     // 매칭방과 유저의 조건이 맞는지 검증하는 메서드
+    // 실력 제한은 검증하지 않음 (어떤 실력이어도 입장 가능)
     private void validateParticipantConditions(User user, Match match) {
 
         if (match.getGenderRestriction() != null && !user.getGender().equals(match.getGenderRestriction())) {
@@ -235,9 +306,7 @@ public class MatchServiceImpl implements MatchService {
             throw new IllegalArgumentException("참가 가능한 나이대가 아닙니다");
         }
 
-        if (match.getSkillRestriction() != null && !user.getSkillRestriction().equals(match.getSkillRestriction())) {
-            throw new IllegalArgumentException(("참가 가능한 실력이 아닙니다"));
-        }
+        // 실력 제한 검증 제거 - 실력과 관계없이 입장 가능
     }
 
     //Specification<엔티티> 문법 - 검색 대상 엔티티,

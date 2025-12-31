@@ -24,8 +24,8 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         // 채팅 연결 엔드포인트 : /ws-chat
         registry.addEndpoint("/ws-chat")
-                // 리액트 주소
-                .setAllowedOrigins("http://localhost:5173")
+                // 리액트 주소 및 도커 환경
+                .setAllowedOrigins("http://localhost:5173", "http://localhost:70")
                 // 구형 브라우저 또는 일부 모바일 환경 등 WebSocket 연결이 막히는 경우 대체됨
                 .withSockJS();
     }

@@ -67,7 +67,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // "/login", "/", "/signup" 요청은 모두에게 허용
                         .requestMatchers("/api/users/login", "/signup", "/api/users/register",
-                                "/password/", "/password/reset/request", "/password/reset")
+                                "/api/password/reset/request", "/api/password/reset")
                         .permitAll()
 
                         .requestMatchers(HttpMethod.GET, "/api/matches/**").permitAll()
@@ -107,11 +107,16 @@ public class SecurityConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
+<<<<<<< Updated upstream
                 registry.addMapping("/api/*")
                         .allowedOrigins("http://localhost:5173/", "http://localhost:70")  // React 주소
 
+=======
+                registry.addMapping("/api/**")
+                        .allowedOrigins("http://localhost:5173", "http://localhost:70")  // React 주소
+>>>>>>> Stashed changes
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                        .allowedHeaders("")
+                        .allowedHeaders("*")
                         .allowCredentials(true);
             }
         };

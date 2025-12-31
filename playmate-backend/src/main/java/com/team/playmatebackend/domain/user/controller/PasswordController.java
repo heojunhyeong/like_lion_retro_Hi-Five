@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/password")
+@RequestMapping("/api/password")
 public class PasswordController {
 
     private final UserService userService;

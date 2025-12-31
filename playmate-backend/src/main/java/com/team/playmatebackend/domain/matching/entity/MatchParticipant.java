@@ -40,4 +40,8 @@ public class MatchParticipant {
     public void approve() {
         this.status = ParticipantStatus.ACCEPTED;
     }
+
+    public void reject() {
+        this.status = ParticipantStatus.REJECTED;
+    }
 }

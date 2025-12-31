@@ -1,8 +1,10 @@
 package com.team.playmatebackend.domain.matching.controller;
 
 import com.team.playmatebackend.domain.matching.dto.MatchCreateDto;
+import com.team.playmatebackend.domain.matching.dto.MatchDetailResponseDto;
 import com.team.playmatebackend.domain.matching.dto.MatchResponseDto;
 import com.team.playmatebackend.domain.matching.dto.MatchSearchRequestDto;
+import com.team.playmatebackend.domain.matching.dto.ParticipantResponseDto;
 import com.team.playmatebackend.domain.matching.service.MatchService;
 import com.team.playmatebackend.global.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
@@ -68,6 +70,62 @@ public class MatchController {
     public ResponseEntity<List<MatchResponseDto>> getMatches(@ModelAttribute MatchSearchRequestDto searchRequest) { //카테고리, 키워드, 인원
         List<MatchResponseDto> matches = matchService.searchMatches(searchRequest);
         return ResponseEntity.ok(matches);
+    }
+
+    /**
+     * 매칭방 상세 정보 조회
+     *
+     * @author 최윤혁
+     * @DateOfCreated 2025-12-30
+     */
+    @GetMapping("/{matchId}")
+    public ResponseEntity<ApiResponse<MatchDetailResponseDto>> getMatchDetail(@PathVariable Long matchId) {
+        MatchDetailResponseDto matchDetail = matchService.getMatchDetail(matchId);
+        return ResponseEntity.ok(ApiResponse.success(matchDetail));
+    }
+
+    /**
+     * 매칭방 참가자 목록 조회
+     *
+     * @author 최윤혁
+     * @DateOfCreated 2025-12-30
+     */
+    @GetMapping("/{matchId}/participants")
+    public ResponseEntity<ApiResponse<List<ParticipantResponseDto>>> getParticipants(@PathVariable Long matchId) {
+        List<ParticipantResponseDto> participants = matchService.getParticipants(matchId);
+        return ResponseEntity.ok(ApiResponse.success(participants));
+    }
+
+    /**
+     * 참가자 승인
+     *
+     * @author 최윤혁
+     * @DateOfCreated 2025-12-30
+     */
+    @PostMapping("/participants/{participantId}/approve")
+    public ResponseEntity<ApiResponse<Void>> approveParticipant(
+            Authentication authentication,
+            @PathVariable Long participantId
+    ) {
+        String hostId = authentication.getName();
+        matchService.approveParticipant(hostId, participantId);
+        return ResponseEntity.ok(ApiResponse.success(null));
+    }
+
+    /**
+     * 참가자 거절
+     *
+     * @author 최윤혁
+     * @DateOfCreated 2025-12-30
+     */
+    @PostMapping("/participants/{participantId}/reject")
+    public ResponseEntity<ApiResponse<Void>> rejectParticipant(
+            Authentication authentication,
+            @PathVariable Long participantId
+    ) {
+        String hostId = authentication.getName();
+        matchService.rejectParticipant(hostId, participantId);
+        return ResponseEntity.ok(ApiResponse.success(null));
     }
 
     //매칭방 상세 조회
