@@ -31,43 +31,53 @@ function Login() {
     return (
         <div className="login-page-wrapper">
             <div className="login-container">
-            <h2>로그인</h2>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>아이디</label><br />
-                    <input
-                        type="text"
-                        value={userID}
-                        onChange={(e) => setUserID(e.target.value)}
-                        required
-                        placeholder="아이디를 입력하세요"
-                    />
-                </div>
+                <h2>로그인</h2>
+                <form onSubmit={handleSubmit}>
+                    <div>
+                        <label>아이디</label><br />
+                        <input
+                            type="text"
+                            value={userID}
+                            onChange={(e) => setUserID(e.target.value)}
+                            required
+                            placeholder="아이디를 입력하세요"
+                        />
+                    </div>
 
-                <div>
-                    <label>비밀번호</label><br />
-                    <input
-                        type="password"
-                        value={userPassword}
-                        onChange={(e) => setUserPassword(e.target.value)}
-                        required
-                        placeholder="비밀번호를 입력하세요"
-                    />
-                </div>
+                    <div>
+                        <label>비밀번호</label><br />
+                        <input
+                            type="password"
+                            value={userPassword}
+                            onChange={(e) => setUserPassword(e.target.value)}
+                            required
+                            placeholder="비밀번호를 입력하세요"
+                        />
+                    </div>
 
-                {error && <div className="error-message">{error}</div>}
+                    {error && <div className="error-message">{error}</div>}
 
-                <div className="button-container">
-                    <button type="submit">로그인</button>
-                    <button 
-                        type="button" 
-                        onClick={() => navigate('/register')}
-                        className="register-button"
-                    >
-                        회원가입
-                    </button>
-                </div>
-            </form>
+                    <div className="password-reset-link">
+                        <button 
+                            type="button" 
+                            onClick={() => navigate('/password-reset')}
+                            className="password-reset-button"
+                        >
+                            비밀번호 찾기
+                        </button>
+                    </div>
+
+                    <div className="button-container">
+                        <button type="submit">로그인</button>
+                        <button 
+                            type="button" 
+                            onClick={() => navigate('/register')}
+                            className="register-button"
+                        >
+                            회원가입
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     );

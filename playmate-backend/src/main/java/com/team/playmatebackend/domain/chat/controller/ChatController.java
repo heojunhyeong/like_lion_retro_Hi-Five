@@ -16,6 +16,6 @@ public class ChatController {
     @MessageMapping("/chat/message")
     public void message(ChatMessageDto message) {
         // 메세지를 /sub/chat/room/{matchId} 경로로 구독 중인 모든 유저에게 전달
-        messagingTemplate.convertAndSend("sub/chat/room" + message.getMatchId());
+        messagingTemplate.convertAndSend("/sub/chat/room/" + message.getMatchId(), message);
     }
 }

@@ -116,3 +116,30 @@ export const getMyProfile = async () => {
         throw error;
     }
 };
+
+/**
+ * 비밀번호 재설정 요청 (이메일로 재설정 링크 전송)
+ * @param {string} email - 사용자 이메일
+ * @returns {Promise<void>}
+ */
+export const requestPasswordReset = async (email) => {
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/password/reset/request`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email }),
+        });
+
+        if (!response.ok) {
+            const errorData = await response.text();
+            throw new Error(errorData || "비밀번호 재설정 요청에 실패했습니다.");
+        }
+
+        return;
+    } catch (error) {
+        console.error("Password reset request error:", error);
+        throw error;
+    }
+};

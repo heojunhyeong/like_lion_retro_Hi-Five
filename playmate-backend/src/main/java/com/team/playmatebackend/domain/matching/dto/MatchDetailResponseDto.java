@@ -20,6 +20,7 @@ public class MatchDetailResponseDto {
     private String title;
 
     // 1. 방장의 정보 (DB에서 가져옴)
+    private String hostUserId;
     private String hostNickname;
     private Gender hostGender;
     private AgeGroup hostAge;
@@ -38,6 +39,7 @@ public class MatchDetailResponseDto {
         this.title = match.getTitle();
 
         // 방장 엔티티에서 정보를 가져옴
+        this.hostUserId = match.getHost().getUserId();
         this.hostNickname = match.getHost().getNickName();
         this.hostGender = match.getHost().getGender();
         this.hostAge = match.getHost().getAge();

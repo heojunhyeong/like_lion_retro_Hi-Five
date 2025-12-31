@@ -12,7 +12,7 @@ services:
       timeout: 5s
       retries: 5
     volumes:
-      - mysql-data:/var/lib/mysql
+      - mysql_data:/var/lib/mysql
     networks:
       - db-net
 
@@ -59,4 +59,4 @@ networks:
   db-net:
 
 volumes:
-  mysql-data:
+  mysql_data:
