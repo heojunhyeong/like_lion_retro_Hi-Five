@@ -29,6 +29,7 @@ export const createMatch = async (matchData) => {
 };
 
 /**
+<<<<<<< Updated upstream
  * 방 목록 조회 API 호출
  * @param {string} category - 게임 카테고리 (PreferCategory enum 값)
  * @returns {Promise<Array>} 방 목록

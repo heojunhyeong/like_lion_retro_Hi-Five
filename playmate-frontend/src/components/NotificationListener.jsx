@@ -7,9 +7,6 @@ const NotificationListener = () => {
         if (!token) return;
 
         // 1. SSE 연결 (백엔드 subscribe API 호출)
-        // 주의: 백엔드 컨트롤러에서 userId를 어떻게 추출하는지에 따라
-        // URL 뒤에 토큰을 붙이거나 (/api/notifications/subscribe?token=...)
-        // 그냥 호출하면 백엔드 SecurityContext에서 처리할 수도 있습니다.
         const eventSource = new EventSource(`/api/notifications/subscribe`);
 
         // 2. 브라우저 알림 권한 요청
@@ -17,35 +14,55 @@ const NotificationListener = () => {
             Notification.requestPermission();
         }
 
-        // 3. 알림 발생 시 처리 함수 (백엔드의 NotificationResponse 구조와 일치)
+        // 3. 알림 발생 시 처리 함수
         const handleNotification = (event) => {
-            // "EventStream Created" 같은 단순 문자열 더미 데이터 처리용 예외 처리
             try {
                 const data = JSON.parse(event.data);
 
+                /**
+                 * 이벤트 타입에 따라 알림 제목 설정 추가
+                 *
+                 * @author 김지번
+                 * @DateOfCreated 2025-12-31
+                 * @DateOfEdit 2025-12-31
+                 */
+
+                // 이벤트 타입(MATCH_ENTER 등)에 따라 제목 설정
+                let title = "PlayMate 알림";
+                if (event.type === 'MATCH_REQUEST') title = "📩 입장 신청";
+                else if (event.type === 'MATCH_ENTER') title = "🎮 멤버 입장";
+                else if (event.type === 'MATCH_APPROVED') title = "✅ 입장 승인";
+                else if (event.type === 'MATCH_REJECTED') title = "🚫 입장 거절";
+
                 if (Notification.permission === "granted") {
-                    const notification = new Notification("PlayMate 알림", {
-                        body: data.message, // NotificationResponse의 message 필드
-                        icon: '/favicon.ico'
+                    const notification = new Notification(title, {
+                        body: data.message,
+                        icon: '/images/logo.png', // 실제 파일 경로 확인 필요
+                        tag: event.type // 같은 타입의 알림은 덮어씌워 도배 방지
                     });
 
                     notification.onclick = () => {
-                        if (data.url) window.location.href = data.url;
-                        window.focus();
+                        // URL 데이터가 있고 빈 문자열이 아닐 때만 이동 (거절 시에는 이동 안 함)
+                        if (data.url && data.url.trim() !== "") {
+                            window.location.href = data.url;
+                        }
+
+                        window.focus();    // 브라우저 탭 활성화
+                        notification.close(); // 클릭 시 알림 닫기
                     };
                 }
             } catch (e) {
-                console.log("더미 데이터 또는 형식 오류:", event.data);
+                console.log("데이터 파싱 오류 또는 더미 데이터:", event.data);
             }
         };
 
-        // 4. 백엔드 서비스의 type.name()에 해당하는 이벤트 리스너 등록
-        // 백엔드 NotificationType Enum의 이름들과 일치해야 합니다.
+        // 4. 백엔드 이벤트 타입별 리스너 등록
         eventSource.addEventListener('MATCH_ENTER', handleNotification);
         eventSource.addEventListener('MATCH_REQUEST', handleNotification);
         eventSource.addEventListener('MATCH_APPROVED', handleNotification);
+        eventSource.addEventListener('MATCH_REJECTED', handleNotification); // 거절 리스너 추가
 
-        // 백엔드에서 최초 연결 시 보내는 "sse" 타입 더미 이벤트 처리 (선택사항)
+        // 연결 성공 확인용
         eventSource.addEventListener('sse', (e) => {
             console.log("SSE 연결 성공:", e.data);
         });
