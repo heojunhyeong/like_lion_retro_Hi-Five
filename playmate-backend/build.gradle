@@ -60,16 +60,9 @@ dependencies {
     // validation
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
-=======
 
->>>>>>> Stashed changes
 }
-
 
 tasks.named('test') {
     useJUnitPlatform()
