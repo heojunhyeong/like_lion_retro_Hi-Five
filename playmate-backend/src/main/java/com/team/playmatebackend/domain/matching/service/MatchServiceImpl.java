@@ -321,6 +321,7 @@ public class MatchServiceImpl implements MatchService {
         }
     }
 
+
     // 매칭방과 유저의 조건이 맞는지 검증하는 메서드
     // 실력 제한은 검증하지 않음 (어떤 실력이어도 입장 가능)
     private void validateParticipantConditions(User user, Match match) {

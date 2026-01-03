@@ -4,6 +4,8 @@
   background: #e5e7eb;
   display: flex;
   flex-direction: column;
+<<<<<<< Updated upstream
+=======
 }
 
 /* 헤더 스타일 */
@@ -131,6 +133,7 @@
 
 .logout-header-button:active {
   transform: translateY(0);
+>>>>>>> Stashed changes
 }
 
 /* 메인 컨텐츠 */
