@@ -297,24 +297,30 @@ public class MatchServiceImpl implements MatchService {
     @Override
     public void leaveMatch(String userId, Long matchId) {
 
-        // 해당 유저가 실제로 매칭방에 참여중인지 검증
+        // 해당 유저가 실제로 매칭방에 참여 중인지 검증
         MatchParticipant participant = matchParticipantRepository.findByMatchIdAndUserUserId(matchId, userId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 매칭에 참여하고 있지 않습니다"));
+                .orElseThrow(() -> new IllegalArgumentException("참여중 아님"));
 
         Match match = participant.getMatch();
 
-        // 참여 내역 삭제
-        matchParticipantRepository.delete(participant);
+        // 상태 변수 체크
+        boolean isHost = match.getHost().getUserId().equals(userId);
 
-        // 인원 수 감소
+        // 인원 감소 및 리스트에서 제거
         match.removeParticipant();
+        match.getParticipants().remove(participant);
 
-        // 방이 비었거나, 나가는 사람이 방장인 경우 방을 삭제
-        if (match.getCurrentParticipants() <= 0 || match.getHost().getUserId().equals(userId)) {
-            // 방 삭제
+        // 현재 인원 확인
+        boolean isEmpty = match.getCurrentParticipants() <= 0;
+
+        if (isHost || isEmpty) {
             matchRepository.delete(match);
+        } else {
+            // 방장이 아니고 인원도 남았다면 본인 참여 정보만 삭제
+            matchParticipantRepository.delete(participant);
         }
     }
+
 
     // 매칭방과 유저의 조건이 맞는지 검증하는 메서드
     // 실력 제한은 검증하지 않음 (어떤 실력이어도 입장 가능)
