@@ -1,16 +1,14 @@
-<<<<<<< Updated upstream
 import { useNavigate } from "react-router-dom";
 import { getToken } from "../api/userApi";
-=======
+
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getToken, removeToken } from "../api/userApi";
->>>>>>> Stashed changes
 import "./MainPage.css";
 
 function MainPage() {
   const navigate = useNavigate();
-<<<<<<< Updated upstream
+
 
   const handleCreateRoom = () => {
     if (!getToken()) {
@@ -151,4 +149,3 @@ function MainPage() {
   );
 }
 
-export default MainPage;
