@@ -13,6 +13,8 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 매칭방 엔티티
@@ -79,6 +81,10 @@ public class Match {
 
     // 매칭방 태그
     private String hashTag;
+
+    @OneToMany(mappedBy = "match", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MatchParticipant> participants = new ArrayList<>();
+
 
     /**
      * 인원이 추가될 때 현재 인원수를 1 증가시키는 비즈니스 로직
