@@ -175,3 +175,25 @@ export const rejectParticipant = async (participantId) => {
         throw error;
     }
 };
+
+/**
+ * 매칭방 퇴장 API 호출 (추가 필요)
+ */
+export const leaveMatch = async (matchId) => {
+    try {
+        const response = await fetch(`${MATCH_API_BASE_URL}/api/matches/${matchId}/leave`, {
+            method: "POST", // 컨트롤러가 PostMapping이므로 POST
+            headers: getAuthHeaders(),
+        });
+
+        if (!response.ok) {
+            const errorData = await response.text();
+            throw new Error(errorData || "방 나가기에 실패했습니다.");
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error("Leave match error:", error);
+        throw error;
+    }
+};

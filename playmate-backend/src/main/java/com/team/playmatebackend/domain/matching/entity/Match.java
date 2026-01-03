@@ -85,7 +85,6 @@ public class Match {
     @OneToMany(mappedBy = "match", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MatchParticipant> participants = new ArrayList<>();
 
-
     /**
      * 인원이 추가될 때 현재 인원수를 1 증가시키는 비즈니스 로직
      * FIXME: 한 번에 여러명이 동시에 신청을 하게되면 동시성 이슈가 발생할 수 있어서 해결 필요
