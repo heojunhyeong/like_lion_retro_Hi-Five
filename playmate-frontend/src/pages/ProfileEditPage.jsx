@@ -43,39 +43,37 @@ const ProfileEditPage = () => {
   };
 
   return (
-    <div className="profile-edit-page">
-      <div className="profile-edit-card">
-        <h2>프로필 수정</h2>
+    <div className="profile-edit-card">
+      <h2>프로필 수정</h2>
 
-        <label>닉네임</label>
-        <input name="nickName" value={form.nickName} onChange={handleChange} />
+      <label>닉네임</label>
+      <input name="nickName" value={form.nickName} onChange={handleChange} />
 
-        <label>선호 게임</label>
-        <select
-          name="preferCategory"
-          value={form.preferCategory}
-          onChange={handleChange}
-        >
-          <option value="League_Of_Legends">리그 오브 레전드</option>
-          <option value="OVERWATCH">오버워치</option>
-          <option value="MAPLESTORY">메이플스토리</option>
-        </select>
+      <label>선호 게임</label>
+      <select
+        name="preferCategory"
+        value={form.preferCategory}
+        onChange={handleChange}
+      >
+        <option value="League_Of_Legends">리그 오브 레전드</option>
+        <option value="OVERWATCH">오버워치</option>
+        <option value="MAPLESTORY">메이플스토리</option>
+      </select>
 
-        <label>소개</label>
-        <textarea
-          name="introduction"
-          value={form.introduction}
-          onChange={handleChange}
-        />
+      <label>소개</label>
+      <textarea
+        name="introduction"
+        value={form.introduction}
+        onChange={handleChange}
+      />
 
-        <div className="edit-button-group">
-          <button className="cancel-btn" onClick={() => navigate("/profile")}>
-            돌아가기
-          </button>
-          <button className="save-btn" onClick={handleSubmit}>
-            수정하기
-          </button>
-        </div>
+      <div className="edit-button-group">
+        <button className="cancel-btn" onClick={() => navigate("/profile")}>
+          돌아가기
+        </button>
+        <button className="save-btn" onClick={handleSubmit}>
+          수정하기
+        </button>
       </div>
     </div>
   );

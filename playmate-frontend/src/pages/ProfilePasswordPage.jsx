@@ -64,45 +64,43 @@ function ProfilePasswordPage() {
   };
 
   return (
-    <div className="password-page-wrapper">
-      <div className="password-page">
-        <h2>비밀번호 변경</h2>
+    <div className="password-page">
+      <h2>비밀번호 변경</h2>
 
-        <input
-          type="password"
-          placeholder="현재 비밀번호"
-          value={currentPassword}
-          onChange={(e) => setCurrentPassword(e.target.value)}
-        />
+      <input
+        type="password"
+        placeholder="현재 비밀번호"
+        value={currentPassword}
+        onChange={(e) => setCurrentPassword(e.target.value)}
+      />
 
-        <button onClick={verifyPassword}>비밀번호 확인</button>
+      <button onClick={verifyPassword}>비밀번호 확인</button>
 
-        {error && <p className="error">{error}</p>}
+      {error && <p className="error">{error}</p>}
 
-        {verified && (
-          <>
-            <input
-              type="password"
-              placeholder="새 비밀번호"
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
-            />
+      {verified && (
+        <>
+          <input
+            type="password"
+            placeholder="새 비밀번호"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+          />
 
-            <input
-              type="password"
-              placeholder="새 비밀번호 확인"
-              value={newPasswordConfirm}
-              onChange={(e) => setNewPasswordConfirm(e.target.value)}
-            />
+          <input
+            type="password"
+            placeholder="새 비밀번호 확인"
+            value={newPasswordConfirm}
+            onChange={(e) => setNewPasswordConfirm(e.target.value)}
+          />
 
-            <button onClick={changePassword}>비밀번호 변경</button>
-          </>
-        )}
+          <button onClick={changePassword}>비밀번호 변경</button>
+        </>
+      )}
 
-        <button className="back-button" onClick={() => navigate("/profile")}>
-          돌아가기
-        </button>
-      </div>
+      <button className="back-button" onClick={() => navigate("/profile")}>
+        돌아가기
+      </button>
     </div>
   );
 }
