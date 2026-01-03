@@ -29,18 +29,27 @@ export const createMatch = async (matchData) => {
 };
 
 /**
-<<<<<<< Updated upstream
  * 방 목록 조회 API 호출
  * @param {string} category - 게임 카테고리 (PreferCategory enum 값)
+ * @param {string} sortType - 정렬 타입 ("LATEST" 또는 "PARTICIPANTS")
+ * @param {string} keyword - 검색 키워드 (방 제목 검색)
  * @returns {Promise<Array>} 방 목록
  */
-export const getMatches = async (category = null) => {
+export const getMatches = async (category = null, sortType = null, keyword = null) => {
     try {
         let url = `${MATCH_API_BASE_URL}/api/matches`;
         const params = new URLSearchParams();
 
         if (category) {
             params.append("preferCategory", category);
+        }
+
+        if (sortType) {
+            params.append("sortType", sortType);
+        }
+
+        if (keyword && keyword.trim()) {
+            params.append("keyword", keyword.trim());
         }
 
         if (params.toString()) {
