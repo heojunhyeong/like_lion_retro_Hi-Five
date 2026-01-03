@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { connectToChat, sendMessage, disconnect } from '../services/chatService';
 import { getToken } from '../api/userApi';
 import { getUserIdFromToken } from '../utils/jwtUtils';
-import { getMatchDetail, getParticipants, approveParticipant, rejectParticipant } from '../api/matchApi';
+import { getMatchDetail, getParticipants, approveParticipant, rejectParticipant, leaveMatch } from '../api/matchApi';
 import './ChatRoom.css';
 
 function ChatRoom() {
@@ -17,6 +17,7 @@ function ChatRoom() {
     const [isHost, setIsHost] = useState(false);
     const [entryMethod, setEntryMethod] = useState(null);
     const messagesEndRef = useRef(null);
+    const [showErrorModal, setShowErrorModal] = useState(false);
 
     // 방 정보 및 참가자 목록 로드
     useEffect(() => {
@@ -93,7 +94,14 @@ function ChatRoom() {
 
             } catch (error) {
                 console.error('방 정보 로드 실패:', error);
-                alert('방 정보를 불러올 수 없습니다.');
+                // 방이 존재하지 않거나 방장이 나간 경우 (404 에러)
+                if (error.status === 404 || 
+                    error.message.includes('방을 찾을 수 없습니다') || 
+                    error.message.includes('ROOM_NOT_FOUND')) {
+                    setShowErrorModal(true);
+                } else {
+                    alert('방 정보를 불러올 수 없습니다.');
+                }
             }
         };
 
@@ -178,12 +186,35 @@ function ChatRoom() {
         return matchDetail?.hostUserId === participantUserId;
     };
 
+    // 방 나가기 처리
+    const handleLeaveRoom = async () => {
+        try {
+            // 방장인 경우 leaveMatch API 호출
+            if (isHost) {
+                await leaveMatch(matchId);
+            }
+            // WebSocket 연결 종료
+            disconnect();
+            // 이전 페이지로 이동
+            navigate('/choosegame');
+        } catch (error) {
+            console.error('방 나가기 실패:', error);
+            alert('방 나가기에 실패했습니다.');
+        }
+    };
+
+    // 에러 모달 닫기 및 이전 페이지로 이동
+    const handleErrorModalClose = () => {
+        setShowErrorModal(false);
+        navigate(-1); // 이전 페이지로 이동
+    };
+
     return (
         <div className="chat-room-container">
             <div className="chat-header">
                 <button 
                     className="back-button"
-                    onClick={() => navigate('/choosegame')}
+                    onClick={handleLeaveRoom}
                 >
                     ← 돌아가기
                 </button>
@@ -310,6 +341,19 @@ function ChatRoom() {
                     </form>
                 </div>
             </div>
+
+            {/* 에러 모달 */}
+            {showErrorModal && (
+                <div className="modal-overlay" onClick={handleErrorModalClose}>
+                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                        <h3>입장 불가</h3>
+                        <p>입장 할 수 없습니다.</p>
+                        <button className="modal-confirm-button" onClick={handleErrorModalClose}>
+                            확인
+                        </button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
