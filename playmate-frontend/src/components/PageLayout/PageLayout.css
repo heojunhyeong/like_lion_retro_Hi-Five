@@ -1,0 +1,14 @@
+.page-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header 아래 실제 컨텐츠 영역 */
+.page-content {
+  flex: 1; /* Header 제외한 나머지 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px; /* 카드와 헤더 사이 여백 */
+}

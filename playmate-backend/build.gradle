@@ -60,7 +60,10 @@ dependencies {
     // validation
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 }
 
 

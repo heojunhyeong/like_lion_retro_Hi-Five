@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getToken, removeToken } from "../api/userApi";
 import "./ChooseGamePage.css";
+import Header from "../components/Header/Header";
 
 function ChooseGamePage() {
   const navigate = useNavigate();
@@ -67,6 +68,7 @@ function ChooseGamePage() {
   return (
     <div className="choose-game-page">
       {/* 헤더 */}
+      <Header />
       <header className="main-header">
         <div className="header-content">
           <div className="header-left">

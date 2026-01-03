@@ -1,10 +1,41 @@
+<<<<<<< Updated upstream
+import { useNavigate } from "react-router-dom";
+import { getToken } from "../api/userApi";
+=======
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getToken, removeToken } from "../api/userApi";
+>>>>>>> Stashed changes
 import "./MainPage.css";
 
 function MainPage() {
   const navigate = useNavigate();
+<<<<<<< Updated upstream
+
+  const handleCreateRoom = () => {
+    if (!getToken()) {
+      alert("로그인이 필요합니다.");
+      navigate("/login");
+      return;
+    }
+    navigate("/createroom");
+  };
+
+  const handleJoinRoom = () => {
+    navigate("/choosegame");
+  };
+
+  return (
+    <div className="main-page">
+      {/* 메인 컨텐츠 */}
+      <main className="main-content">
+        {/* 사이트 소개 섹션 */}
+        <div className="intro-section">
+          <div className="intro-box">
+            <h2 className="intro-title">사이트 소개 및 설명</h2>
+          </div>
+        </div>
+=======
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
@@ -98,6 +129,7 @@ function MainPage() {
             <h2 className="intro-title">사이트 소개 및 설명</h2>
           </div>
         </div>
+>>>>>>> Stashed changes
 
         {/* 방 생성/참여 섹션 */}
         <div className="room-section">
