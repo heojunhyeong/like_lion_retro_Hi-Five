@@ -5,7 +5,9 @@ import com.team.playmatebackend.domain.matching.dto.MatchDetailResponseDto;
 import com.team.playmatebackend.domain.matching.dto.MatchResponseDto;
 import com.team.playmatebackend.domain.matching.dto.MatchSearchRequestDto;
 import com.team.playmatebackend.domain.matching.dto.ParticipantResponseDto;
+import com.team.playmatebackend.domain.matching.entity.enums.MatchSortType;
 import com.team.playmatebackend.domain.matching.service.MatchService;
+import com.team.playmatebackend.domain.user.entity.enums.PreferCategory;
 import com.team.playmatebackend.global.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -67,7 +69,17 @@ public class MatchController {
 
     //매칭방 검색
     @GetMapping
-    public ResponseEntity<List<MatchResponseDto>> getMatches(@ModelAttribute MatchSearchRequestDto searchRequest) { //카테고리, 키워드, 인원
+    public ResponseEntity<List<MatchResponseDto>> getMatches(
+            @RequestParam(required = false) PreferCategory preferCategory,
+            @RequestParam(required = false) String keyword,
+            @RequestParam(required = false) MatchSortType sortType
+    ) {
+        MatchSearchRequestDto searchRequest = MatchSearchRequestDto.builder()
+                .preferCategory(preferCategory)
+                .keyword(keyword)
+                .sortType(sortType)
+                .build();
+
         List<MatchResponseDto> matches = matchService.searchMatches(searchRequest);
         return ResponseEntity.ok(matches);
     }
