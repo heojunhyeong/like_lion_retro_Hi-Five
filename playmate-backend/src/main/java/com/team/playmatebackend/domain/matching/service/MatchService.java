@@ -18,4 +18,8 @@ public interface MatchService {
     List<MatchResponseDto> searchMatches(MatchSearchRequestDto searchRequest);
     List<ParticipantResponseDto> getParticipants(Long matchId);
     MatchDetailResponseDto getMatchDetail(Long matchId);
+
+
+    // 매칭방 입장 시 권한 검증
+//    void checkChatAccess(String userId, Long matchId);
 }

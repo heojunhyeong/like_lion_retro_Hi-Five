@@ -21,7 +21,9 @@ public enum ErrorCode {
 
     // Match
     ROOM_CAPACITY_EXCEEDED(HttpStatus.BAD_REQUEST, "방 정원이 가득 찼습니다"),
-    ROOM_NOT_FOUND(HttpStatus.NOT_FOUND, "방을 찾을 수 없습니다");
+    ROOM_NOT_FOUND(HttpStatus.NOT_FOUND, "방을 찾을 수 없습니다"),
+    ACCESS_DENIED(HttpStatus.BAD_REQUEST, "권한이 없습니다");
+
 
     private final HttpStatus status;
     private final String message;

@@ -398,4 +398,26 @@ public class MatchServiceImpl implements MatchService {
                 .createdDate(match.getCreatedDate())
                 .build();
     }
+
+
+    /**
+     * 채팅방 권한 검증 메서드
+     * 해당 매칭방에 참여 정보가 있고 상태가 ACCEPTED인 경우에만 입장을 허용한다
+     *
+     * @author 허준형
+     * @DateOfCreated 2025-12-29
+     * @DateOfEdit 2025-12-29
+     */
+//    @Override
+//    @Transactional(readOnly = true)
+//    public void checkChatAccess(String userId, Long matchId) {
+//
+//        boolean isAuthorized = matchParticipantRepository.findByMatchIdAndUserUserId(matchId, userId)
+//                .map(participant -> participant.getStatus() == ParticipantStatus.ACCEPTED)
+//                .orElse(false);
+//
+//        if (!isAuthorized) {
+//            throw new CustomException(ErrorCode.ACCESS_DENIED);
+//        }
+//    }
 }
