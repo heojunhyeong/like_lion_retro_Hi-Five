@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getToken, removeToken } from "../api/userApi";
+import { getToken } from "../api/userApi";
 import { getMatches } from "../api/matchApi";
 import "./GameRoomPage.css";
 
@@ -24,16 +24,10 @@ const GAME_NAME_MAP = {
 function GameRoomPage() {
     const navigate = useNavigate();
     const { gameId } = useParams();
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [rooms, setRooms] = useState([]);
     const [loading, setLoading] = useState(true);
     const [sortType, setSortType] = useState("LATEST");
     const [searchKeyword, setSearchKeyword] = useState("");
-
-    useEffect(() => {
-        const token = getToken();
-        setIsLoggedIn(!!token);
-    }, []);
 
     useEffect(() => {
         const loadRooms = async () => {
@@ -59,20 +53,6 @@ function GameRoomPage() {
             loadRooms();
         }
     }, [gameId, sortType, navigate]);
-
-    const handleLoginClick = () => {
-        navigate("/login");
-    };
-
-    const handleRegisterClick = () => {
-        navigate("/register");
-    };
-
-    const handleLogoutClick = () => {
-        removeToken();
-        setIsLoggedIn(false);
-        navigate("/");
-    };
 
     const handleBackClick = () => {
         navigate("/choosegame");
@@ -140,40 +120,6 @@ function GameRoomPage() {
 
     return (
         <div className="game-room-page">
-            {/* 헤더 */}
-            <header className="main-header">
-                <div className="header-content">
-                    <div className="header-left">
-                        <div className="logo">PlayMate</div>
-                    </div>
-                    <div className="header-right">
-                        {isLoggedIn ? (
-                            <button
-                                onClick={handleLogoutClick}
-                                className="logout-header-button"
-                            >
-                                로그아웃
-                            </button>
-                        ) : (
-                            <>
-                                <button
-                                    onClick={handleRegisterClick}
-                                    className="register-header-button"
-                                >
-                                    회원가입
-                                </button>
-                                <button
-                                    onClick={handleLoginClick}
-                                    className="login-header-button"
-                                >
-                                    로그인
-                                </button>
-                            </>
-                        )}
-                    </div>
-                </div>
-            </header>
-
             {/* 메인 컨텐츠 */}
             <main className="main-content">
                 <div className="game-room-header">
