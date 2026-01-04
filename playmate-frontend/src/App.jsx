@@ -22,7 +22,7 @@ function App() {
       <NotificationListener />
 
       <Routes>
-        {/* ✅ Header가 필요한 모든 페이지 */}
+        {/* ✅ Header,footer가 필요한 모든 페이지 */}
         <Route element={<PageLayout />}>
           <Route path="/" element={<MainPage />} />
           <Route path="/choosegame" element={<ChooseGamePage />} />
@@ -34,7 +34,7 @@ function App() {
           <Route path="/profile/password" element={<ProfilePasswordPage />} />
         </Route>
 
-        {/* ❌ Header가 필요 없는 페이지 */}
+        {/* ❌ Header,footer가 필요 없는 페이지 */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/password-reset" element={<PasswordReset />} />
