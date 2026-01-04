@@ -5,6 +5,7 @@ const NotificationListener = () => {
 
     /**
      * SSE 연결 요청 시 토큰을 쿼리 파라미터로 전달하고, JwtFilter가 이를 읽을 수 있도록 수정
+     * 0104 하트비트 리스너 추가
      *
      * @author 김지번
      * @DateOfCreated 2025-12-31
@@ -69,6 +70,12 @@ const NotificationListener = () => {
         eventSource.addEventListener('MATCH_REQUEST', handleNotification);
         eventSource.addEventListener('MATCH_APPROVED', handleNotification);
         eventSource.addEventListener('MATCH_REJECTED', handleNotification); // 거절 리스너 추가
+
+        // [추가] 하트비트 리스너: 서버에서 보내는 연결 유지 신호를 처리합니다.
+        eventSource.addEventListener('heartbeat', (e) => {
+            // console.log 대신 debug를 사용하여 콘솔창을 깨끗하게 유지합니다.
+            console.debug("SSE Heartbeat received");
+        });
 
         // 연결 성공 확인용
         eventSource.addEventListener('sse', (e) => {
