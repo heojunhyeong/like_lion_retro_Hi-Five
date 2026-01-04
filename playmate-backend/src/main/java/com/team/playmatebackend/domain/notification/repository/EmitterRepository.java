@@ -31,4 +31,9 @@ public class EmitterRepository {
     public SseEmitter get(String userId) {
         return emitters.get(userId);
     }
+
+    // EmitterRepository.java 에 추가
+    public Map<String, SseEmitter> getAllEmitters() {
+        return emitters; // 현재 저장된 모든 맵 반환
+    }
 }
