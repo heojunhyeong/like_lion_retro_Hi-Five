@@ -2,12 +2,20 @@ import { useEffect } from 'react';
 import { getToken } from '../api/userApi';
 
 const NotificationListener = () => {
+
+    /**
+     * SSE 연결 요청 시 토큰을 쿼리 파라미터로 전달하고, JwtFilter가 이를 읽을 수 있도록 수정
+     *
+     * @author 김지번
+     * @DateOfCreated 2025-12-31
+     * @DateOfEdit 2026-01-04
+     */
     useEffect(() => {
-        const token = getToken();
+        const token = getToken(); // 로컬 스토리지 등에서 토큰 가져오기
         if (!token) return;
 
-        // 1. SSE 연결 (백엔드 subscribe API 호출)
-        const eventSource = new EventSource(`/api/notifications/subscribe`);
+        // [수정] 헤더 대신 쿼리 파라미터로 토큰 전달
+        const eventSource = new EventSource(`/api/notifications/subscribe?token=${token}`);
 
         // 2. 브라우저 알림 권한 요청
         if (Notification.permission !== "granted") {
