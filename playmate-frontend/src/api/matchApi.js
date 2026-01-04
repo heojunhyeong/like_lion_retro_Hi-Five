@@ -90,7 +90,9 @@ export const getMatchDetail = async (matchId) => {
 
         if (!response.ok) {
             const errorData = await response.text();
-            throw new Error(errorData || "방 정보 조회에 실패했습니다.");
+            const error = new Error(errorData || "방 정보 조회에 실패했습니다.");
+            error.status = response.status;
+            throw error;
         }
 
         const data = await response.json();
