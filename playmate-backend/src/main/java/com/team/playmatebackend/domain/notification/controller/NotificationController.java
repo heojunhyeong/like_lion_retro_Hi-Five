@@ -1,6 +1,7 @@
 package com.team.playmatebackend.domain.notification.controller;
 
 import com.team.playmatebackend.domain.notification.service.NotificationService;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
@@ -14,7 +15,7 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
  *
  * @author 김지번
  * @DateOfCreated 2025-12-30
- * @DateOfEdit 2025-12-30
+ * @DateOfEdit 2026-01-04
  */
 
 @RestController
@@ -26,7 +27,10 @@ public class NotificationController {
 
     // MIME TYPE은 반드시 text/event-stream 이어야 함
     @GetMapping(value = "/subscribe", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public SseEmitter subscribe(Authentication authentication) {
+    public SseEmitter subscribe(Authentication authentication, HttpServletResponse response) {
+        // [추가] Nginx 등 프록시 서버의 버퍼링 방지
+        response.setHeader("X-Accel-Buffering", "no");
+
         return notificationService.subscribe(authentication.getName());
     }
 }

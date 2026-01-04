@@ -48,6 +48,10 @@ public class MatchServiceImpl implements MatchService {
     @Transactional
     public Long createMatch(String userId, MatchCreateDto dto) {
 
+        if (matchRepository.existsByHostUserId(userId)) {
+            throw new CustomException(ErrorCode.ALREADY_HOSTING_MATCH);
+        }
+
         User host = userRepository.findByUserId(userId)
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 

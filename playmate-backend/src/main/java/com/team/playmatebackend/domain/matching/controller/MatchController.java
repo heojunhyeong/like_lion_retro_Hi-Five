@@ -52,6 +52,23 @@ public class MatchController {
     }
 
     /**
+     * 매칭방 입장
+     *
+     * @author 허준형
+     * @DateOfCreated 2026-01-04.
+     * @DateOfEdit 2025-01-04
+     */
+    @PostMapping("/{matchId}apply")
+    public ResponseEntity<ApiResponse<MatchResponseDto>> applyMatch(
+            Authentication authentication,
+            @PathVariable Long matchId
+    ) {
+        String userId = authentication.getName();
+        matchService.applyToMatch(userId, matchId);
+        return ResponseEntity.ok(ApiResponse.success(null));
+    }
+
+    /**
      * 매칭방 퇴장
      *
      * @author 허준형

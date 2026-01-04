@@ -1,32 +1,8 @@
-import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getToken, removeToken } from "../api/userApi";
 import "./ChooseGamePage.css";
-import Header from "../components/Header/Header";
 
 function ChooseGamePage() {
   const navigate = useNavigate();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    // 토큰이 있으면 로그인 상태
-    const token = getToken();
-    setIsLoggedIn(!!token);
-  }, []);
-
-  const handleLoginClick = () => {
-    navigate("/login");
-  };
-
-  const handleRegisterClick = () => {
-    navigate("/register");
-  };
-
-  const handleLogoutClick = () => {
-    removeToken();
-    setIsLoggedIn(false);
-    navigate("/");
-  };
 
   const handleGameClick = (gameId) => {
     navigate(`/game/${gameId}`);
@@ -67,41 +43,6 @@ function ChooseGamePage() {
 
   return (
     <div className="choose-game-page">
-      {/* 헤더 */}
-      <Header />
-      <header className="main-header">
-        <div className="header-content">
-          <div className="header-left">
-            <div className="logo">PlayMate</div>
-          </div>
-          <div className="header-right">
-            {isLoggedIn ? (
-              <button
-                onClick={handleLogoutClick}
-                className="logout-header-button"
-              >
-                로그아웃
-              </button>
-            ) : (
-              <>
-                <button
-                  onClick={handleRegisterClick}
-                  className="register-header-button"
-                >
-                  회원가입
-                </button>
-                <button
-                  onClick={handleLoginClick}
-                  className="login-header-button"
-                >
-                  로그인
-                </button>
-              </>
-            )}
-          </div>
-        </div>
-      </header>
-
       {/* 메인 컨텐츠 */}
       <main className="main-content">
         <div className="games-section">
