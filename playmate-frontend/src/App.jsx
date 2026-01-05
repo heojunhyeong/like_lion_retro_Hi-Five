@@ -11,6 +11,7 @@ import CreateRoomPage from "./pages/CreateRoomPage.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 import PasswordReset from "./pages/PasswordReset.jsx";
+import PasswordResetConfirm from "./pages/PasswordResetConfirm.jsx";
 import ChatRoom from "./pages/ChatRoom.jsx";
 import NotificationListener from "./components/NotificationListener.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
@@ -41,6 +42,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/password-reset" element={<PasswordReset />} />
+        <Route path="/password/reset" element={<PasswordResetConfirm />} />
       </Routes>
 
     </Router>
