@@ -18,6 +18,9 @@ function ChatRoom() {
     const [entryMethod, setEntryMethod] = useState(null);
     const messagesEndRef = useRef(null);
     const [showErrorModal, setShowErrorModal] = useState(false);
+    const [userParticipantStatus, setUserParticipantStatus] = useState(null);
+    const isWebSocketConnectedRef = useRef(false);
+    const previousParticipantStatusRef = useRef(null);
 
     // 방 정보 및 참가자 목록 로드
     useEffect(() => {
@@ -50,47 +53,69 @@ function ChatRoom() {
 
                 // 참가자 목록 조회
                 const participantsResponse = await getParticipants(matchId);
-                setParticipants(participantsResponse.data || []);
+                const participantsList = participantsResponse.data || [];
+                setParticipants(participantsList);
 
-                // WebSocket 연결
-                connectToChat(matchId, (message) => {
-                    // 서버에서 받은 메시지 처리
-                    setMessages((prevMessages) => {
-                        const now = new Date().getTime();
-                        const messageTimestamp = new Date().toISOString();
-                        
-                        // 임시 메시지(tempId가 있는)를 찾아서 서버 메시지로 교체
-                        const tempMessageIndex = prevMessages.findIndex(prevMsg => 
-                            prevMsg.tempId &&
-                            prevMsg.content === message.content &&
-                            prevMsg.senderId === message.senderId &&
-                            prevMsg.timestamp &&
-                            (now - new Date(prevMsg.timestamp).getTime()) < 3000
-                        );
-                        
-                        if (tempMessageIndex !== -1) {
-                            // 임시 메시지를 서버 메시지로 교체 (tempId 제거)
-                            const newMessages = [...prevMessages];
-                            newMessages[tempMessageIndex] = { ...message, timestamp: messageTimestamp };
-                            return newMessages;
-                        }
-                        
-                        // 중복 메시지 체크: 같은 내용, 같은 발신자, 2초 이내의 메시지는 무시
-                        const isDuplicate = prevMessages.some(prevMsg => 
-                            prevMsg.content === message.content &&
-                            prevMsg.senderId === message.senderId &&
-                            prevMsg.timestamp &&
-                            (now - new Date(prevMsg.timestamp).getTime()) < 2000
-                        );
-                        
-                        if (isDuplicate) {
-                            return prevMessages;
-                        }
-                        
-                        // 새 메시지 추가
-                        return [...prevMessages, { ...message, timestamp: messageTimestamp }];
+                // 현재 사용자의 참가 상태 확인
+                const currentUserParticipant = participantsList.find(p => p.userId === userId);
+                const userStatus = currentUserParticipant ? currentUserParticipant.status : null;
+                setUserParticipantStatus(userStatus);
+                previousParticipantStatusRef.current = userStatus;
+
+                // APPROVAL 방식이고 방장이 아니며 WAITING 상태면 채팅방 접근 불가
+                if (matchData.entryMethod === 'APPROVAL' && !isHost && userStatus === 'WAITING') {
+                    // 승인 대기 중이므로 채팅방 접근 불가
+                    // UI는 표시하되 채팅 기능은 비활성화
+                } else if (matchData.entryMethod === 'APPROVAL' && !isHost && userStatus !== 'ACCEPTED') {
+                    // 참가 신청을 하지 않은 경우
+                    alert('방에 참가 신청을 해주세요.');
+                    navigate('/choosegame');
+                    return;
+                }
+
+                // ACCEPTED 상태이거나 방장인 경우에만 WebSocket 연결
+                if (isHost || userStatus === 'ACCEPTED') {
+                    // WebSocket 연결
+                    connectToChat(matchId, (message) => {
+                        // 서버에서 받은 메시지 처리
+                        setMessages((prevMessages) => {
+                            const now = new Date().getTime();
+                            const messageTimestamp = new Date().toISOString();
+                            
+                            // 임시 메시지(tempId가 있는)를 찾아서 서버 메시지로 교체
+                            const tempMessageIndex = prevMessages.findIndex(prevMsg => 
+                                prevMsg.tempId &&
+                                prevMsg.content === message.content &&
+                                prevMsg.senderId === message.senderId &&
+                                prevMsg.timestamp &&
+                                (now - new Date(prevMsg.timestamp).getTime()) < 3000
+                            );
+                            
+                            if (tempMessageIndex !== -1) {
+                                // 임시 메시지를 서버 메시지로 교체 (tempId 제거)
+                                const newMessages = [...prevMessages];
+                                newMessages[tempMessageIndex] = { ...message, timestamp: messageTimestamp };
+                                return newMessages;
+                            }
+                            
+                            // 중복 메시지 체크: 같은 내용, 같은 발신자, 2초 이내의 메시지는 무시
+                            const isDuplicate = prevMessages.some(prevMsg => 
+                                prevMsg.content === message.content &&
+                                prevMsg.senderId === message.senderId &&
+                                prevMsg.timestamp &&
+                                (now - new Date(prevMsg.timestamp).getTime()) < 2000
+                            );
+                            
+                            if (isDuplicate) {
+                                return prevMessages;
+                            }
+                            
+                            // 새 메시지 추가
+                            return [...prevMessages, { ...message, timestamp: messageTimestamp }];
+                        });
                     });
-                });
+                    isWebSocketConnectedRef.current = true;
+                }
 
             } catch (error) {
                 console.error('방 정보 로드 실패:', error);
@@ -112,6 +137,124 @@ function ChatRoom() {
             disconnect();
         };
     }, [matchId, navigate]);
+
+    // 참가자 목록 주기적 새로고침 (방장이 수락/거절 옵션을 볼 수 있도록, 참가자가 승인 상태 변경 확인)
+    useEffect(() => {
+        const interval = setInterval(() => {
+            const refreshParticipants = async () => {
+                try {
+                    const userId = getUserIdFromToken();
+                    const participantsResponse = await getParticipants(matchId);
+                    const participantsList = participantsResponse.data || [];
+                    setParticipants(participantsList);
+                    
+                    // 현재 사용자의 참가 상태도 함께 업데이트
+                    const currentUserParticipant = participantsList.find(p => p.userId === userId);
+                    const userStatus = currentUserParticipant ? currentUserParticipant.status : null;
+                    const previousStatus = previousParticipantStatusRef.current;
+                    
+                    // 참가자가 목록에서 사라졌고 이전 상태가 WAITING이었다면 거절된 것으로 간주
+                    if (!currentUserParticipant && previousStatus === 'WAITING' && !isHost) {
+                        alert('방장이 입장을 거절했습니다.');
+                        navigate('/choosegame');
+                        return;
+                    }
+                    
+                    setUserParticipantStatus((prevStatus) => {
+                        return userStatus;
+                    });
+                    previousParticipantStatusRef.current = userStatus;
+                    
+                    // REJECTED 상태가 되면 이전 페이지로 이동
+                    if (userStatus === 'REJECTED' && previousStatus !== 'REJECTED') {
+                        alert('방장이 입장을 거절했습니다.');
+                        navigate('/choosegame');
+                    }
+                } catch (error) {
+                    console.error('참가자 목록 새로고침 실패:', error);
+                    // 방이 존재하지 않거나 방장이 나간 경우 (404 에러)
+                    if (error.status === 404 || 
+                        error.message?.includes('방을 찾을 수 없습니다') || 
+                        error.message?.includes('ROOM_NOT_FOUND')) {
+                        // 방장이 나가서 방이 삭제된 경우
+                        alert('채팅이 종료되었습니다.');
+                        disconnect();
+                        navigate('/choosegame');
+                        return;
+                    }
+                }
+            };
+            refreshParticipants();
+        }, 2000); // 2초마다 새로고침
+
+        return () => clearInterval(interval);
+    }, [matchId, isHost, navigate]);
+
+    // 방 정보 주기적 확인 (방장이 나가서 방이 삭제되었는지 확인)
+    useEffect(() => {
+        const interval = setInterval(async () => {
+            try {
+                // 방 정보 조회
+                await getMatchDetail(matchId);
+            } catch (error) {
+                // 방이 존재하지 않거나 방장이 나간 경우 (404 에러)
+                if (error.status === 404 || 
+                    error.message?.includes('방을 찾을 수 없습니다') || 
+                    error.message?.includes('ROOM_NOT_FOUND')) {
+                    // 방장이 나가서 방이 삭제된 경우
+                    alert('채팅이 종료되었습니다.');
+                    disconnect();
+                    navigate('/choosegame');
+                    return;
+                }
+            }
+        }, 2000); // 2초마다 확인
+
+        return () => clearInterval(interval);
+    }, [matchId, navigate]);
+
+    // 참가자가 승인되어 ACCEPTED 상태가 되면 WebSocket 연결
+    useEffect(() => {
+        if (userParticipantStatus === 'ACCEPTED' && !isHost && !isWebSocketConnectedRef.current) {
+            // WebSocket 연결
+            connectToChat(matchId, (message) => {
+                setMessages((prevMessages) => {
+                    const now = new Date().getTime();
+                    const messageTimestamp = new Date().toISOString();
+                    
+                    // 임시 메시지(tempId가 있는)를 찾아서 서버 메시지로 교체
+                    const tempMessageIndex = prevMessages.findIndex(prevMsg => 
+                        prevMsg.tempId &&
+                        prevMsg.content === message.content &&
+                        prevMsg.senderId === message.senderId &&
+                        prevMsg.timestamp &&
+                        (now - new Date(prevMsg.timestamp).getTime()) < 3000
+                    );
+                    
+                    if (tempMessageIndex !== -1) {
+                        const newMessages = [...prevMessages];
+                        newMessages[tempMessageIndex] = { ...message, timestamp: messageTimestamp };
+                        return newMessages;
+                    }
+                    
+                    // 중복 메시지 체크
+                    const isDuplicate = prevMessages.some(prevMsg => 
+                        prevMsg.content === message.content &&
+                        prevMsg.senderId === message.senderId &&
+                        prevMsg.timestamp &&
+                        (now - new Date(prevMsg.timestamp).getTime()) < 2000
+                    );
+                    
+                    if (isDuplicate) {
+                        return prevMessages;
+                    }
+                    
+                    return [...prevMessages, { ...message, timestamp: messageTimestamp }];
+                });
+            });
+            isWebSocketConnectedRef.current = true;
+        }
+    }, [userParticipantStatus, isHost, matchId]);
 
     // 참가자 목록 새로고침
     const refreshParticipants = async () => {
@@ -189,10 +332,8 @@ function ChatRoom() {
     // 방 나가기 처리
     const handleLeaveRoom = async () => {
         try {
-            // 방장인 경우 leaveMatch API 호출
-            if (isHost) {
-                await leaveMatch(matchId);
-            }
+            // 방장이든 일반 참가자든 모두 leaveMatch API 호출 (백엔드에서 처리 방식 구분)
+            await leaveMatch(matchId);
             // WebSocket 연결 종료
             disconnect();
             // 이전 페이지로 이동
@@ -209,8 +350,26 @@ function ChatRoom() {
         navigate(-1); // 이전 페이지로 이동
     };
 
+    // 승인 대기 중인지 확인
+    const isWaitingApproval = entryMethod === 'APPROVAL' && !isHost && userParticipantStatus === 'WAITING';
+    const canChat = isHost || userParticipantStatus === 'ACCEPTED';
+
     return (
         <div className="chat-room-container">
+            {/* 승인 대기 중인 경우 상단에 안내 메시지 표시 */}
+            {isWaitingApproval && (
+                <div style={{
+                    backgroundColor: '#fff3cd',
+                    border: '1px solid #ffc107',
+                    padding: '15px',
+                    textAlign: 'center',
+                    fontSize: '16px',
+                    fontWeight: 'bold',
+                    color: '#856404'
+                }}>
+                    승인 대기중입니다. 방장의 승인을 기다려주세요.
+                </div>
+            )}
             <div className="chat-header">
                 <button 
                     className="back-button"
@@ -332,10 +491,11 @@ function ChatRoom() {
                             type="text"
                             value={inputMessage}
                             onChange={(e) => setInputMessage(e.target.value)}
-                            placeholder="메시지를 입력하세요..."
+                            placeholder={canChat ? "메시지를 입력하세요..." : "승인 대기 중입니다..."}
                             className="message-input"
+                            disabled={!canChat}
                         />
-                        <button type="submit" className="send-button">
+                        <button type="submit" className="send-button" disabled={!canChat}>
                             전송
                         </button>
                     </form>
