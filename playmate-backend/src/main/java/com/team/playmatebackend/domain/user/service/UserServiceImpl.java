@@ -147,7 +147,7 @@ public class UserServiceImpl implements UserService {
         passwordResetTokenRepository.save(resetToken);
 
         String resetLink =
-                "http://localhost:3000/password/reset?token=" + token;
+                "http://3.39.23.122:70/password/reset?token=" + token;
 
         mailService.sendPasswordResetMail(user.getUserEmail(), resetLink);
 
