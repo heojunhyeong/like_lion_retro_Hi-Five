@@ -72,6 +72,9 @@ public class SecurityConfig {
 
                         .requestMatchers(HttpMethod.GET, "/api/matches/**").permitAll()
 
+                        // WebSocket 연결을 위한 경로 허용
+                        .requestMatchers("/ws-chat/**").permitAll()
+
                         // admin으로 시작하는 모든 요청은 Admin 역할을 가진 사용자만 접근 가능
                         .requestMatchers("/admin/**").hasRole(UserRoleType.ADMIN.name())
 

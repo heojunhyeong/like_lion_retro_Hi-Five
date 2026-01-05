@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getToken } from "../api/userApi";
-import { getMatches } from "../api/matchApi";
+import { getMatches, applyToMatch } from "../api/matchApi";
 import "./GameRoomPage.css";
 
 // 게임 ID와 카테고리 매핑
@@ -58,9 +58,24 @@ function GameRoomPage() {
         navigate("/choosegame");
     };
 
-    const handleRoomClick = (roomId) => {
-        // 채팅방으로 이동
-        navigate(`/chat/${roomId}`);
+    const handleRoomClick = async (roomId) => {
+        // 로그인 체크
+        if (!getToken()) {
+            alert("로그인이 필요합니다.");
+            navigate("/login");
+            return;
+        }
+
+        try {
+            // 방 입장 API 호출
+            await applyToMatch(roomId);
+            
+            // 성공하면 채팅방으로 이동
+            navigate(`/chat/${roomId}`);
+        } catch (error) {
+            console.error("방 입장 실패:", error);
+            alert(error.message || "방 입장에 실패했습니다.");
+        }
     };
 
     const handleCreateRoom = () => {
