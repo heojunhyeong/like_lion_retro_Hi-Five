@@ -141,7 +141,9 @@ export const getParticipants = async (matchId) => {
 
         if (!response.ok) {
             const errorData = await response.text();
-            throw new Error(errorData || "참가자 목록 조회에 실패했습니다.");
+            const error = new Error(errorData || "참가자 목록 조회에 실패했습니다.");
+            error.status = response.status;
+            throw error;
         }
 
         const data = await response.json();

@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { getToken } from '../api/userApi';
 
 const NotificationListener = () => {
@@ -42,6 +43,26 @@ const NotificationListener = () => {
                 else if (event.type === 'MATCH_ENTER') title = "🎮 멤버 입장";
                 else if (event.type === 'MATCH_APPROVED') title = "✅ 입장 승인";
                 else if (event.type === 'MATCH_REJECTED') title = "🚫 입장 거절";
+
+                // 승인 알림을 받으면 자동으로 채팅방으로 이동
+                if (event.type === 'MATCH_APPROVED' && data.url && data.url.trim() !== "") {
+                    // URL에서 matchId 추출 (/chat/{matchId})
+                    const matchId = data.url.replace('/chat/', '');
+                    if (matchId) {
+                        // 자동으로 채팅방으로 이동
+                        window.location.href = data.url;
+                        return; // 알림 표시 없이 바로 이동
+                    }
+                }
+
+                // 거절 알림을 받으면 이전 페이지로 이동
+                if (event.type === 'MATCH_REJECTED') {
+                    // 현재 URL이 채팅방이면 이전 페이지로 이동
+                    if (window.location.pathname.startsWith('/chat/')) {
+                        window.history.back();
+                        return; // 알림 표시 없이 바로 이동
+                    }
+                }
 
                 if (Notification.permission === "granted") {
                     const notification = new Notification(title, {

@@ -61,13 +61,8 @@ function CreateRoomPage() {
       const matchId = response.data;
       console.log("방 생성 성공! 방 ID:", matchId);
       alert("방이 성공적으로 생성되었습니다!");
-      // 방 생성 후 해당 게임 페이지로 리다이렉트
-      if (gameId) {
-        navigate(`/game/${gameId}`);
-      } else {
-        // gameId가 없으면 채팅방으로 이동
-        navigate(`/chat/${matchId}`);
-      }
+      // 방 생성 후 바로 채팅방으로 이동 (방장은 이미 ACCEPTED 상태)
+      navigate(`/chat/${matchId}`);
     } catch (error) {
       console.error("방 생성 실패:", error);
       alert(error.message || "방 생성에 실패했습니다.");
