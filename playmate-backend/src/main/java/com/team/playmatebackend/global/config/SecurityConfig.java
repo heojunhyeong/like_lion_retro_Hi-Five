@@ -67,7 +67,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // "/login", "/", "/signup" 요청은 모두에게 허용
                         .requestMatchers("/api/users/login", "/signup", "/api/users/register",
-                                "/password/", "/password/reset/request", "/password/reset")
+                                "/password/", "/api/password/**")
                         .permitAll()
 
                         .requestMatchers(HttpMethod.GET, "/api/matches/**").permitAll()
@@ -111,7 +111,7 @@ public class SecurityConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/api/*")
-                        .allowedOrigins("http://localhost:5173/", "http://localhost:70" , "3.39.23.122:70")  // React 주소
+                        .allowedOrigins("http://localhost:5173/", "http://localhost:70")  // React 주소
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("")
                         .allowCredentials(true);
