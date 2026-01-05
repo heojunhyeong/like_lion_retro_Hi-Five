@@ -59,8 +59,8 @@ function GameRoomPage() {
     };
 
     const handleRoomClick = (roomId) => {
-        // TODO: 방 상세 페이지로 이동 또는 방 참여 기능 구현
-        console.log("방 클릭:", roomId);
+        // 채팅방으로 이동
+        navigate(`/chat/${roomId}`);
     };
 
     const handleCreateRoom = () => {
