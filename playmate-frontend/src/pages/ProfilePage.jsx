@@ -80,7 +80,7 @@ const ProfilePage = () => {
       <div className="profile-button-group">
         <button
           className="profile-back-button"
-          onClick={() => (window.location.href = "http://localhost:70")}
+          onClick={() => navigate(-1)}
         >
           돌아가기
         </button>

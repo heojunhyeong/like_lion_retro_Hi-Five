@@ -55,9 +55,11 @@ const ProfileEditPage = () => {
         value={form.preferCategory}
         onChange={handleChange}
       >
-        <option value="League_Of_Legends">리그 오브 레전드</option>
-        <option value="OVERWATCH">오버워치</option>
-        <option value="MAPLESTORY">메이플스토리</option>
+        <option value="LEAGUE_OF_LEGENDS">리그오브레전드</option>
+        <option value="OVER_WATCH">오버워치</option>
+        <option value="MAPLE_STORY">메이플스토리</option>
+        <option value="FC_ONLINE">FC 온라인</option>
+        <option value="OTHER">기타</option>
       </select>
 
       <label>소개</label>
