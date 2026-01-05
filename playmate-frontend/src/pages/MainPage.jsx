@@ -27,7 +27,8 @@ function MainPage() {
                 {/* 사이트 소개 섹션 */}
                 <div className="intro-section">
                     <div className="intro-box">
-                        <h2 className="intro-title">사이트 소개 및 설명</h2>
+                        <h2 className="intro-title">Match the Play.
+                            Find Your Playmate</h2>
                     </div>
                 </div>
 

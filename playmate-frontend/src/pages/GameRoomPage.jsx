@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getToken } from "../api/userApi";
-import { getMatches, applyToMatch } from "../api/matchApi";
+import { getUserIdFromToken } from "../utils/jwtUtils";
+import { getMatches, applyToMatch, getMatchDetail } from "../api/matchApi";
 import "./GameRoomPage.css";
 
 // 게임 ID와 카테고리 매핑
@@ -67,14 +68,35 @@ function GameRoomPage() {
         }
 
         try {
-            // 방 입장 API 호출
+            const userId = getUserIdFromToken();
+            
+            // 방 상세 정보 조회하여 방장인지 확인
+            const matchDetailResponse = await getMatchDetail(roomId);
+            const matchData = matchDetailResponse.data;
+            const isHost = matchData.hostUserId && userId === matchData.hostUserId;
+            
+            // 방장이면 바로 채팅방으로 이동 (이미 ACCEPTED 상태로 등록되어 있음)
+            if (isHost) {
+                navigate(`/chat/${roomId}`);
+                return;
+            }
+            
+            // 방장이 아니면 방 입장 API 호출
             await applyToMatch(roomId);
             
             // 성공하면 채팅방으로 이동
             navigate(`/chat/${roomId}`);
         } catch (error) {
             console.error("방 입장 실패:", error);
-            alert(error.message || "방 입장에 실패했습니다.");
+            // 이미 참가 신청한 경우나 방장인 경우에도 채팅방으로 이동
+            if (error.message && (
+                error.message.includes("이미 참가 신청") || 
+                error.message.includes("방장은 자신의 방에 참가 신청할 수 없습니다")
+            )) {
+                navigate(`/chat/${roomId}`);
+            } else {
+                alert(error.message || "방 입장에 실패했습니다.");
+            }
         }
     };
 

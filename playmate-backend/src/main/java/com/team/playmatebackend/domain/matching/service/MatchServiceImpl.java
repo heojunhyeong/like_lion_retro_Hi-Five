@@ -103,6 +103,16 @@ public class MatchServiceImpl implements MatchService {
         Match match = matchRepository.findById(matchId)
                 .orElseThrow(() -> new CustomException(ErrorCode.ROOM_NOT_FOUND));
 
+        // 방장은 자신의 방에 참가 신청할 수 없음 (이미 ACCEPTED 상태로 등록되어 있음)
+        if (match.getHost().getUserId().equals(userId)) {
+            throw new IllegalArgumentException("방장은 자신의 방에 참가 신청할 수 없습니다.");
+        }
+
+        // 이미 참가 신청한 경우 중복 신청 방지
+        if (matchParticipantRepository.findByMatchIdAndUserUserId(matchId, userId).isPresent()) {
+            throw new IllegalArgumentException("이미 참가 신청하셨습니다.");
+        }
+
         // 방장의 요구조건 검증
         validateParticipantConditions(user, match);
 
@@ -205,7 +215,7 @@ public class MatchServiceImpl implements MatchService {
                 targetUser.getUserId(),
                 NotificationType.MATCH_APPROVED,
                 participant.getMatch().getTitle() + " 방 입장이 승인되었습니다.",
-                "/matches/" + participant.getMatch().getId() // 해당 매칭방으로 이동
+                "/chat/" + participant.getMatch().getId() // 채팅방으로 이동
         );
 
     }
@@ -309,9 +319,12 @@ public class MatchServiceImpl implements MatchService {
 
         // 상태 변수 체크
         boolean isHost = match.getHost().getUserId().equals(userId);
+        boolean isAccepted = participant.getStatus() == ParticipantStatus.ACCEPTED;
 
-        // 인원 감소 및 리스트에서 제거
-        match.removeParticipant();
+        // ACCEPTED 상태인 참가자만 인원 감소 (WAITING 상태는 currentParticipants에 포함되지 않음)
+        if (isAccepted) {
+            match.removeParticipant();
+        }
         match.getParticipants().remove(participant);
 
         // 현재 인원 확인
@@ -322,6 +335,10 @@ public class MatchServiceImpl implements MatchService {
         } else {
             // 방장이 아니고 인원도 남았다면 본인 참여 정보만 삭제
             matchParticipantRepository.delete(participant);
+            // match 엔티티의 변경사항(인원수 감소)을 DB에 저장
+            if (isAccepted) {
+                matchRepository.save(match);
+            }
         }
     }
 
