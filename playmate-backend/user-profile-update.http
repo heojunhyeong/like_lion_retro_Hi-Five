@@ -1,0 +1,19 @@
+### 사용자 프로필 조회 (로그인 상태)
+GET http://localhost:8080/api/users/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaW4iLCJpYXQiOjE3NjcwNjk0MjgsImV4cCI6MTc2NzA3MzAyOH0.u4sZq6aOCqcoBGPL80EESujvvvigdMbHwe5IBRPvYRo
+
+
+### 프로필 수정
+PUT http://localhost:8080/api/users/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaW4iLCJpYXQiOjE3NjcwNjk0MjgsImV4cCI6MTc2NzA3MzAyOH0.u4sZq6aOCqcoBGPL80EESujvvvigdMbHwe5IBRPvYRo
+Content-Type: application/json
+
+{
+  "nickName": "수정된닉네임",
+  "preferCategory": "SPORTS",
+  "introduction": "안녕하세요. 프로필 수정 테스트입니다."
+}
+
+### 프로필 조회
+GET http://localhost:8080/api/users/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaW4iLCJpYXQiOjE3NjcwNjk0MjgsImV4cCI6MTc2NzA3MzAyOH0.u4sZq6aOCqcoBGPL80EESujvvvigdMbHwe5IBRPvYRo

@@ -1,0 +1,21 @@
+### 회원가입
+POST http://localhost:8080/api/users/register
+Content-Type: application/json
+
+{
+  "userId": "jin_test1",
+  "password": "TestPassword123!",
+  "confirmPassword": "TestPassword123!",
+  "nickname": "진테스트",
+  "email": "jin_test@test.com"
+}
+
+
+### 로그인
+POST http://localhost:8080/api/users/login
+Content-Type: application/json
+
+{
+  "userID": "jin_test",
+  "userPassword": "TestPassword123!"
+}

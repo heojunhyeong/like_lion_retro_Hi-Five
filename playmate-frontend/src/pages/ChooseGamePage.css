@@ -1,0 +1,184 @@
+.choose-game-page {
+    width: 100%;
+    min-height: 100vh;
+    background: #e5e7eb;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 헤더 스타일 */
+.main-header {
+    width: 100%;
+    background: #ffffff;
+    border-bottom: 1px solid #e1e8ed;
+    padding: 16px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    flex-shrink: 0;
+}
+
+.header-content {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1e40af;
+    letter-spacing: -0.5px;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.register-header-button {
+    padding: 10px 20px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #ffffff;
+    background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+}
+
+.register-header-button:hover {
+    background: linear-gradient(135deg, #357abd 0%, #2a5f8f 100%);
+    box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
+    transform: translateY(-2px);
+}
+
+.login-header-button {
+    padding: 10px 24px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #4a90e2;
+    background: #ffffff;
+    border: 2px solid #e1e8ed;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.login-header-button:hover {
+    background: #f9fafb;
+    border-color: #4a90e2;
+    transform: translateY(-2px);
+}
+
+.login-header-button:active {
+    transform: translateY(0);
+}
+
+.logout-header-button {
+    padding: 10px 24px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #ffffff;
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+}
+
+.logout-header-button:hover {
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+    transform: translateY(-2px);
+}
+
+.logout-header-button:active {
+    transform: translateY(0);
+}
+
+/* 메인 컨텐츠 */
+.main-content {
+    max-width: 1400px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 60px 40px;
+    box-sizing: border-box;
+    flex: 1;
+}
+
+.games-section {
+    width: 100%;
+}
+
+.games-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.game-card {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.game-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
+    border-color: #4a90e2;
+}
+
+.game-card-content {
+    padding: 0;
+    text-align: center;
+    min-height: 280px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.game-image-container {
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+}
+
+.game-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.game-name {
+    font-size: 20px;
+    font-weight: 600;
+    color: #2c3e50;
+    margin: 0;
+    padding: 20px 24px;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+}
+
+

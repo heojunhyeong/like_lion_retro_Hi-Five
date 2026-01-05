@@ -87,15 +87,33 @@
 ---
 ### spring-boot-starter-security
 
--목적: 인증(Authentication) 및 인가(Authorization) 기능 제공
--사용 위치: main 코드 전반 (보안 설정, 필터, 인증 처리)
--비고: 기본 보안 필터 체인 및 설정 자동 구성 제공
+- 목적: 인증(Authentication) 및 인가(Authorization) 기능 제공
+- 사용 위치: main 코드 전반 (보안 설정, 필터, 인증 처리)
+- 비고: 기본 보안 필터 체인 및 설정 자동 구성 제공
 ---
 ### spring-security-test
 
 - 목적: Spring Security 환경에서의 테스트 지원
 - 사용 위치: test 패키지
 - 비고: Mock 인증 객체, 보안 컨텍스트 설정 등 테스트 편의 기능 제공
+---
+### spring-boot-starter-mail
+
+- 목적 : Java 애플리케이션에서 이메일을 쉽게 보낼 수 있도록 지원하는 모듈
+- 사용 위치 : MailService, MailServiceImpl
+- 비고 : 추가시 JavaMailSender 빈을 자동으로 설정
+---
+### spring-boot-starter-websocket
+
+- 목적 : 서버와 클라이언트 간 실시간 양방향 통신을 위해 사용
+- 사용 위치 : WebSocket 설정 클래스와 @MessageMapping 컨트롤러
+- 비고 : STOMP 기반 pub/sub 구조로 채팅·알림 같은 실시간 기능 구현
+---
+### spring-boot-starter-validation
+
+- 목적 : 요청으로 들어오는 데이터의 유효성 검증 자동 처리
+- 사용 위치 : @RequestBody / @ModelAttribute DTO와 컨트롤러
+- 비고 : @NotNull, @NotBlank 등 어노테이션으로 검증 실패를 사전에 차단
 ---
 ## 추가 시 기록 형식
 
