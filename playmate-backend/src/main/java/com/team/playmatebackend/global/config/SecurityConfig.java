@@ -67,7 +67,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // "/login", "/", "/signup" 요청은 모두에게 허용
                         .requestMatchers("/api/users/login", "/signup", "/api/users/register",
-                                "/password/", "/password/reset/request", "/password/reset")
+                                "/password/", "/api/password/**")
                         .permitAll()
 
                         .requestMatchers(HttpMethod.GET, "/api/matches/**").permitAll()
