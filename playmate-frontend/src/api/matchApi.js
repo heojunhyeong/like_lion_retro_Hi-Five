@@ -104,6 +104,30 @@ export const getMatchDetail = async (matchId) => {
 };
 
 /**
+ * 매칭방 입장/참가 API 호출
+ * @param {number} matchId - 방 ID
+ * @returns {Promise<Object>} 응답 데이터
+ */
+export const applyToMatch = async (matchId) => {
+    try {
+        const response = await fetch(`${MATCH_API_BASE_URL}/api/matches/${matchId}apply`, {
+            method: "POST",
+            headers: getAuthHeaders(),
+        });
+
+        if (!response.ok) {
+            const errorData = await response.text();
+            throw new Error(errorData || "방 입장에 실패했습니다.");
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error("Apply to match error:", error);
+        throw error;
+    }
+};
+
+/**
  * 참가자 목록 조회
  * @param {number} matchId - 방 ID
  * @returns {Promise<Object>} 참가자 목록

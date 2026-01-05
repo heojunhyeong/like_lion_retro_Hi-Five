@@ -1,5 +1,6 @@
 import SockJS from 'sockjs-client';
 import { Client } from '@stomp/stompjs';
+import { getToken } from '../api/userApi';
 
 let stompClient = null;
 
@@ -9,8 +10,11 @@ let stompClient = null;
  * @Date0fEdit 2025-12-30
  */
 export const connectToChat = (matchId, onMessageReceived) => {
-    // SockJS를 사용하여 WebSocket 연결 생성
-    const socket = new SockJS('/ws-chat');
+    // JWT 토큰 가져오기
+    const token = getToken();
+    
+    // SockJS를 사용하여 WebSocket 연결 생성 (토큰을 쿼리 파라미터로 전달)
+    const socket = new SockJS(`/ws-chat${token ? `?token=${token}` : ''}`);
     
     // STOMP 클라이언트 생성
     stompClient = new Client({
