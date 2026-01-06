@@ -14,6 +14,7 @@
 | 백엔드 | Spring Boot |
 | 프론트엔드 | React |
 | 데이터베이스 | MySQL |
+| 프록시 | Nginx |
 | 컨테이너 | Docker, Docker Compose |
 | 배포 | AWS EC2 |
 | 실시간 통신 | WebSocket (STOMP), SSE (Server-Sent Events) |
@@ -33,9 +34,11 @@ like_lion_retro_Hi-Five
 │   ├─ Dockerfile
 │   └─ build.gradle
 ├─ playmate-frontend
-│   ├─ src
 │   ├─ public
 │   ├─ src
+│   └─ Dockerfile
+├─ nginx
+│   ├─ default.conf
 │   └─ Dockerfile
 └─  docker-compose.yml
 ```
